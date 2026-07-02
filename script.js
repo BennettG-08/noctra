@@ -1,5 +1,10 @@
 import { db } from "./firebase.js";
 
+import {
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
 /* =========================
    NOCTRA - SCRIPT BASE
 ========================= */
@@ -200,46 +205,51 @@ joinButtons.forEach(btn => {
 });
 
 /* =========================
-   PUBLICAR GRUPO (SIMULADO)
+   PUBLICAR GRUPO (FIREBASE)
 ========================= */
 
 const publishForm = document.getElementById("publishForm");
 
 if (publishForm) {
 
-    publishForm.addEventListener("submit", (e) => {
+    publishForm.addEventListener("submit", async (e) => {
 
         e.preventDefault();
 
-        const name = document.getElementById("groupName").value;
-        const desc = document.getElementById("groupDescription").value;
+        const name = document.getElementById("groupName").value.trim();
+        const desc = document.getElementById("groupDescription").value.trim();
         const category = document.getElementById("groupCategory").value;
-        const link = document.getElementById("groupLink").value;
+        const link = document.getElementById("groupLink").value.trim();
 
         if (!name || !desc || !category || !link) return;
 
-        const groupList = document.querySelector(".groupList");
+        try {
 
-        const newCard = document.createElement("div");
-        newCard.classList.add("groupCard");
+            await addDoc(collection(db, "groups"), {
 
-        newCard.innerHTML = `
-            <div class="groupImage">
-                <img src="https://placehold.co/120x120/png" />
-            </div>
-            <div class="groupInfo">
-                <h3>${name}</h3>
-                <p>${category} • Nuevo</p>
-                <button class="joinBtn">Unirse</button>
-            </div>
-        `;
+                name,
+                description: desc,
+                category,
+                link,
+                createdAt: new Date()
 
-        groupList.prepend(newCard);
+            });
 
-        publishForm.reset();
+            alert("Grupo publicado correctamente.");
 
-        document.getElementById("publishModal").style.display = "none";
+            publishForm.reset();
+
+            document.getElementById("publishModal").style.display = "none";
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Error al publicar el grupo.");
+
+        }
 
     });
 
 }
+
