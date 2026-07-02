@@ -1,27 +1,18 @@
-/* =========================================================
-   NOCTRA
-   Version: 1.0
-   Desarrollado por Bennett
-   ========================================================= */
+/* =========================
+   NOCTRA - STYLE BASE
+========================= */
 
 :root{
 
-    --background:#09090f;
-    --background2:#111122;
+    --bg:#0b0b14;
+    --card:#141426;
     --primary:#7b2cff;
-    --primaryHover:#9b4dff;
     --secondary:#00d4ff;
-    --white:#ffffff;
-    --text:#e8e8e8;
-    --gray:#9b9b9b;
-    --border:rgba(255,255,255,.08);
+    --text:#ffffff;
+    --muted:#a1a1aa;
 
-    --radius:22px;
-
-    --shadow:
-        0 15px 40px rgba(0,0,0,.35);
-
-    --transition:.35s;
+    --radius:18px;
+    --transition:.3s;
 
 }
 
@@ -30,467 +21,400 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-
-}
-
-html{
-
-    scroll-behavior:smooth;
+    font-family:'Poppins',sans-serif;
 
 }
 
 body{
 
-    font-family:'Poppins',sans-serif;
-
-    background:var(--background);
-
+    background:var(--bg);
     color:var(--text);
-
-    min-height:100vh;
-
     overflow-x:hidden;
 
 }
 
-/* Fondo */
+/* =========================
+   SPLASH SCREEN
+========================= */
 
-.background{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:-1;
-
-    background:
-
-    radial-gradient(circle at top left,#5923ff44,transparent 35%),
-
-    radial-gradient(circle at bottom right,#00d4ff22,transparent 35%),
-
-    linear-gradient(145deg,#08080e,#10101d,#0d0d18,#08080e);
-
-}
-
-/* Splash */
-
-#splashScreen{
+#splash{
 
     position:fixed;
-
     inset:0;
-
-    background:#07070d;
-
+    background:linear-gradient(135deg,#0b0b14,#141426);
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     flex-direction:column;
-
     z-index:9999;
 
 }
 
 .logoSplash h1{
 
-    font-size:58px;
-
-    color:white;
-
-    letter-spacing:8px;
-
-    font-weight:800;
+    font-size:50px;
+    letter-spacing:6px;
+    color:var(--primary);
 
 }
 
-.logoSplash span{
+.logoSplash p{
 
-    color:#9d9d9d;
-
+    color:var(--muted);
+    margin-top:10px;
     font-size:14px;
 
-    letter-spacing:3px;
-
-    margin-top:12px;
-
-    display:block;
-
 }
 
-/* Barra superior */
+/* =========================
+   TOP BAR
+========================= */
 
-.topBar{
+.topbar{
 
     position:fixed;
-
     top:0;
-
     left:0;
-
     width:100%;
-
-    height:70px;
-
-    padding:0 20px;
-
+    height:65px;
     display:flex;
-
-    align-items:center;
-
     justify-content:space-between;
-
-    backdrop-filter:blur(18px);
-
-    background:rgba(8,8,12,.55);
-
-    border-bottom:1px solid var(--border);
-
-    z-index:500;
+    align-items:center;
+    padding:0 20px;
+    background:rgba(20,20,38,.8);
+    backdrop-filter:blur(10px);
+    z-index:1000;
 
 }
 
-.logoArea h2{
-
-    color:white;
-
-    font-size:24px;
-
-    letter-spacing:4px;
-
-}
-
-.headerIcons{
-
-    display:flex;
-
-    gap:18px;
-
-}
-
-.headerIcons i{
-
-    color:white;
+.topbar h2{
 
     font-size:20px;
+    letter-spacing:3px;
 
+}
+
+.actions button{
+
+    background:none;
+    border:none;
+    color:var(--text);
+    font-size:18px;
+    margin-left:12px;
     cursor:pointer;
 
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+
+    padding:90px 20px 20px;
+
+}
+
+.hero h1{
+
+    font-size:22px;
+    margin-bottom:10px;
+
+}
+
+.hero p{
+
+    color:var(--muted);
+    font-size:14px;
+
+}
+
+.searchBox{
+
+    margin-top:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 15px;
+    background:var(--card);
+    border-radius:var(--radius);
+
+}
+
+.searchBox input{
+
+    background:none;
+    border:none;
+    outline:none;
+    color:white;
+    width:100%;
+
+}
+
+/* =========================
+   SECTION HEADERS
+========================= */
+
+.sectionHeader{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:20px 0 10px;
+
+}
+
+.sectionHeader h2{
+
+    font-size:18px;
+
+}
+
+.sectionHeader button{
+
+    background:none;
+    border:none;
+    color:var(--secondary);
+    cursor:pointer;
+    font-size:14px;
+
+}
+
+/* =========================
+   GROUP LIST
+========================= */
+
+.groupList{
+
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+
+}
+
+/* =========================
+   GROUP CARD
+========================= */
+
+.groupCard{
+
+    display:flex;
+    gap:12px;
+    background:var(--card);
+    padding:12px;
+    border-radius:var(--radius);
     transition:var(--transition);
 
 }
 
-/* =========================================================
-   CONTENEDOR PRINCIPAL
-========================================================= */
-
-#app{
-    width:100%;
-    max-width:600px;
-    margin:90px auto 120px;
-    padding:20px;
-}
-
-/* =========================================================
-   BUSCADOR
-========================================================= */
-
-.searchSection{
-    margin-bottom:30px;
-}
-
-.searchBox{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background:rgba(255,255,255,.05);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:15px 18px;
-    backdrop-filter:blur(15px);
-}
-
-.searchBox i{
-    color:var(--gray);
-    font-size:18px;
-}
-
-.searchBox input{
-    width:100%;
-    background:none;
-    border:none;
-    outline:none;
-    color:var(--white);
-    font-size:16px;
-}
-
-.searchBox input::placeholder{
-    color:var(--gray);
-}
-
-/* =========================================================
-   TITULOS
-========================================================= */
-
-.sectionTitle{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-}
-
-.sectionTitle h2{
-    font-size:22px;
-    font-weight:700;
-}
-
-.sectionTitle button{
-    border:none;
-    background:none;
-    color:var(--secondary);
-    cursor:pointer;
-    font-weight:600;
-}
-
-/* =========================================================
-   TARJETAS
-========================================================= */
-
-.featuredContainer{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-}
-
-.groupCard{
-    display:flex;
-    gap:15px;
-    background:rgba(255,255,255,.05);
-    border:1px solid var(--border);
-    border-radius:22px;
-    padding:15px;
-    transition:.3s;
-}
-
 .groupCard:hover{
-    transform:translateY(-4px);
-    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+    transform:translateY(-3px);
+
 }
 
 .groupImage img{
-    width:85px;
-    height:85px;
-    border-radius:18px;
+
+    width:70px;
+    height:70px;
+    border-radius:12px;
     object-fit:cover;
+
 }
 
 .groupInfo{
+
     flex:1;
+
 }
 
 .groupInfo h3{
-    margin-bottom:8px;
+
+    font-size:16px;
+
 }
 
 .groupInfo p{
-    color:var(--gray);
-    font-size:14px;
-    margin-bottom:12px;
+
+    font-size:12px;
+    color:var(--muted);
+    margin:4px 0 8px;
+
 }
 
-.groupInfo button{
+.joinBtn{
+
+    padding:6px 12px;
     border:none;
-    padding:10px 18px;
-    border-radius:14px;
+    border-radius:10px;
     background:var(--primary);
     color:white;
     cursor:pointer;
-    transition:.3s;
-}
-
-.groupInfo button:hover{
-    background:var(--primaryHover);
-}
-
-.headerIcons i:hover{
-
-    color:var(--secondary);
-
-    transform:scale(1.15);
+    font-size:12px;
 
 }
 
-/* =========================================================
-   CATEGORÍAS
-========================================================= */
-
-.categorySection{
-    margin-top:35px;
-}
+/* =========================
+   CATEGORIES
+========================= */
 
 .categoryGrid{
+
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:15px;
+    gap:10px;
+    margin-top:10px;
+
 }
 
-.categoryItem{
-    background:rgba(255,255,255,.05);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:18px;
+.category{
+
+    background:var(--card);
+    padding:14px;
+    border-radius:14px;
     text-align:center;
-    font-weight:600;
+    font-size:13px;
     cursor:pointer;
-    transition:all .3s ease;
-    backdrop-filter:blur(15px);
+    transition:var(--transition);
+
 }
 
-.categoryItem:hover{
-    background:rgba(123,44,255,.15);
-    border-color:var(--primary);
-    transform:translateY(-4px);
+.category:hover{
+
+    background:var(--primary);
+
 }
 
-/* =========================================================
-   BOTÓN FLOTANTE
-========================================================= */
+/* =========================
+   FAB BUTTON
+========================= */
 
 #fabButton{
+
     position:fixed;
-    right:22px;
-    bottom:95px;
-    width:62px;
-    height:62px;
-    border:none;
+    bottom:85px;
+    right:20px;
+    width:55px;
+    height:55px;
     border-radius:50%;
+    border:none;
     background:linear-gradient(135deg,var(--primary),var(--secondary));
-    color:#fff;
-    font-size:24px;
+    color:white;
+    font-size:20px;
     cursor:pointer;
-    box-shadow:0 12px 35px rgba(123,44,255,.45);
-    transition:all .3s ease;
-    z-index:900;
+    box-shadow:0 10px 25px rgba(0,0,0,.4);
+    transition:var(--transition);
+
 }
 
 #fabButton:hover{
-    transform:scale(1.08) rotate(90deg);
+
+    transform:scale(1.1);
+
 }
 
-/* =========================================================
-   NAVEGACIÓN INFERIOR
-========================================================= */
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .bottomNav{
+
     position:fixed;
-    left:0;
     bottom:0;
+    left:0;
     width:100%;
-    height:75px;
+    height:65px;
     display:flex;
     justify-content:space-around;
     align-items:center;
-    background:rgba(8,8,12,.92);
-    backdrop-filter:blur(18px);
-    border-top:1px solid var(--border);
-    z-index:999;
+    background:rgba(20,20,38,.9);
+    backdrop-filter:blur(10px);
+    border-top:1px solid rgba(255,255,255,.05);
+
 }
 
 .navItem{
-    background:none;
-    border:none;
-    color:var(--gray);
+
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:5px;
+    gap:3px;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:12px;
     cursor:pointer;
-    transition:.3s;
+
 }
 
 .navItem i{
-    font-size:20px;
+
+    font-size:16px;
+
 }
 
-.navItem span{
-    font-size:12px;
-}
+.navItem.active{
 
-.navItem.active,
-.navItem:hover{
     color:var(--primary);
+
 }
 
-/* =========================================================
-   MODALES
-========================================================= */
+/* =========================
+   MODALS
+========================= */
 
 .modal{
+
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.75);
+    background:rgba(0,0,0,.7);
     display:none;
     justify-content:center;
     align-items:center;
     padding:20px;
     z-index:2000;
+
 }
 
 .modalContent{
+
     width:100%;
-    max-width:420px;
-    background:#12121c;
-    border:1px solid var(--border);
-    border-radius:24px;
-    padding:25px;
+    max-width:400px;
+    background:var(--card);
+    padding:20px;
+    border-radius:20px;
+
 }
 
 .modalContent h2{
-    margin-bottom:20px;
-    text-align:center;
+
+    margin-bottom:15px;
+
 }
 
 .modalContent input,
 .modalContent textarea,
 .modalContent select{
-    width:100%;
-    margin-bottom:15px;
-    padding:14px;
-    border:none;
-    outline:none;
-    border-radius:14px;
-    background:#1b1b29;
-    color:#fff;
-}
 
-.modalContent textarea{
-    min-height:110px;
-    resize:none;
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:12px;
+    background:#0f0f1c;
+    color:white;
+    outline:none;
+
 }
 
 .modalContent button{
+
     width:100%;
-    padding:14px;
+    padding:12px;
     border:none;
-    border-radius:14px;
+    border-radius:12px;
     background:var(--primary);
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
+    color:white;
     cursor:pointer;
-    transition:.3s;
-}
 
-.modalContent button:hover{
-    background:var(--primaryHover);
-}
-
-.modalContent p{
-    margin-top:15px;
-    text-align:center;
-    color:var(--gray);
-    cursor:pointer;
 }
