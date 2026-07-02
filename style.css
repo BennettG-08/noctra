@@ -1,0 +1,496 @@
+/* =========================================================
+   NOCTRA
+   Version: 1.0
+   Desarrollado por Bennett
+   ========================================================= */
+
+:root{
+
+    --background:#09090f;
+    --background2:#111122;
+    --primary:#7b2cff;
+    --primaryHover:#9b4dff;
+    --secondary:#00d4ff;
+    --white:#ffffff;
+    --text:#e8e8e8;
+    --gray:#9b9b9b;
+    --border:rgba(255,255,255,.08);
+
+    --radius:22px;
+
+    --shadow:
+        0 15px 40px rgba(0,0,0,.35);
+
+    --transition:.35s;
+
+}
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+}
+
+/* Fondo */
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-1;
+
+    background:
+
+    radial-gradient(circle at top left,#5923ff44,transparent 35%),
+
+    radial-gradient(circle at bottom right,#00d4ff22,transparent 35%),
+
+    linear-gradient(145deg,#08080e,#10101d,#0d0d18,#08080e);
+
+}
+
+/* Splash */
+
+#splashScreen{
+
+    position:fixed;
+
+    inset:0;
+
+    background:#07070d;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    z-index:9999;
+
+}
+
+.logoSplash h1{
+
+    font-size:58px;
+
+    color:white;
+
+    letter-spacing:8px;
+
+    font-weight:800;
+
+}
+
+.logoSplash span{
+
+    color:#9d9d9d;
+
+    font-size:14px;
+
+    letter-spacing:3px;
+
+    margin-top:12px;
+
+    display:block;
+
+}
+
+/* Barra superior */
+
+.topBar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:70px;
+
+    padding:0 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    backdrop-filter:blur(18px);
+
+    background:rgba(8,8,12,.55);
+
+    border-bottom:1px solid var(--border);
+
+    z-index:500;
+
+}
+
+.logoArea h2{
+
+    color:white;
+
+    font-size:24px;
+
+    letter-spacing:4px;
+
+}
+
+.headerIcons{
+
+    display:flex;
+
+    gap:18px;
+
+}
+
+.headerIcons i{
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+#app{
+    width:100%;
+    max-width:600px;
+    margin:90px auto 120px;
+    padding:20px;
+}
+
+/* =========================================================
+   BUSCADOR
+========================================================= */
+
+.searchSection{
+    margin-bottom:30px;
+}
+
+.searchBox{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:15px 18px;
+    backdrop-filter:blur(15px);
+}
+
+.searchBox i{
+    color:var(--gray);
+    font-size:18px;
+}
+
+.searchBox input{
+    width:100%;
+    background:none;
+    border:none;
+    outline:none;
+    color:var(--white);
+    font-size:16px;
+}
+
+.searchBox input::placeholder{
+    color:var(--gray);
+}
+
+/* =========================================================
+   TITULOS
+========================================================= */
+
+.sectionTitle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.sectionTitle h2{
+    font-size:22px;
+    font-weight:700;
+}
+
+.sectionTitle button{
+    border:none;
+    background:none;
+    color:var(--secondary);
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* =========================================================
+   TARJETAS
+========================================================= */
+
+.featuredContainer{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.groupCard{
+    display:flex;
+    gap:15px;
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:15px;
+    transition:.3s;
+}
+
+.groupCard:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+}
+
+.groupImage img{
+    width:85px;
+    height:85px;
+    border-radius:18px;
+    object-fit:cover;
+}
+
+.groupInfo{
+    flex:1;
+}
+
+.groupInfo h3{
+    margin-bottom:8px;
+}
+
+.groupInfo p{
+    color:var(--gray);
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.groupInfo button{
+    border:none;
+    padding:10px 18px;
+    border-radius:14px;
+    background:var(--primary);
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.groupInfo button:hover{
+    background:var(--primaryHover);
+}
+
+.headerIcons i:hover{
+
+    color:var(--secondary);
+
+    transform:scale(1.15);
+
+}
+
+/* =========================================================
+   CATEGORÍAS
+========================================================= */
+
+.categorySection{
+    margin-top:35px;
+}
+
+.categoryGrid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.categoryItem{
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    text-align:center;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .3s ease;
+    backdrop-filter:blur(15px);
+}
+
+.categoryItem:hover{
+    background:rgba(123,44,255,.15);
+    border-color:var(--primary);
+    transform:translateY(-4px);
+}
+
+/* =========================================================
+   BOTÓN FLOTANTE
+========================================================= */
+
+#fabButton{
+    position:fixed;
+    right:22px;
+    bottom:95px;
+    width:62px;
+    height:62px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    color:#fff;
+    font-size:24px;
+    cursor:pointer;
+    box-shadow:0 12px 35px rgba(123,44,255,.45);
+    transition:all .3s ease;
+    z-index:900;
+}
+
+#fabButton:hover{
+    transform:scale(1.08) rotate(90deg);
+}
+
+/* =========================================================
+   NAVEGACIÓN INFERIOR
+========================================================= */
+
+.bottomNav{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:75px;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    background:rgba(8,8,12,.92);
+    backdrop-filter:blur(18px);
+    border-top:1px solid var(--border);
+    z-index:999;
+}
+
+.navItem{
+    background:none;
+    border:none;
+    color:var(--gray);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.navItem i{
+    font-size:20px;
+}
+
+.navItem span{
+    font-size:12px;
+}
+
+.navItem.active,
+.navItem:hover{
+    color:var(--primary);
+}
+
+/* =========================================================
+   MODALES
+========================================================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:2000;
+}
+
+.modalContent{
+    width:100%;
+    max-width:420px;
+    background:#12121c;
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:25px;
+}
+
+.modalContent h2{
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.modalContent input,
+.modalContent textarea,
+.modalContent select{
+    width:100%;
+    margin-bottom:15px;
+    padding:14px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:#1b1b29;
+    color:#fff;
+}
+
+.modalContent textarea{
+    min-height:110px;
+    resize:none;
+}
+
+.modalContent button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:var(--primary);
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.modalContent button:hover{
+    background:var(--primaryHover);
+}
+
+.modalContent p{
+    margin-top:15px;
+    text-align:center;
+    color:var(--gray);
+    cursor:pointer;
+}
