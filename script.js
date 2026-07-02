@@ -1,3 +1,5 @@
+import { db } from "./firebase.js";
+
 /* =========================
    NOCTRA - SCRIPT BASE
 ========================= */
