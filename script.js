@@ -252,3 +252,39 @@ if (publishForm) {
 
 }
 
+async function cargarGrupos() {
+
+    const groupList = document.querySelector(".groupList");
+
+    if (!groupList) return;
+
+    const snapshot = await getDocs(collection(db, "groups"));
+
+    snapshot.forEach((doc) => {
+
+        const grupo = doc.data();
+
+        const card = document.createElement("div");
+
+        card.className = "groupCard";
+
+        card.innerHTML = `
+            <div class="groupImage">
+                <img src="https://placehold.co/120x120/png" alt="Grupo">
+            </div>
+            <div class="groupInfo">
+                <h3>${grupo.name}</h3>
+                <p>${grupo.category}</p>
+                <a href="${grupo.link}" target="_blank">
+                    <button class="joinBtn">Unirse</button>
+                </a>
+            </div>
+        `;
+
+        groupList.prepend(card);
+
+    });
+
+}
+
+cargarGrupos();
