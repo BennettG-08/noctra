@@ -2,41 +2,296 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NOCTRA</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>NOCTRA | Descubre grupos de WhatsApp</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="theme-color" content="#09090f">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="description" content="NOCTRA - Plataforma para descubrir y compartir grupos de WhatsApp.">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body>
 
-    <div class="background"></div>
+<!-- Splash -->
 
-    <div class="container">
+<div id="splashScreen">
 
-        <div class="logo">
+<div class="logoSplash">
 
-            <h1>NOCTRA</h1>
+<h1>NOCTRA</h1>
 
-            <p>Descubre y comparte grupos de WhatsApp</p>
+<span>Discover WhatsApp Groups</span>
 
-        </div>
+</div>
 
-        <button id="enterBtn">
-            Entrar
-        </button>
+</div>
+
+<!-- Aplicación -->
+
+<div id="app">
+
+<header class="topBar">
+
+<div class="logoArea">
+
+<h2>NOCTRA</h2>
+
+</div>
+
+<div class="headerIcons">
+
+<i class="fa-solid fa-bell"></i>
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+</header>
+
+    <!-- Barra de búsqueda -->
+
+<section class="searchSection">
+
+    <div class="searchBox">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar grupos...">
 
     </div>
 
-    <script src="script.js"></script>
+</section>
 
-</body>
+<!-- Grupos destacados -->
 
-</html>
+<section class="featuredSection">
+
+    <div class="sectionTitle">
+
+        <h2>🔥 Destacados</h2>
+
+        <button>Ver todo</button>
+
+    </div>
+
+    <div class="featuredContainer">
+
+        <div class="groupCard">
+
+            <div class="groupImage">
+
+                <img src="https://placehold.co/120x120" alt="Grupo">
+
+            </div>
+
+            <div class="groupInfo">
+
+                <h3>Gaming Latino</h3>
+
+                <p>Videojuegos • 520 miembros</p>
+
+                <button>Unirse</button>
+
+            </div>
+
+        </div>
+
+        <div class="groupCard">
+
+            <div class="groupImage">
+
+                <img src="https://placehold.co/120x120" alt="Grupo">
+
+            </div>
+
+            <div class="groupInfo">
+
+                <h3>Anime World</h3>
+
+                <p>Anime • 810 miembros</p>
+
+                <button>Unirse</button>
+
+            </div>
+
+        </div>
+
+        <div class="groupCard">
+
+            <div class="groupImage">
+
+                <img src="https://placehold.co/120x120" alt="Grupo">
+
+            </div>
+
+            <div class="groupInfo">
+
+                <h3>Música 24/7</h3>
+
+                <p>Música • 1.2K miembros</p>
+
+                <button>Unirse</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Categorías -->
+
+<section class="categorySection">
+
+    <div class="sectionTitle">
+
+        <h2>📂 Categorías</h2>
+
+    </div>
+
+    <div class="categoryGrid">
+
+        <div class="categoryItem">🎮 Gaming</div>
+
+        <div class="categoryItem">🎵 Música</div>
+
+        <div class="categoryItem">😂 Memes</div>
+
+        <div class="categoryItem">⚽ Deportes</div>
+
+        <div class="categoryItem">💻 Tecnología</div>
+
+        <div class="categoryItem">🎬 Películas</div>
+
+        <div class="categoryItem">❤️ Amistad</div>
+
+        <div class="categoryItem">📚 Estudios</div>
+
+    </div>
+
+</section>
+
+    <!-- Botón flotante -->
+
+<button id="fabButton">
+
+    <i class="fa-solid fa-plus"></i>
+
+</button>
+
+<!-- Navegación inferior -->
+
+<nav class="bottomNav">
+
+    <button class="navItem active">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Inicio</span>
+
+    </button>
+
+    <button class="navItem">
+
+        <i class="fa-solid fa-layer-group"></i>
+
+        <span>Categorías</span>
+
+    </button>
+
+    <button class="navItem">
+
+        <i class="fa-solid fa-heart"></i>
+
+        <span>Favoritos</span>
+
+    </button>
+
+    <button class="navItem">
+
+        <i class="fa-solid fa-user"></i>
+
+        <span>Perfil</span>
+
+    </button>
+
+</nav>
+
+<!-- Modal para publicar grupo -->
+
+<div id="publishModal" class="modal">
+
+    <div class="modalContent">
+
+        <h2>Publicar Grupo</h2>
+
+        <input type="text" placeholder="Nombre del grupo">
+
+        <textarea placeholder="Descripción"></textarea>
+
+        <input type="url" placeholder="Enlace de invitación de WhatsApp">
+
+        <select>
+
+            <option>Selecciona una categoría</option>
+
+            <option>Gaming</option>
+
+            <option>Anime</option>
+
+            <option>Música</option>
+
+            <option>Memes</option>
+
+            <option>Tecnología</option>
+
+            <option>Amistad</option>
+
+            <option>Deportes</option>
+
+        </select>
+
+        <button>Publicar</button>
+
+    </div>
+
+</div>
+
+<!-- Modal de inicio de sesión -->
+
+<div id="loginModal" class="modal">
+
+    <div class="modalContent">
+
+        <h2>Iniciar Sesión</h2>
+
+        <input type="email" placeholder="Correo electrónico">
+
+        <input type="password" placeholder="Contraseña">
+
+        <button>Entrar</button>
+
+        <p>¿No tienes cuenta? Crear cuenta</p>
+
+    </div>
+
+</div>
