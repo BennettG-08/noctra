@@ -6,6 +6,15 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+
 /* =========================
    NOCTRA - SCRIPT BASE
 ========================= */
@@ -71,17 +80,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const profileBtn = document.getElementById("profileBtn");
 
-    if (profileBtn && loginModal) {
+if (profileBtn) {
 
-        profileBtn.addEventListener("click", () => {
+    profileBtn.addEventListener("click", async () => {
 
-            loginModal.style.display = "flex";
+        try {
 
-        });
+            const result = await signInWithPopup(auth, provider);
 
-    }
+            alert("Bienvenido " + result.user.displayName);
 
-});
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    });
+
+}
 
 /* =========================
    SEARCH FUNCTION
