@@ -1,19 +1,36 @@
-import { app, db } from "./firebase.js";
-
-import {
-  collection,
-  addDoc,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+onAuthStateChanged(auth, (user) => {
+
+    const profileBtn = document.getElementById("profileBtn");
+
+    if (user) {
+
+        if (profileBtn) {
+            profileBtn.innerHTML = `
+                <img src="${user.photoURL}"
+                     alt="Perfil"
+                     style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+            `;
+        }
+
+    } else {
+
+        if (profileBtn) {
+            profileBtn.innerHTML = `<i class="fa fa-user"></i>`;
+        }
+
+    }
+
+});
 
 /* =========================
    NOCTRA - SCRIPT BASE
