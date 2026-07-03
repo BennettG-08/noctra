@@ -337,3 +337,45 @@ async function cargarGrupos() {
 }
 
 cargarGrupos();
+
+// ===============================
+// PÁGINA DE PERFIL
+// ===============================
+
+const profileNavBtn = document.getElementById("profileNavBtn");
+const profilePage = document.getElementById("profilePage");
+const main = document.querySelector("main");
+const bottomNav = document.querySelector(".bottomNav");
+const fabButton = document.getElementById("fabButton");
+
+const profileImage = document.getElementById("profileImage");
+const profileName = document.getElementById("profileName");
+const profileEmail = document.getElementById("profileEmail");
+
+if (profileNavBtn) {
+
+    profileNavBtn.addEventListener("click", () => {
+
+        if (main) main.style.display = "none";
+        if (fabButton) fabButton.style.display = "none";
+        if (profilePage) profilePage.style.display = "block";
+
+        const user = auth.currentUser;
+
+        if (user) {
+
+            profileImage.src = user.photoURL;
+            profileName.textContent = user.displayName;
+            profileEmail.textContent = user.email;
+
+        } else {
+
+            profileImage.src = "https://placehold.co/150x150";
+            profileName.textContent = "Invitado";
+            profileEmail.textContent = "No has iniciado sesión";
+
+        }
+
+    });
+
+}
