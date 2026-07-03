@@ -88,7 +88,14 @@ if (profileBtn) {
 
             const result = await signInWithPopup(auth, provider);
 
-            alert("Bienvenido " + result.user.displayName);
+const user = result.user;
+
+profileBtn.innerHTML = `
+<img src="${user.photoURL}"
+style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+`;
+
+alert("Bienvenido " + user.displayName);
 
         } catch (error) {
 
