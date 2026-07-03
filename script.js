@@ -92,7 +92,8 @@ if (profileBtn) {
 
         } catch (error) {
 
-            alert(error.message);
+    if (error.code !== "auth/cancelled-popup-request") {
+        alert(error.message);
 
         }
 
