@@ -1,4 +1,4 @@
-import { db } from "./firebase.js";
+import { app, db } from "./firebase.js";
 
 import {
   collection,
@@ -12,7 +12,7 @@ import {
   signInWithPopup
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-const auth = getAuth();
+const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 /* =========================
