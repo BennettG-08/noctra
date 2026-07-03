@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
        LOGIN ICON
     ========================= */
 
-    const profileBtn = document.getElementById("profileBtn");
+  const profileBtn = document.getElementById("profileBtn");
 
 if (profileBtn) {
 
@@ -88,19 +88,20 @@ if (profileBtn) {
 
             const result = await signInWithPopup(auth, provider);
 
-const user = result.user;
+            const user = result.user;
 
-profileBtn.innerHTML = `
-<img src="${user.photoURL}"
-style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
-`;
+            profileBtn.innerHTML = `
+                <img src="${user.photoURL}"
+                style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+            `;
 
-alert("Bienvenido " + user.displayName);
+            alert("Bienvenido " + user.displayName);
 
         } catch (error) {
 
-    if (error.code !== "auth/cancelled-popup-request") {
-        alert(error.message);
+            if (error.code !== "auth/cancelled-popup-request") {
+                alert(error.message);
+            }
 
         }
 
