@@ -240,13 +240,13 @@ if (publishForm) {
 
             publishForm.reset();
 
-            document.getElementById("publishModal").style.display = "none";
+                    document.getElementById("publishModal").style.display = "none";
 
-        catch (error) {
+        } catch (error) {
 
-    console.error(error);
+            console.error(error);
 
-    alert(error.message);
+            alert(error.message);
 
         }
 
