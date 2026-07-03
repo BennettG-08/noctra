@@ -1,3 +1,5 @@
+import { app, db } from "./firebase.js";
+
 import {
   getAuth,
   GoogleAuthProvider,
