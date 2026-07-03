@@ -242,11 +242,11 @@ if (publishForm) {
 
             document.getElementById("publishModal").style.display = "none";
 
-        } catch (error) {
+        catch (error) {
 
-            console.error(error);
+    console.error(error);
 
-            alert("Error al publicar el grupo.");
+    alert(error.message);
 
         }
 
