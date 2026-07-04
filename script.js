@@ -219,6 +219,7 @@ navItems.forEach(item => {
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
 const joinButtons = document.querySelectorAll(".joinBtn");
+const favoriteButtons = document.querySelectorAll(".favoriteBtn");
 
 joinButtons.forEach(btn => {
 
@@ -249,6 +250,38 @@ joinButtons.forEach(btn => {
             btn.innerText = "Unirse";
 
         }
+
+    });
+
+});
+
+favoriteButtons.forEach(btn => {
+
+    const card = btn.closest(".groupCard");
+
+    if (!card) return;
+
+    const title = card.querySelector("h3").innerText;
+
+    if (favorites.includes(title)) {
+        btn.classList.add("active");
+    }
+
+    btn.addEventListener("click", () => {
+
+        if (favorites.includes(title)) {
+
+            favorites = favorites.filter(f => f !== title);
+            btn.classList.remove("active");
+
+        } else {
+
+            favorites.push(title);
+            btn.classList.add("active");
+
+        }
+
+        localStorage.setItem("favorites", JSON.stringify(favorites));
 
     });
 
