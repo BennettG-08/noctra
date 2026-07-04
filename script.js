@@ -4,7 +4,8 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 const auth = getAuth(app);
@@ -337,7 +338,6 @@ async function cargarGrupos() {
 }
 
 cargarGrupos();
-
 // ===============================
 // PÁGINA DE PERFIL
 // ===============================
@@ -379,3 +379,23 @@ if (profileNavBtn) {
     });
 
 }
+
+// ===============================
+// CERRAR SESIÓN
+// ===============================
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener("click", async () => {
+
+        await signOut(auth);
+
+        if (profilePage) profilePage.style.display = "none";
+        if (main) main.style.display = "block";
+        if (fabButton) fabButton.style.display = "flex";
+
+    });
+
+          }
