@@ -418,3 +418,37 @@ body{
     cursor:pointer;
 
 }
+
+/* =========================
+   BOTONES DE LOS GRUPOS
+========================= */
+
+.groupActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.favoriteBtn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #1e1e2d;
+    color: #ff4d6d;
+    font-size: 18px;
+    transition: 0.25s;
+}
+
+.favoriteBtn:hover {
+    transform: scale(1.08);
+    background: #ff4d6d;
+    color: white;
+}
+
+.favoriteBtn.active {
+    background: #ff4d6d;
+    color: white;
+}
