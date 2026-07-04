@@ -404,7 +404,6 @@ const profileNavBtn = document.getElementById("profileNavBtn");
 const profilePage = document.getElementById("profilePage");
 const main = document.querySelector("main");
 const bottomNav = document.querySelector(".bottomNav");
-const fabButton = document.getElementById("fabButton");
 
 const profileImage = document.getElementById("profileImage");
 const profileName = document.getElementById("profileName");
