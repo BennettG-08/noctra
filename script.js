@@ -269,22 +269,27 @@ favoriteButtons.forEach(btn => {
 
     if (!card) return;
 
-    const title = card.querySelector("h3").innerText;
+    const grupo = {
+        name: card.querySelector("h3").innerText,
+        category: card.querySelector("p").innerText,
+        link: card.querySelector("a") ? card.querySelector("a").href : "#",
+        image: card.querySelector("img").src
+    };
 
-    if (favorites.includes(title)) {
+    if (favorites.some(f => f.name === grupo.name)) {
         btn.classList.add("active");
     }
 
     btn.addEventListener("click", () => {
 
-        if (favorites.includes(title)) {
+        if (favorites.some(f => f.name === grupo.name)) {
 
-            favorites = favorites.filter(f => f !== title);
+            favorites = favorites.filter(f => f.name !== grupo.name);
             btn.classList.remove("active");
 
         } else {
 
-            favorites.push(title);
+            favorites.push(grupo);
             btn.classList.add("active");
 
         }
