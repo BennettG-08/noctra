@@ -361,34 +361,59 @@ async function cargarGrupos() {
         card.className = "groupCard";
 
         card.innerHTML = `
-    <div class="groupImage">
-        <img src="https://placehold.co/120x120/png" alt="Grupo">
-    </div>
-
-    <div class="groupInfo">
-
-        <h3>${grupo.name}</h3>
-
-        <p>${grupo.category}</p>
-
-        <div class="groupActions">
-
-            <button class="favoriteBtn">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <a href="${grupo.link}" target="_blank">
-                <button class="joinBtn">
-                    Unirse
-                </button>
-            </a>
-
+        <div class="groupImage">
+            <img src="https://placehold.co/120x120/png" alt="Grupo">
         </div>
 
-    </div>
-`;
+        <div class="groupInfo">
+
+            <h3>${grupo.name}</h3>
+
+            <p>${grupo.category}</p>
+
+            <div class="groupActions">
+
+                <button class="favoriteBtn">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <a href="${grupo.link}" target="_blank">
+                    <button class="joinBtn">
+                        Unirse
+                    </button>
+                </a>
+
+            </div>
+
+        </div>
+        `;
 
         groupList.prepend(card);
+
+        // BOTÓN FAVORITO
+        const btnFavorito = card.querySelector(".favoriteBtn");
+
+        if (favorites.includes(grupo.name)) {
+            btnFavorito.classList.add("active");
+        }
+
+        btnFavorito.addEventListener("click", () => {
+
+            if (favorites.includes(grupo.name)) {
+
+                favorites = favorites.filter(f => f !== grupo.name);
+                btnFavorito.classList.remove("active");
+
+            } else {
+
+                favorites.push(grupo.name);
+                btnFavorito.classList.add("active");
+
+            }
+
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+
+        });
 
     });
 
