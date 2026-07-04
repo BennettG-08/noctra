@@ -396,31 +396,36 @@ async function cargarGrupos() {
         groupList.prepend(card);
 
         // BOTÓN FAVORITO
-        const btnFavorito = card.querySelector(".favoriteBtn");
+const btnFavorito = card.querySelector(".favoriteBtn");
 
-        if (favorites.includes(grupo.name)) {
-            btnFavorito.classList.add("active");
-        }
+const grupoFavorito = {
+    name: grupo.name,
+    category: grupo.category,
+    link: grupo.link,
+    image: "https://placehold.co/120x120/png"
+};
 
-        btnFavorito.addEventListener("click", () => {
+if (favorites.some(f => f.name === grupoFavorito.name)) {
+    btnFavorito.classList.add("active");
+}
 
-            if (favorites.includes(grupo.name)) {
+btnFavorito.addEventListener("click", () => {
 
-                favorites = favorites.filter(f => f !== grupo.name);
-                btnFavorito.classList.remove("active");
+    if (favorites.some(f => f.name === grupoFavorito.name)) {
 
-            } else {
+        favorites = favorites.filter(f => f.name !== grupoFavorito.name);
+        btnFavorito.classList.remove("active");
 
-                favorites.push(grupo.name);
-                btnFavorito.classList.add("active");
+    } else {
 
-            }
+        favorites.push(grupoFavorito);
+        btnFavorito.classList.add("active");
 
-            localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
 
-        });
+    localStorage.setItem("favorites", JSON.stringify(favorites));
 
-    });
+});
 
 }
 
@@ -529,32 +534,69 @@ function mostrarFavoritos() {
 
     const favoritesList = document.getElementById("favoritesList");
 
-    if (!favoritesList) return;
-
     favoritesList.innerHTML = "";
 
     if (favorites.length === 0) {
 
         favoritesList.innerHTML = `
-            <p style="text-align:center;color:#888;">
-                Aún no tienes grupos favoritos.
-            </p>
+        <p style="text-align:center;color:#888;">
+            Aún no tienes grupos favoritos.
+        </p>
         `;
 
         return;
 
     }
 
-    favorites.forEach(nombre => {
+    favorites.forEach(grupo => {
 
         favoritesList.innerHTML += `
-            <div class="groupCard">
-                <div class="groupInfo">
-                    <h3>${nombre}</h3>
-                    <p>❤️ Grupo favorito</p>
-                </div>
+        <div class="groupCard">
+
+            <div class="groupImage">
+                <img src="${grupo.image}" alt="${grupo.name}">
             </div>
+
+            <div class="groupInfo">
+
+                <h3>${grupo.name}</h3>
+
+                <p>${grupo.category}</p>
+
+                <div class="groupActions">
+
+                    <button class="favoriteBtn active" data-name="${grupo.name}">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+
+                    <a href="${grupo.link}" target="_blank">
+                        <button class="joinBtn">
+                            Unirse
+                        </button>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
         `;
+
+    });
+
+    document.querySelectorAll("#favoritesList .favoriteBtn").forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+            const nombre = btn.dataset.name;
+
+            favorites = favorites.filter(f => f.name !== nombre);
+
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+
+            mostrarFavoritos();
+
+        });
 
     });
 
