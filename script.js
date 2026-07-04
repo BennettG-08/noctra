@@ -490,3 +490,20 @@ if (homeNavBtn) {
     });
 
 }
+
+// ===============================
+// ABRIR FAVORITOS
+// ===============================
+
+if (favoritesNavBtn) {
+
+    favoritesNavBtn.addEventListener("click", () => {
+
+        if (main) main.style.display = "none";
+        if (profilePage) profilePage.style.display = "none";
+        if (favoritesPage) favoritesPage.style.display = "block";
+        if (fabButton) fabButton.style.display = "none";
+
+    });
+
+}
