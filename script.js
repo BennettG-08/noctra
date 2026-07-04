@@ -411,3 +411,22 @@ if (logoutBtn) {
     });
 
 }
+
+// ===============================
+// VOLVER AL INICIO
+// ===============================
+
+const homeNavBtn = document.getElementById("homeNavBtn");
+
+if (homeNavBtn) {
+
+    homeNavBtn.addEventListener("click", () => {
+
+        if (profilePage) profilePage.style.display = "none";
+        if (main) main.style.display = "block";
+        if (fabButton) fabButton.style.display = "flex";
+        if (bottomNav) bottomNav.style.display = "flex";
+
+    });
+
+}
