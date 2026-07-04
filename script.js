@@ -474,12 +474,15 @@ if (logoutBtn) {
 // ===============================
 
 const homeNavBtn = document.getElementById("homeNavBtn");
+const favoritesNavBtn = document.getElementById("favoritesNavBtn");
+const favoritesPage = document.getElementById("favoritesPage");
 
 if (homeNavBtn) {
 
     homeNavBtn.addEventListener("click", () => {
 
         if (profilePage) profilePage.style.display = "none";
+        if (favoritesPage) favoritesPage.style.display = "none";
         if (main) main.style.display = "block";
         if (fabButton) fabButton.style.display = "flex";
         if (bottomNav) bottomNav.style.display = "flex";
