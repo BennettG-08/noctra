@@ -320,17 +320,32 @@ async function cargarGrupos() {
         card.className = "groupCard";
 
         card.innerHTML = `
-            <div class="groupImage">
-                <img src="https://placehold.co/120x120/png" alt="Grupo">
-            </div>
-            <div class="groupInfo">
-                <h3>${grupo.name}</h3>
-                <p>${grupo.category}</p>
-                <a href="${grupo.link}" target="_blank">
-                    <button class="joinBtn">Unirse</button>
-                </a>
-            </div>
-        `;
+    <div class="groupImage">
+        <img src="https://placehold.co/120x120/png" alt="Grupo">
+    </div>
+
+    <div class="groupInfo">
+
+        <h3>${grupo.name}</h3>
+
+        <p>${grupo.category}</p>
+
+        <div class="groupActions">
+
+            <button class="favoriteBtn">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <a href="${grupo.link}" target="_blank">
+                <button class="joinBtn">
+                    Unirse
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+`;
 
         groupList.prepend(card);
 
