@@ -398,27 +398,27 @@ async function cargarGrupos() {
         // BOTÓN FAVORITO
 const btnFavorito = card.querySelector(".favoriteBtn");
 
-const grupoFavorito = {
+const favorito = {
     name: grupo.name,
     category: grupo.category,
     link: grupo.link,
     image: "https://placehold.co/120x120/png"
 };
 
-if (favorites.some(f => f.name === grupoFavorito.name)) {
+if (favorites.some(f => f.name === grupo.name)) {
     btnFavorito.classList.add("active");
 }
 
 btnFavorito.addEventListener("click", () => {
 
-    if (favorites.some(f => f.name === grupoFavorito.name)) {
+    if (favorites.some(f => f.name === grupo.name)) {
 
-        favorites = favorites.filter(f => f.name !== grupoFavorito.name);
+        favorites = favorites.filter(f => f.name !== grupo.name);
         btnFavorito.classList.remove("active");
 
     } else {
 
-        favorites.push(grupoFavorito);
+        favorites.push(favorito);
         btnFavorito.classList.add("active");
 
     }
