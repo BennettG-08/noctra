@@ -20,20 +20,6 @@ import {
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
 onAuthStateChanged(auth, (user) => {
 
     const profileBtn = document.getElementById("profileBtn");
