@@ -494,9 +494,46 @@ if (homeNavBtn) {
 // ABRIR FAVORITOS
 // ===============================
 
+function mostrarFavoritos() {
+
+    const favoritesList = document.getElementById("favoritesList");
+
+    if (!favoritesList) return;
+
+    favoritesList.innerHTML = "";
+
+    if (favorites.length === 0) {
+
+        favoritesList.innerHTML = `
+            <p style="text-align:center;color:#888;">
+                Aún no tienes grupos favoritos.
+            </p>
+        `;
+
+        return;
+
+    }
+
+    favorites.forEach(nombre => {
+
+        favoritesList.innerHTML += `
+            <div class="groupCard">
+                <div class="groupInfo">
+                    <h3>${nombre}</h3>
+                    <p>❤️ Grupo favorito</p>
+                </div>
+            </div>
+        `;
+
+    });
+
+}
+
 if (favoritesNavBtn) {
 
     favoritesNavBtn.addEventListener("click", () => {
+
+        mostrarFavoritos();
 
         if (main) main.style.display = "none";
         if (profilePage) profilePage.style.display = "none";
