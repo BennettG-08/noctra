@@ -338,6 +338,7 @@ async function cargarGrupos() {
 }
 
 cargarGrupos();
+
 // ===============================
 // PÁGINA DE PERFIL
 // ===============================
@@ -390,12 +391,23 @@ if (logoutBtn) {
 
     logoutBtn.addEventListener("click", async () => {
 
-        await signOut(auth);
+        try {
 
-        if (profilePage) profilePage.style.display = "none";
-        if (main) main.style.display = "block";
-        if (fabButton) fabButton.style.display = "flex";
+            await signOut(auth);
+
+            if (profilePage) profilePage.style.display = "none";
+            if (main) main.style.display = "block";
+            if (fabButton) fabButton.style.display = "flex";
+            if (bottomNav) bottomNav.style.display = "flex";
+
+            alert("Sesión cerrada correctamente.");
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
 
     });
 
-          }
+}
