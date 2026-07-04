@@ -427,6 +427,10 @@ btnFavorito.addEventListener("click", () => {
 
 });
 
+// Cierra el snapshot.forEach
+});
+
+// Cierra la función cargarGrupos
 }
 
 cargarGrupos();
