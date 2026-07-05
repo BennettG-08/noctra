@@ -14,7 +14,6 @@ import {
     signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-alert("Script cargado");
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -36,6 +35,32 @@ const favoritesPage = document.getElementById("favoritesPage");
 const profileImage = document.getElementById("profileImage");
 const profileName = document.getElementById("profileName");
 const profileEmail = document.getElementById("profileEmail");
+
+// =========================
+// ABRIR MODAL PUBLICAR
+// =========================
+
+const publishModal = document.getElementById("publishModal");
+
+if (fabButton && publishModal) {
+
+    fabButton.addEventListener("click", () => {
+
+        publishModal.style.display = "flex";
+
+    });
+
+    window.addEventListener("click", (e) => {
+
+        if (e.target === publishModal) {
+
+            publishModal.style.display = "none";
+
+        }
+
+    });
+
+}
 
 // =========================
 // FUNCIONES
