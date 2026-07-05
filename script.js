@@ -23,34 +23,60 @@ const provider = new GoogleAuthProvider();
 
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
+const splash = document.getElementById("splash");
 const main = document.querySelector("main");
 const fabButton = document.getElementById("fabButton");
+
+const profileBtn = document.getElementById("profileBtn");
 const profilePage = document.getElementById("profilePage");
 const favoritesPage = document.getElementById("favoritesPage");
 
+const profileImage = document.getElementById("profileImage");
+const profileName = document.getElementById("profileName");
+const profileEmail = document.getElementById("profileEmail");
+
 // =========================
-// GUARDAR FAVORITOS
+// FUNCIONES
 // =========================
 
 function guardarFavoritos() {
     localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
-// =========================
-// VERIFICAR SI ES FAVORITO
-// =========================
-
 function esFavorito(nombre) {
     return favorites.some(f => f.name === nombre);
 }
+
+// =========================
+// SPLASH
+// =========================
+
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        if (splash) {
+
+            splash.style.opacity = "0";
+            splash.style.transition = "0.5s";
+
+            setTimeout(() => {
+
+                splash.style.display = "none";
+
+            }, 500);
+
+        }
+
+    }, 1500);
+
+});
 
 // =========================
 // LOGIN GOOGLE
 // =========================
 
 onAuthStateChanged(auth, (user) => {
-
-    const profileBtn = document.getElementById("profileBtn");
 
     if (!profileBtn) return;
 
@@ -66,12 +92,9 @@ onAuthStateChanged(auth, (user) => {
         profileBtn.innerHTML = `
             <i class="fa-solid fa-user"></i>
         `;
-
     }
 
 });
-
-const profileBtn = document.getElementById("profileBtn");
 
 if (profileBtn) {
 
@@ -84,7 +107,9 @@ if (profileBtn) {
         } catch (error) {
 
             if (error.code !== "auth/cancelled-popup-request") {
+
                 alert(error.message);
+
             }
 
         }
@@ -102,9 +127,11 @@ function crearCardGrupo(grupo) {
     const card = document.createElement("div");
     card.className = "groupCard";
 
+    const imagen = grupo.image || "https://placehold.co/120x120/png";
+
     card.innerHTML = `
         <div class="groupImage">
-            <img src="${grupo.image || "https://placehold.co/120x120/png"}" alt="${grupo.name}">
+            <img src="${imagen}" alt="${grupo.name}">
         </div>
 
         <div class="groupInfo">
@@ -145,7 +172,7 @@ function crearCardGrupo(grupo) {
                 name: grupo.name,
                 category: grupo.category,
                 link: grupo.link,
-                image: grupo.image || "https://placehold.co/120x120/png"
+                image: imagen
             });
 
             btnFavorito.classList.add("active");
@@ -161,26 +188,22 @@ function crearCardGrupo(grupo) {
 }
 
 // =========================
-// CARGAR GRUPOS FIREBASE
+// CARGAR GRUPOS
 // =========================
 
 async function cargarGrupos() {
 
-    const groupLists = document.querySelectorAll(".groupList");
+    const lista = document.querySelector(".groupList");
 
-    if (groupLists.length === 0) return;
-
-    const lista = groupLists[groupLists.length - 1];
+    if (!lista) return;
 
     lista.innerHTML = "";
 
     const snapshot = await getDocs(collection(db, "groups"));
 
-    snapshot.forEach((documento) => {
+    snapshot.forEach((doc) => {
 
-        const grupo = documento.data();
-
-        lista.prepend(crearCardGrupo(grupo));
+        lista.prepend(crearCardGrupo(doc.data()));
 
     });
 
@@ -209,46 +232,17 @@ function mostrarFavoritos() {
         `;
 
         return;
-
     }
 
     favorites.forEach(grupo => {
 
-        const card = document.createElement("div");
-
-        card.className = "groupCard";
-
-        card.innerHTML = `
-            <div class="groupImage">
-                <img src="${grupo.image}" alt="${grupo.name}">
-            </div>
-
-            <div class="groupInfo">
-
-                <h3>${grupo.name}</h3>
-
-                <p>${grupo.category}</p>
-
-                <div class="groupActions">
-
-                    <button class="favoriteBtn active">
-                        <i class="fa-solid fa-heart"></i>
-                    </button>
-
-                    <a href="${grupo.link}" target="_blank">
-                        <button class="joinBtn">
-                            Unirse
-                        </button>
-                    </a>
-
-                </div>
-
-            </div>
-        `;
+        const card = crearCardGrupo(grupo);
 
         const btn = card.querySelector(".favoriteBtn");
 
-        btn.addEventListener("click", () => {
+        btn.classList.add("active");
+
+        btn.onclick = () => {
 
             favorites = favorites.filter(f => f.name !== grupo.name);
 
@@ -260,9 +254,7 @@ function mostrarFavoritos() {
 
                 const titulo = c.querySelector("h3");
 
-                if (!titulo) return;
-
-                if (titulo.textContent === grupo.name) {
+                if (titulo && titulo.textContent === grupo.name) {
 
                     c.querySelector(".favoriteBtn")?.classList.remove("active");
 
@@ -270,7 +262,7 @@ function mostrarFavoritos() {
 
             });
 
-        });
+        };
 
         favoritesList.appendChild(card);
 
@@ -279,7 +271,7 @@ function mostrarFavoritos() {
 }
 
 // =========================
-// ABRIR PÁGINA FAVORITOS
+// ABRIR FAVORITOS
 // =========================
 
 const favoritesNavBtn = document.getElementById("favoritesNavBtn");
@@ -291,11 +283,8 @@ if (favoritesNavBtn) {
         mostrarFavoritos();
 
         if (main) main.style.display = "none";
-
         if (profilePage) profilePage.style.display = "none";
-
         if (favoritesPage) favoritesPage.style.display = "block";
-
         if (fabButton) fabButton.style.display = "none";
 
     });
@@ -309,10 +298,6 @@ if (favoritesNavBtn) {
 const profileNavBtn = document.getElementById("profileNavBtn");
 const homeNavBtn = document.getElementById("homeNavBtn");
 const logoutBtn = document.getElementById("logoutBtn");
-
-const profileImage = document.getElementById("profileImage");
-const profileName = document.getElementById("profileName");
-const profileEmail = document.getElementById("profileEmail");
 
 if (profileNavBtn) {
 
@@ -344,7 +329,7 @@ if (profileNavBtn) {
 }
 
 // =========================
-// VOLVER AL INICIO
+// INICIO
 // =========================
 
 if (homeNavBtn) {
@@ -381,7 +366,7 @@ if (logoutBtn) {
             profileName.textContent = "Invitado";
             profileEmail.textContent = "No has iniciado sesión";
 
-            alert("Sesión cerrada.");
+            alert("Sesión cerrada correctamente.");
 
         } catch (error) {
 
