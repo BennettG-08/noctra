@@ -385,3 +385,74 @@ if (logoutBtn) {
     });
 
 }
+
+// =========================
+// PUBLICAR GRUPO
+// =========================
+
+const publishForm = document.getElementById("publishForm");
+
+if (publishForm) {
+
+    publishForm.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const name = document.getElementById("groupName").value.trim();
+        const description = document.getElementById("groupDescription").value.trim();
+        const category = document.getElementById("groupCategory").value;
+        const link = document.getElementById("groupLink").value.trim();
+
+        const imageInput = document.getElementById("groupImage");
+
+        let image = "https://placehold.co/120x120/png";
+
+        if (imageInput.files.length > 0) {
+
+            const file = imageInput.files[0];
+
+            image = await new Promise((resolve) => {
+
+                const reader = new FileReader();
+
+                reader.onload = e => resolve(e.target.result);
+
+                reader.readAsDataURL(file);
+
+            });
+
+        }
+
+        if (!name || !description || !category || !link) return;
+
+        try {
+
+    await addDoc(collection(db, "groups"), {
+
+        name,
+        description,
+        category,
+        link,
+        image
+
+    });
+
+    publishForm.reset();
+
+    document.getElementById("publishModal").style.display = "none";
+
+    await cargarGrupos();
+
+    alert("Grupo publicado correctamente.");
+
+} catch (error) {
+
+    console.error(error);
+
+    alert(error.message);
+
+}
+
+});
+
+}
