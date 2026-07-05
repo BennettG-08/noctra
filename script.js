@@ -161,29 +161,35 @@ function crearCardGrupo(grupo) {
 
     const btnFavorito = card.querySelector(".favoriteBtn");
 
-    btnFavorito.addEventListener("click", () => {
+btnFavorito.addEventListener("click", () => {
 
-        if (esFavorito(grupo.name)) {
+    if (esFavorito(grupo.name)) {
 
-            favorites = favorites.filter(f => f.name !== grupo.name);
-            btnFavorito.classList.remove("active");
+        favorites = favorites.filter(f => f.name !== grupo.name);
 
-        } else {
+        btnFavorito.classList.remove("active");
 
-            favorites.push({
-                name: grupo.name,
-                category: grupo.category,
-                link: grupo.link,
-                image: imagen
-            });
+    } else {
 
-            btnFavorito.classList.add("active");
+        favorites.push({
+            name: grupo.name,
+            category: grupo.category,
+            link: grupo.link,
+            image: imagen
+        });
 
-        }
+        btnFavorito.classList.add("active");
 
-        guardarFavoritos();
+    }
 
-    });
+    guardarFavoritos();
+
+    // Si la página de favoritos está abierta, la actualiza
+    if (favoritesPage && favoritesPage.style.display === "block") {
+        mostrarFavoritos();
+    }
+
+});
 
     return card;
 
