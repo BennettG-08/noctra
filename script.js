@@ -630,6 +630,7 @@ if (publishForm) {
     category,
     link,
     image,
+    views: 0,
     createdAt: Date.now()
 
 });
