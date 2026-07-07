@@ -192,6 +192,7 @@ function crearCardGrupo(grupo) {
 `;
 
     const btnFavorito = card.querySelector(".favoriteBtn");
+const btnUnirse = card.querySelector(".joinBtn");
 
 btnFavorito.addEventListener("click", () => {
 
@@ -216,14 +217,33 @@ btnFavorito.addEventListener("click", () => {
 
     guardarFavoritos();
 
-    // Si la página de favoritos está abierta, la actualiza
     if (favoritesPage && favoritesPage.style.display === "block") {
         mostrarFavoritos();
     }
 
 });
 
-    return card;
+btnUnirse.addEventListener("click", async () => {
+
+    try {
+
+        await updateDoc(doc(db, "groups", grupo.id), {
+            views: increment(1)
+        });
+
+    } catch (error) {
+
+        console.error("Error al actualizar vistas:", error);
+
+    }
+
+    window.open(grupo.link, "_blank");
+
+    cargarGrupos();
+
+});
+
+return card;
 
 }
 
