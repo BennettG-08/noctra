@@ -244,7 +244,10 @@ async function cargarGrupos() {
 
     snapshot.forEach((documento) => {
 
-        const grupo = documento.data();
+        const grupo = {
+            id: documento.id,
+            ...documento.data()
+        };
 
         const ahora = Date.now();
         const cuarentaYOchoHoras = 48 * 60 * 60 * 1000;
