@@ -31,10 +31,11 @@ const fabButton = document.getElementById("fabButton");
 const profileBtn = document.getElementById("profileBtn");
 const profilePage = document.getElementById("profilePage");
 const favoritesPage = document.getElementById("favoritesPage");
+const explorePage = document.getElementById("explorePage");
 
 const profileImage = document.getElementById("profileImage");
 const profileName = document.getElementById("profileName");
-const profileEmail = document.getElementById("profileEmail");
+const profileEmail = document.getElementById("profileEmail"); 
 
 // =========================
 // ABRIR MODAL PUBLICAR
