@@ -262,6 +262,37 @@ async function cargarGrupos() {
 cargarGrupos();
 
 // =========================
+// BUSCADOR
+// =========================
+
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", () => {
+
+        const texto = searchInput.value.toLowerCase().trim();
+
+        const lista = document.querySelector(".groupList");
+
+        lista.innerHTML = "";
+
+        grupos
+            .filter(grupo =>
+                grupo.name.toLowerCase().includes(texto) ||
+                grupo.category.toLowerCase().includes(texto)
+            )
+            .forEach(grupo => {
+
+                lista.prepend(crearCardGrupo(grupo));
+
+            });
+
+    });
+
+}
+
+// =========================
 // MOSTRAR FAVORITOS
 // =========================
 
