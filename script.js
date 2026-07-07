@@ -315,10 +315,11 @@ function mostrarFavoritos() {
 }
 
 // =========================
-// ABRIR FAVORITOS
+// FAVORITOS Y EXPLORAR
 // =========================
 
 const favoritesNavBtn = document.getElementById("favoritesNavBtn");
+const exploreNavBtn = document.getElementById("exploreNavBtn");
 
 if (favoritesNavBtn) {
 
@@ -328,7 +329,22 @@ if (favoritesNavBtn) {
 
         if (main) main.style.display = "none";
         if (profilePage) profilePage.style.display = "none";
+        if (explorePage) explorePage.style.display = "none";
         if (favoritesPage) favoritesPage.style.display = "block";
+        if (fabButton) fabButton.style.display = "none";
+
+    });
+
+}
+
+if (exploreNavBtn) {
+
+    exploreNavBtn.addEventListener("click", () => {
+
+        if (main) main.style.display = "none";
+        if (profilePage) profilePage.style.display = "none";
+        if (favoritesPage) favoritesPage.style.display = "none";
+        if (explorePage) explorePage.style.display = "block";
         if (fabButton) fabButton.style.display = "none";
 
     });
