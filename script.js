@@ -423,6 +423,7 @@ if (profileNavBtn) {
 
         if (main) main.style.display = "none";
         if (favoritesPage) favoritesPage.style.display = "none";
+        if (explorePage) explorePage.style.display = "none";
         if (profilePage) profilePage.style.display = "block";
         if (fabButton) fabButton.style.display = "none";
 
@@ -457,6 +458,7 @@ if (homeNavBtn) {
         if (main) main.style.display = "block";
         if (profilePage) profilePage.style.display = "none";
         if (favoritesPage) favoritesPage.style.display = "none";
+        if (explorePage) explorePage.style.display = "none";
         if (fabButton) fabButton.style.display = "flex";
 
     });
