@@ -454,13 +454,14 @@ if (publishForm) {
 
     await addDoc(collection(db, "groups"), {
 
-        name,
-        description,
-        category,
-        link,
-        image
+    name,
+    description,
+    category,
+    link,
+    image,
+    createdAt: Date.now()
 
-    });
+});
 
     publishForm.reset();
 
