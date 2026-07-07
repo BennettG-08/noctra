@@ -236,7 +236,17 @@ async function cargarGrupos() {
 
     snapshot.forEach((doc) => {
 
-        lista.prepend(crearCardGrupo(doc.data()));
+        const grupo = doc.data();
+
+        const ahora = Date.now();
+        const cuarentaYOchoHoras = 48 * 60 * 60 * 1000;
+
+        // Si el grupo tiene más de 48 horas, no se muestra
+        if (grupo.createdAt && (ahora - grupo.createdAt) > cuarentaYOchoHoras) {
+            return;
+        }
+
+        lista.prepend(crearCardGrupo(grupo));
 
     });
 
