@@ -259,7 +259,6 @@ async function cargarGrupos() {
 
     lista.innerHTML = "";
 
-    // Vacía el arreglo antes de volver a cargar
     grupos = [];
 
     const snapshot = await getDocs(collection(db, "groups"));
@@ -278,10 +277,16 @@ async function cargarGrupos() {
             return;
         }
 
-        // Guardamos el grupo para usarlo en Explorar
         grupos.push(grupo);
 
-        lista.prepend(crearCardGrupo(grupo));
+    });
+
+    // Ordenar de mayor a menor número de vistas
+    grupos.sort((a, b) => (b.views || 0) - (a.views || 0));
+
+    grupos.forEach((grupo) => {
+
+        lista.appendChild(crearCardGrupo(grupo));
 
     });
 
