@@ -234,19 +234,24 @@ async function cargarGrupos() {
 
     lista.innerHTML = "";
 
+    // Vacía el arreglo antes de volver a cargar
+    grupos = [];
+
     const snapshot = await getDocs(collection(db, "groups"));
 
-    snapshot.forEach((doc) => {
+    snapshot.forEach((documento) => {
 
-        const grupo = doc.data();
+        const grupo = documento.data();
 
         const ahora = Date.now();
         const cuarentaYOchoHoras = 48 * 60 * 60 * 1000;
 
-        // Si el grupo tiene más de 48 horas, no se muestra
         if (grupo.createdAt && (ahora - grupo.createdAt) > cuarentaYOchoHoras) {
             return;
         }
+
+        // Guardamos el grupo para usarlo en Explorar
+        grupos.push(grupo);
 
         lista.prepend(crearCardGrupo(grupo));
 
