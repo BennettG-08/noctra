@@ -162,32 +162,34 @@ function crearCardGrupo(grupo) {
     const imagen = grupo.image || "https://placehold.co/120x120/png";
 
     card.innerHTML = `
-        <div class="groupImage">
-            <img src="${imagen}" alt="${grupo.name}">
+    <div class="groupImage">
+        <img src="${imagen}" alt="${grupo.name}">
+    </div>
+
+    <div class="groupInfo">
+
+        <h3>${grupo.name}</h3>
+
+        <p>${grupo.category}</p>
+
+        <small style="color:#888;">
+            👁️ ${grupo.views || 0} vistas
+        </small>
+
+        <div class="groupActions">
+
+            <button class="favoriteBtn ${esFavorito(grupo.name) ? "active" : ""}">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button class="joinBtn">
+                Unirse
+            </button>
+
         </div>
 
-        <div class="groupInfo">
-
-            <h3>${grupo.name}</h3>
-
-            <p>${grupo.category}</p>
-
-            <div class="groupActions">
-
-                <button class="favoriteBtn ${esFavorito(grupo.name) ? "active" : ""}">
-                    <i class="fa-solid fa-heart"></i>
-                </button>
-
-                <a href="${grupo.link}" target="_blank">
-                    <button class="joinBtn">
-                        Unirse
-                    </button>
-                </a>
-
-            </div>
-
-        </div>
-    `;
+    </div>
+`;
 
     const btnFavorito = card.querySelector(".favoriteBtn");
 
