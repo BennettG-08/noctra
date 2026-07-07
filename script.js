@@ -23,6 +23,7 @@ const provider = new GoogleAuthProvider();
 // =========================
 
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let grupos = [];
 
 const splash = document.getElementById("splash");
 const main = document.querySelector("main");
