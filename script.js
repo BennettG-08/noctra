@@ -277,16 +277,41 @@ if (searchInput) {
 
         lista.innerHTML = "";
 
-        grupos
-            .filter(grupo =>
-                grupo.name.toLowerCase().includes(texto) ||
-                grupo.category.toLowerCase().includes(texto)
-            )
-            .forEach(grupo => {
+        // Si no hay texto, mostrar todos los grupos
+        if (texto === "") {
+
+            grupos.forEach(grupo => {
 
                 lista.prepend(crearCardGrupo(grupo));
 
             });
+
+            return;
+
+        }
+
+        const resultados = grupos.filter(grupo =>
+            grupo.name.toLowerCase().includes(texto) ||
+            grupo.category.toLowerCase().includes(texto)
+        );
+
+        if (resultados.length === 0) {
+
+            lista.innerHTML = `
+                <p style="text-align:center;color:#888;padding:20px;">
+                    No se encontraron grupos.
+                </p>
+            `;
+
+            return;
+
+        }
+
+        resultados.forEach(grupo => {
+
+            lista.prepend(crearCardGrupo(grupo));
+
+        });
 
     });
 
