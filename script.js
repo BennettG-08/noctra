@@ -353,6 +353,58 @@ if (exploreNavBtn) {
         if (explorePage) explorePage.style.display = "block";
         if (fabButton) fabButton.style.display = "none";
 
+        mostrarCategorias();
+
+    });
+
+}
+
+// =========================
+// EXPLORAR POR CATEGORÍA
+// =========================
+
+function mostrarCategorias() {
+
+    const categorias = document.querySelectorAll("#explorePage .category");
+    const contenedor = document.getElementById("exploreGroups");
+
+    contenedor.innerHTML = "";
+
+    categorias.forEach(categoria => {
+
+        categoria.onclick = () => {
+
+            contenedor.innerHTML = "";
+
+            const nombreCategoria = categoria.textContent
+                .replace(/[^\p{L}\p{N}\s]/gu, "")
+                .trim()
+                .toLowerCase();
+
+            const encontrados = grupos.filter(grupo =>
+                grupo.category.toLowerCase() === nombreCategoria
+            );
+
+            if (encontrados.length === 0) {
+
+                contenedor.innerHTML = `
+                    <p style="text-align:center;color:#888;">
+                        No hay grupos en esta categoría.
+                    </p>
+                `;
+
+                return;
+
+            }
+
+            encontrados.forEach(grupo => {
+
+                contenedor.appendChild(crearCardGrupo(grupo));
+
+            });
+
+        };
+
     });
 
 }
