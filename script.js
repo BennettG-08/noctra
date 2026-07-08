@@ -389,3 +389,77 @@ setInterval(() => {
     cargarGrupos();
 
 }, 60000);
+
+// =========================
+// BUSCADOR Y BOTONES
+// =========================
+
+const searchInput = document.getElementById("searchInput");
+const featuredBtn = document.getElementById("featuredBtn");
+const refreshBtn = document.getElementById("refreshBtn");
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", () => {
+
+        const texto = searchInput.value.trim().toLowerCase();
+
+        const listas = document.querySelectorAll(".groupList");
+
+        listas.forEach(lista => lista.innerHTML = "");
+
+        let resultados = grupos;
+
+        if (texto !== "") {
+
+            resultados = grupos.filter(grupo =>
+
+                grupo.name.toLowerCase().includes(texto) ||
+
+                grupo.category.toLowerCase().includes(texto)
+
+            );
+
+        }
+
+        listas.forEach(lista => {
+
+            resultados.forEach(grupo => {
+
+                lista.appendChild(crearCardGrupo(grupo));
+
+            });
+
+        });
+
+    });
+
+}
+
+if (featuredBtn) {
+
+    featuredBtn.addEventListener("click", () => {
+
+        const lista = document.querySelector(".groupList");
+
+        if (!lista) return;
+
+        lista.scrollIntoView({
+
+            behavior: "smooth"
+
+        });
+
+    });
+
+}
+
+if (refreshBtn) {
+
+    refreshBtn.addEventListener("click", async () => {
+
+        await cargarGrupos();
+
+    });
+
+}
