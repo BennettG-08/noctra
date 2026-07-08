@@ -307,9 +307,14 @@ async function cargarGrupos() {
 
     snapshot.forEach((documento) => {
 
+        const datos = documento.data();
+
         const grupo = {
             id: documento.id,
-            ...documento.data()
+            ...datos,
+            createdAt: datos.createdAt?.seconds
+                ? datos.createdAt.seconds * 1000
+                : datos.createdAt
         };
 
         const ahora = Date.now();
