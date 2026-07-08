@@ -585,4 +585,107 @@ function mostrarCategorias() {
 
     });
 
+    // =========================
+// PERFIL - INICIO - VOLVER
+// =========================
+
+const profileNavBtn = document.getElementById("profileNavBtn");
+const homeNavBtn = document.getElementById("homeNavBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (profileNavBtn) {
+
+    profileNavBtn.onclick = () => {
+
+        if (main) main.style.display = "none";
+        if (favoritesPage) favoritesPage.style.display = "none";
+        if (explorePage) explorePage.style.display = "none";
+        if (groupDetailsPage) groupDetailsPage.style.display = "none";
+
+        profilePage.style.display = "block";
+
+        if (fabButton) fabButton.style.display = "none";
+
+        const user = auth.currentUser;
+
+        if (user) {
+
+            profileImage.src = user.photoURL;
+            profileName.textContent = user.displayName;
+            profileEmail.textContent = user.email;
+
+        } else {
+
+            profileImage.src = "https://placehold.co/150x150";
+            profileName.textContent = "Invitado";
+            profileEmail.textContent = "No has iniciado sesión";
+
+        }
+
+    };
+
+}
+
+if (homeNavBtn) {
+
+    homeNavBtn.onclick = () => {
+
+        if (groupDetailsPage) groupDetailsPage.style.display = "none";
+        if (profilePage) profilePage.style.display = "none";
+        if (favoritesPage) favoritesPage.style.display = "none";
+        if (explorePage) explorePage.style.display = "none";
+
+        main.style.display = "block";
+
+        if (fabButton) fabButton.style.display = "flex";
+
+        cargarGrupos();
+
+    };
+
+}
+
+if (backToHomeBtn) {
+
+    backToHomeBtn.onclick = () => {
+
+        groupDetailsPage.style.display = "none";
+
+        main.style.display = "block";
+
+        if (fabButton) fabButton.style.display = "flex";
+
+    };
+
+}
+
+if (logoutBtn) {
+
+    logoutBtn.onclick = async () => {
+
+        try {
+
+            await signOut(auth);
+
+            profilePage.style.display = "none";
+            main.style.display = "block";
+
+            if (fabButton) fabButton.style.display = "flex";
+
+            profileImage.src = "https://placehold.co/150x150";
+            profileName.textContent = "Invitado";
+            profileEmail.textContent = "No has iniciado sesión";
+
+            alert("Sesión cerrada.");
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    };
+
+}
+
                                                  }
