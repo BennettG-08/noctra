@@ -463,3 +463,126 @@ if (refreshBtn) {
     });
 
 }
+
+// =========================
+// FAVORITOS Y EXPLORAR
+// =========================
+
+function mostrarFavoritos() {
+
+    const lista = document.getElementById("favoritesList");
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    if (favorites.length === 0) {
+
+        lista.innerHTML = `
+            <p style="text-align:center;color:#888;">
+                No tienes grupos favoritos.
+            </p>
+        `;
+
+        return;
+
+    }
+
+    favorites.forEach(grupo => {
+
+        lista.appendChild(crearCardGrupo(grupo));
+
+    });
+
+}
+
+const favoritesNavBtn = document.getElementById("favoritesNavBtn");
+const exploreNavBtn = document.getElementById("exploreNavBtn");
+
+if (favoritesNavBtn) {
+
+    favoritesNavBtn.onclick = () => {
+
+        if (main) main.style.display = "none";
+        if (profilePage) profilePage.style.display = "none";
+        if (groupDetailsPage) groupDetailsPage.style.display = "none";
+        if (explorePage) explorePage.style.display = "none";
+
+        favoritesPage.style.display = "block";
+
+        if (fabButton) fabButton.style.display = "none";
+
+        mostrarFavoritos();
+
+    };
+
+}
+
+if (exploreNavBtn) {
+
+    exploreNavBtn.onclick = () => {
+
+        if (main) main.style.display = "none";
+        if (profilePage) profilePage.style.display = "none";
+        if (favoritesPage) favoritesPage.style.display = "none";
+        if (groupDetailsPage) groupDetailsPage.style.display = "none";
+
+        explorePage.style.display = "block";
+
+        if (fabButton) fabButton.style.display = "none";
+
+        mostrarCategorias();
+
+    };
+
+}
+
+// =========================
+// CATEGORÍAS
+// =========================
+
+function mostrarCategorias() {
+
+    const categorias = document.querySelectorAll("#explorePage .category");
+    const contenedor = document.getElementById("exploreGroups");
+
+    if (!contenedor) return;
+
+    categorias.forEach(categoria => {
+
+        categoria.onclick = () => {
+
+            contenedor.innerHTML = "";
+
+            const nombre = categoria.textContent
+                .replace(/[^\p{L}\p{N}\s]/gu, "")
+                .trim()
+                .toLowerCase();
+
+            const encontrados = grupos.filter(grupo =>
+                grupo.category.toLowerCase() === nombre
+            );
+
+            if (encontrados.length === 0) {
+
+                contenedor.innerHTML = `
+                    <p style="text-align:center;color:#888;">
+                        No hay grupos en esta categoría.
+                    </p>
+                `;
+
+                return;
+
+            }
+
+            encontrados.forEach(grupo => {
+
+                contenedor.appendChild(crearCardGrupo(grupo));
+
+            });
+
+        };
+
+    });
+
+                                                 }
