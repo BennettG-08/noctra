@@ -79,6 +79,28 @@ function esFavorito(nombre) {
     return favorites.some(f => f.name === nombre);
 }
 
+function tiempoTranscurrido(fecha) {
+
+    if (!fecha) return "Hace un momento";
+
+    const ahora = Date.now();
+    const diferencia = ahora - fecha;
+
+    const minutos = Math.floor(diferencia / 60000);
+
+    if (minutos < 1) return "Hace unos segundos";
+    if (minutos < 60) return `Hace ${minutos} min`;
+
+    const horas = Math.floor(minutos / 60);
+
+    if (horas < 24) return `Hace ${horas} h`;
+
+    const dias = Math.floor(horas / 24);
+
+    return `Hace ${dias} día${dias > 1 ? "s" : ""}`;
+    
+}
+
 // =========================
 // SPLASH
 // =========================
