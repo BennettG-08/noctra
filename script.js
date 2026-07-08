@@ -561,10 +561,16 @@ if (profileNavBtn) {
 
     profileNavBtn.addEventListener("click", () => {
 
+        // Ocultar todas las pantallas
         if (main) main.style.display = "none";
         if (favoritesPage) favoritesPage.style.display = "none";
         if (explorePage) explorePage.style.display = "none";
+        if (groupDetailsPage) groupDetailsPage.style.display = "none";
+
+        // Mostrar perfil
         if (profilePage) profilePage.style.display = "block";
+
+        // Ocultar botón +
         if (fabButton) fabButton.style.display = "none";
 
         const user = auth.currentUser;
