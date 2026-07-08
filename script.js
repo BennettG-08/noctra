@@ -688,4 +688,103 @@ if (logoutBtn) {
 
 }
 
+    // =========================
+// PUBLICAR - BOTONES EXTRA
+// =========================
+
+const publishForm = document.getElementById("publishForm");
+const notificationBtn = document.getElementById("notificationBtn");
+const featuredBtn = document.getElementById("featuredBtn");
+const refreshBtn = document.getElementById("refreshBtn");
+
+if (publishForm) {
+
+    publishForm.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const name = document.getElementById("groupName").value.trim();
+        const description = document.getElementById("groupDescription").value.trim();
+        const category = document.getElementById("groupCategory").value;
+        const link = document.getElementById("groupLink").value.trim();
+
+        let image = "https://placehold.co/120x120/png";
+
+        const imageInput = document.getElementById("groupImage");
+
+        if (imageInput.files.length > 0) {
+
+            image = await new Promise(resolve => {
+
+                const reader = new FileReader();
+
+                reader.onload = e => resolve(e.target.result);
+
+                reader.readAsDataURL(imageInput.files[0]);
+
+            });
+
+        }
+
+        await addDoc(collection(db, "groups"), {
+
+            name,
+            description,
+            category,
+            link,
+            image,
+            views: 0,
+            createdAt: Date.now()
+
+        });
+
+        publishForm.reset();
+
+        publishModal.style.display = "none";
+
+        await cargarGrupos();
+
+        alert("Grupo publicado correctamente.");
+
+    });
+
+}
+
+if (featuredBtn) {
+
+    featuredBtn.onclick = () => {
+
+        window.scrollTo({
+
+            top: document.querySelector(".featured").offsetTop,
+            behavior: "smooth"
+
+        });
+
+    };
+
+}
+
+if (refreshBtn) {
+
+    refreshBtn.onclick = async () => {
+
+        await cargarGrupos();
+
+        alert("Grupos actualizados.");
+
+    };
+
+}
+
+if (notificationBtn) {
+
+    notificationBtn.onclick = () => {
+
+        alert("Aún no tienes notificaciones.");
+
+    };
+
+}
+
                                                  }
