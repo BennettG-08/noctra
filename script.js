@@ -170,7 +170,7 @@ if (fabButton && publishModal) {
 
     });
 
-            }
+}
 
 // ==========================
 // LOGIN GOOGLE
@@ -398,3 +398,79 @@ setInterval(() => {
     cargarGrupos();
 
 }, 60000);
+
+// ==========================
+// BUSCADOR
+// ==========================
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", () => {
+
+        const texto = searchInput.value.trim().toLowerCase();
+
+        const destacada = document.querySelector(".featured .groupList");
+        const nuevos = document.querySelector(".latestGroups .groupList");
+
+        if (destacada) destacada.innerHTML = "";
+        if (nuevos) nuevos.innerHTML = "";
+
+        let resultados = grupos;
+
+        if (texto !== "") {
+
+            resultados = grupos.filter(grupo =>
+
+                grupo.name.toLowerCase().includes(texto) ||
+                grupo.category.toLowerCase().includes(texto)
+
+            );
+
+        }
+
+        const destacados = [...resultados].sort((a, b) => (b.views || 0) - (a.views || 0));
+        const recientes = [...resultados].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        destacados.slice(0, 10).forEach(grupo => {
+            destacada?.appendChild(crearCardGrupo(grupo));
+        });
+
+        recientes.slice(0, 10).forEach(grupo => {
+            nuevos?.appendChild(crearCardGrupo(grupo));
+        });
+
+    });
+
+}
+
+// ==========================
+// BOTÓN "VER TODOS"
+// ==========================
+
+if (featuredBtn) {
+
+    featuredBtn.onclick = () => {
+
+        document.querySelector(".latestGroups")?.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    };
+
+}
+
+// ==========================
+// BOTÓN ACTUALIZAR
+// ==========================
+
+if (refreshBtn) {
+
+    refreshBtn.onclick = async () => {
+
+        await cargarGrupos();
+
+        alert("Grupos actualizados.");
+
+    };
+
+}
