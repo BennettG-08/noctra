@@ -31,306 +31,143 @@
 
 <div id="splash">
 
-<div class="logoSplash">
+    <div class="logoSplash">
 
-<h1>NOCTRA</h1>
+        <h1>NOCTRA</h1>
 
-<p>Descubre y comparte grupos de WhatsApp</p>
+        <p>Descubre y comparte grupos de WhatsApp</p>
+
+    </div>
 
 </div>
-
-</div>
-
-<!-- APP -->
 
 <div id="app">
 
+    <!-- BARRA SUPERIOR -->
+
 <header class="topbar">
 
-<div class="logo">
+    <div class="logo">
 
-<h2>NOCTRA</h2>
+        <h2>NOCTRA</h2>
 
-</div>
+    </div>
 
-<div class="actions">
+    <div class="actions">
 
-<button id="notificationBtn">
+        <button id="notificationBtn">
 
-<i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-bell"></i>
 
-</button>
+        </button>
 
-<button id="profileBtn">
+        <button id="profileBtn">
 
-<i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-user"></i>
 
-</button>
+        </button>
 
-</div>
+    </div>
 
 </header>
 
 <main>
 
-<section class="hero">
+    <!-- HERO -->
 
-<h1>
+    <section class="hero">
 
-Encuentra miles de grupos de WhatsApp
+        <h1>
+            Encuentra miles de grupos de WhatsApp
+        </h1>
 
-</h1>
+        <p>
+            Explora categorías, publica tus grupos y descubre nuevas comunidades.
+        </p>
 
-<p>
+        <div class="searchBox">
 
-Explora categorías, publica tus grupos y descubre nuevas comunidades.
+            <i class="fa-solid fa-magnifying-glass"></i>
 
-</p>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Buscar grupos...">
 
-<div class="searchBox">
-
-<i class="fa-solid fa-magnifying-glass"></i>
-
-<input
-type="text"
-id="searchInput"
-placeholder="Buscar grupos...">
-
-</div>
-
-</section>
-
-<section class="featured">
-
-<div class="sectionHeader">
-
-<h2>🔥 Grupos destacados</h2>
-
-<button>
-
-Ver todos
-
-</button>
-
-</div>
-
-<div class="groupList">
-
-    <div class="groupCard">
-
-<div class="groupImage">
-
-<img src="https://placehold.co/120x120/png" alt="Gaming">
-
-</div>
-
-<div class="groupInfo">
-
-<h3>Gaming Latino</h3>
-
-<p>🎮 Videojuegos • 2.3K miembros</p>
-
-<button class="joinBtn">
-
-Unirse
-
-</button>
-
-</div>
-
-</div>
-
-<div class="groupCard">
-
-<div class="groupImage">
-
-<img src="https://placehold.co/120x120/png" alt="Anime">
-
-</div>
-
-<div class="groupInfo">
-
-<h3>Anime World</h3>
-
-<p>🌸 Anime • 1.9K miembros</p>
-
-<button class="joinBtn">
-
-Unirse
-
-</button>
-
-</div>
-
-</div>
-
-<div class="groupCard">
-
-<div class="groupImage">
-
-<img src="https://placehold.co/120x120/png" alt="Música">
-
-</div>
-
-<div class="groupInfo">
-
-<h3>Música 24/7</h3>
-
-<p>🎵 Música • 4.1K miembros</p>
-
-<button class="joinBtn">
-
-Unirse
-
-</button>
-
-</div>
-
-</div>
-
-<div class="groupCard">
-
-<div class="groupImage">
-
-<img src="https://placehold.co/120x120/png" alt="Tecnología">
-
-</div>
-
-<div class="groupInfo">
-
-<h3>Programadores</h3>
-
-<p>💻 Tecnología • 3.7K miembros</p>
-
-<button class="joinBtn">
-
-Unirse
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="categories">
-
-<div class="sectionHeader">
-
-<h2>📂 Categorías</h2>
-
-</div>
-
-<div class="categoryGrid">
-
-<div class="category">🎮 Gaming</div>
-
-<div class="category">🎵 Música</div>
-
-<div class="category">😂 Memes</div>
-
-<div class="category">⚽ Deportes</div>
-
-<div class="category">❤️ Amistad</div>
-
-<div class="category">💻 Tecnología</div>
-
-<div class="category">🎬 Películas</div>
-
-<div class="category">📚 Estudios</div>
-
-<div class="category">🚗 Autos</div>
-
-<div class="category">🌎 Viajes</div>
-
-<div class="category">🛍 Compras</div>
-
-<div class="category">🐶 Mascotas</div>
-
-</div>
+        </div>
 
     </section>
 
-    <section class="latestGroups">
+    <!-- GRUPOS DESTACADOS -->
+
+<section class="featured">
+
+    <div class="sectionHeader">
+
+        <h2>🔥 Grupos destacados</h2>
+
+        <button id="seeAllBtn">
+            Ver todos
+        </button>
+
+    </div>
+
+    <!-- Aquí JavaScript cargará automáticamente los grupos -->
+    <div class="groupList" id="featuredGroups"></div>
+
+</section>
+
+<!-- CATEGORÍAS -->
+
+<section class="categories">
+
+    <div class="sectionHeader">
+
+        <h2>📂 Categorías</h2>
+
+    </div>
+
+    <div class="categoryGrid" id="homeCategories">
+
+        <div class="category">🎮 Gaming</div>
+        <div class="category">🎵 Música</div>
+        <div class="category">😂 Memes</div>
+        <div class="category">⚽ Deportes</div>
+        <div class="category">❤️ Amistad</div>
+        <div class="category">💻 Tecnología</div>
+        <div class="category">🎬 Películas</div>
+        <div class="category">📚 Estudios</div>
+        <div class="category">🚗 Autos</div>
+        <div class="category">🌎 Viajes</div>
+        <div class="category">🛍 Compras</div>
+        <div class="category">🐶 Mascotas</div>
+
+    </div>
+
+</section>
+
+    <!-- NUEVOS GRUPOS -->
+
+<section class="latestGroups">
 
     <div class="sectionHeader">
 
         <h2>🆕 Nuevos grupos</h2>
 
-        <button>Actualizar</button>
+        <button id="refreshGroupsBtn">
+            Actualizar
+        </button>
 
     </div>
 
-    <div class="groupList">
-
-        <div class="groupCard">
-
-            <div class="groupImage">
-
-                <img src="https://placehold.co/120x120/png" alt="Fútbol">
-
-            </div>
-
-            <div class="groupInfo">
-
-                <h3>Fútbol Mundial</h3>
-
-                <p>⚽ Deportes • 3.2K miembros</p>
-
-                <button class="joinBtn">Unirse</button>
-
-            </div>
-
-        </div>
-
-        <div class="groupCard">
-
-            <div class="groupImage">
-
-                <img src="https://placehold.co/120x120/png" alt="Películas">
-
-            </div>
-
-            <div class="groupInfo">
-
-                <h3>Cine & Series</h3>
-
-                <p>🎬 Entretenimiento • 2.8K miembros</p>
-
-                <button class="joinBtn">Unirse</button>
-
-            </div>
-
-        </div>
-
-        <div class="groupCard">
-
-            <div class="groupImage">
-
-                <img src="https://placehold.co/120x120/png" alt="Amistad">
-
-            </div>
-
-            <div class="groupInfo">
-
-                <h3>Amigos Latam</h3>
-
-                <p>❤️ Amistad • 5.6K miembros</p>
-
-                <button class="joinBtn">Unirse</button>
-
-            </div>
-
-        </div>
-
-    </div>
+    <!-- Aquí JavaScript cargará automáticamente todos los grupos -->
+    <div class="groupList" id="latestGroups"></div>
 
 </section>
 
 </main>
+
+<!-- BOTÓN PUBLICAR -->
 
 <button id="fabButton">
 
@@ -338,31 +175,45 @@ Unirse
 
 </button>
 
+<!-- MENÚ INFERIOR -->
+
 <nav class="bottomNav">
 
     <button class="navItem active" id="homeNavBtn">
-    <i class="fa-solid fa-house"></i>
-    <span>Inicio</span>
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Inicio</span>
+
     </button>
 
     <button class="navItem" id="exploreNavBtn">
-    <i class="fa-solid fa-compass"></i>
-    <span>Explorar</span>
+
+        <i class="fa-solid fa-compass"></i>
+
+        <span>Explorar</span>
+
     </button>
 
     <button class="navItem" id="favoritesNavBtn">
-    <i class="fa-solid fa-heart"></i>
-    <span>Favoritos</span>
+
+        <i class="fa-solid fa-heart"></i>
+
+        <span>Favoritos</span>
+
     </button>
 
     <button class="navItem" id="profileNavBtn">
+
         <i class="fa-solid fa-user"></i>
+
         <span>Perfil</span>
+
     </button>
 
 </nav>
 
-    <!-- Modal Publicar Grupo -->
+    <!-- MODAL PUBLICAR -->
 
 <div id="publishModal" class="modal">
 
@@ -388,14 +239,19 @@ Unirse
 
                 <option value="">Selecciona una categoría</option>
 
-                <option>Gaming</option>
-                <option>Música</option>
-                <option>Anime</option>
-                <option>Memes</option>
-                <option>Deportes</option>
-                <option>Tecnología</option>
-                <option>Amistad</option>
-                <option>Películas</option>
+                <option value="Gaming">🎮 Gaming</option>
+                <option value="Música">🎵 Música</option>
+                <option value="Anime">🌸 Anime</option>
+                <option value="Memes">😂 Memes</option>
+                <option value="Deportes">⚽ Deportes</option>
+                <option value="Tecnología">💻 Tecnología</option>
+                <option value="Amistad">❤️ Amistad</option>
+                <option value="Películas">🎬 Películas</option>
+                <option value="Estudios">📚 Estudios</option>
+                <option value="Autos">🚗 Autos</option>
+                <option value="Viajes">🌎 Viajes</option>
+                <option value="Compras">🛍 Compras</option>
+                <option value="Mascotas">🐶 Mascotas</option>
 
             </select>
 
@@ -422,53 +278,22 @@ Unirse
 
 </div>
 
-<!-- Modal Iniciar Sesión -->
-
-<div id="loginModal" class="modal">
-
-    <div class="modalContent">
-
-        <h2>Iniciar Sesión</h2>
-
-        <form id="loginForm">
-
-            <input
-                type="email"
-                placeholder="Correo electrónico"
-                required>
-
-            <input
-                type="password"
-                placeholder="Contraseña"
-                required>
-
-            <button type="submit">
-
-                Entrar
-
-            </button>
-
-        </form>
-
-    </div>
-
-</div>
-
-<!-- PANTALLA PERFIL -->
+    <!-- PANTALLA PERFIL -->
 
 <section id="profilePage" style="display:none;padding:25px;">
 
     <div style="text-align:center;">
 
-        <img id="profileImage"
-             src="https://placehold.co/150x150"
-             style="width:130px;height:130px;border-radius:50%;object-fit:cover;">
+        <img
+            id="profileImage"
+            src="https://placehold.co/150x150"
+            style="width:130px;height:130px;border-radius:50%;object-fit:cover;">
 
         <h2 id="profileName">Invitado</h2>
 
         <p id="profileEmail">No has iniciado sesión</p>
 
-        <button id="logoutBtn">
+        <button id="logoutBtn" class="joinBtn">
             Cerrar sesión
         </button>
 
@@ -508,6 +333,10 @@ Unirse
         <div class="category">💻 Tecnología</div>
         <div class="category">🎬 Películas</div>
         <div class="category">📚 Estudios</div>
+        <div class="category">🚗 Autos</div>
+        <div class="category">🌎 Viajes</div>
+        <div class="category">🛍 Compras</div>
+        <div class="category">🐶 Mascotas</div>
 
     </div>
 
@@ -551,7 +380,5 @@ Unirse
 <script type="module" src="script.js"></script>
 
 </body>
+
 </html>
-
-
-
