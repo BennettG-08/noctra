@@ -589,6 +589,22 @@ if (profileNavBtn) {
 }
 
 // =========================
+// VOLVER DESDE DETALLE
+// =========================
+
+if (backToHomeBtn) {
+
+    backToHomeBtn.addEventListener("click", () => {
+
+        if (groupDetailsPage) groupDetailsPage.style.display = "none";
+        if (main) main.style.display = "block";
+        if (fabButton) fabButton.style.display = "flex";
+
+    });
+
+}
+
+// =========================
 // INICIO
 // =========================
 
@@ -596,6 +612,7 @@ if (homeNavBtn) {
 
     homeNavBtn.addEventListener("click", () => {
 
+        if (groupDetailsPage) groupDetailsPage.style.display = "none";
         if (main) main.style.display = "block";
         if (profilePage) profilePage.style.display = "none";
         if (favoritesPage) favoritesPage.style.display = "none";
