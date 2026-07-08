@@ -214,3 +214,178 @@ if (profileBtn) {
     });
 
 }
+
+// =========================
+// CREAR TARJETA DE GRUPO
+// =========================
+
+function crearCardGrupo(grupo) {
+
+    const card = document.createElement("div");
+    card.className = "groupCard";
+
+    const imagen = grupo.image || "https://placehold.co/120x120/png";
+
+    card.innerHTML = `
+        <div class="groupImage">
+            <img src="${imagen}" alt="${grupo.name}">
+        </div>
+
+        <div class="groupInfo">
+
+            <h3>${grupo.name}</h3>
+
+            <p>${grupo.category}</p>
+
+            <small style="color:#888;">
+                👁️ ${grupo.views || 0} vistas
+                <br>
+                🕒 ${tiempoTranscurrido(grupo.createdAt)}
+            </small>
+
+            <div class="groupActions">
+
+                <button class="favoriteBtn ${esFavorito(grupo.name) ? "active" : ""}">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <button class="joinBtn verGrupoBtn">
+                    Ver grupo
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+    const btnFavorito = card.querySelector(".favoriteBtn");
+    const verGrupoBtn = card.querySelector(".verGrupoBtn");
+
+    btnFavorito.addEventListener("click", (e) => {
+
+        e.stopPropagation();
+
+        if (esFavorito(grupo.name)) {
+
+            favorites = favorites.filter(f => f.name !== grupo.name);
+            btnFavorito.classList.remove("active");
+
+        } else {
+
+            favorites.push({
+                name: grupo.name,
+                category: grupo.category,
+                description: grupo.description,
+                image: imagen,
+                link: grupo.link,
+                views: grupo.views,
+                createdAt: grupo.createdAt
+            });
+
+            btnFavorito.classList.add("active");
+
+        }
+
+        guardarFavoritos();
+
+        if (favoritesPage.style.display === "block") {
+            mostrarFavoritos();
+        }
+
+    });
+
+    verGrupoBtn.addEventListener("click", async () => {
+
+        ocultarPantallas();
+
+        groupDetailsPage.style.display = "block";
+
+        detailImage.src = imagen;
+        detailName.textContent = grupo.name;
+        detailCategory.textContent = "📂 " + grupo.category;
+        detailDescription.textContent = grupo.description || "Sin descripción";
+        detailTime.textContent = "🕒 " + tiempoTranscurrido(grupo.createdAt);
+
+        try {
+
+            await updateDoc(doc(db, "groups", grupo.id), {
+                views: increment(1)
+            });
+
+            grupo.views = (grupo.views || 0) + 1;
+
+        } catch (e) {}
+
+        detailViews.textContent = "👁️ " + (grupo.views || 0) + " vistas";
+
+        detailJoinBtn.onclick = () => {
+
+            window.open(grupo.link, "_blank");
+
+        };
+
+    });
+
+    return card;
+
+}
+
+// =========================
+// CARGAR GRUPOS
+// =========================
+
+async function cargarGrupos() {
+
+    const listas = document.querySelectorAll(".groupList");
+
+    listas.forEach(lista => lista.innerHTML = "");
+
+    grupos = [];
+
+    const snapshot = await getDocs(collection(db, "groups"));
+
+    snapshot.forEach((documento) => {
+
+        let grupo = {
+            id: documento.id,
+            ...documento.data()
+        };
+
+        if (grupo.createdAt?.seconds) {
+            grupo.createdAt = grupo.createdAt.seconds * 1000;
+        }
+
+        const ahora = Date.now();
+        const limite = 48 * 60 * 60 * 1000;
+
+        if (grupo.createdAt && (ahora - grupo.createdAt) > limite) {
+            return;
+        }
+
+        grupos.push(grupo);
+
+    });
+
+    grupos.sort((a, b) => (b.views || 0) - (a.views || 0));
+
+    const listasGrupos = document.querySelectorAll(".groupList");
+
+    listasGrupos.forEach(lista => {
+
+        grupos.forEach(grupo => {
+
+            lista.appendChild(crearCardGrupo(grupo));
+
+        });
+
+    });
+
+}
+
+cargarGrupos();
+
+setInterval(() => {
+
+    cargarGrupos();
+
+}, 60000);
