@@ -172,9 +172,11 @@ function crearCardGrupo(grupo) {
 
         <p>${grupo.category}</p>
 
-        <small style="color:#888;">
-            👁️ ${grupo.views || 0} vistas
-        </small>
+<small style="color:#888;">
+    👁️ ${grupo.views || 0} vistas
+    <br>
+    🕒 ${tiempoTranscurrido(grupo.createdAt)}
+</small>
 
         <div class="groupActions">
 
