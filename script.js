@@ -41,6 +41,17 @@ const profileImage = document.getElementById("profileImage");
 const profileName = document.getElementById("profileName");
 const profileEmail = document.getElementById("profileEmail"); 
 
+const groupDetailsPage = document.getElementById("groupDetailsPage");
+
+const detailImage = document.getElementById("detailImage");
+const detailName = document.getElementById("detailName");
+const detailCategory = document.getElementById("detailCategory");
+const detailDescription = document.getElementById("detailDescription");
+const detailViews = document.getElementById("detailViews");
+const detailTime = document.getElementById("detailTime");
+const detailJoinBtn = document.getElementById("detailJoinBtn");
+const backToHomeBtn = document.getElementById("backToHomeBtn");
+
 // =========================
 // ABRIR MODAL PUBLICAR
 // =========================
