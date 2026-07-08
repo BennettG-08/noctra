@@ -307,15 +307,15 @@ async function cargarGrupos() {
 
     snapshot.forEach((documento) => {
 
-        const datos = documento.data();
-
-        const grupo = {
+        let grupo = {
             id: documento.id,
-            ...datos,
-            createdAt: datos.createdAt?.seconds
-                ? datos.createdAt.seconds * 1000
-                : datos.createdAt
+            ...documento.data()
         };
+
+        // Compatibilidad con Timestamp de Firebase y Date.now()
+        if (grupo.createdAt?.seconds) {
+            grupo.createdAt = grupo.createdAt.seconds * 1000;
+        }
 
         const ahora = Date.now();
         const cuarentaYOchoHoras = 48 * 60 * 60 * 1000;
@@ -328,7 +328,6 @@ async function cargarGrupos() {
 
     });
 
-    // Ordenar de mayor a menor número de vistas
     grupos.sort((a, b) => (b.views || 0) - (a.views || 0));
 
     grupos.forEach((grupo) => {
@@ -340,6 +339,11 @@ async function cargarGrupos() {
 }
 
 cargarGrupos();
+
+// Actualizar los tiempos cada minuto
+setInterval(() => {
+    cargarGrupos();
+}, 60000);
 
 // =========================
 // BUSCADOR
