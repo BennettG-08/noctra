@@ -195,90 +195,97 @@ function crearCardGrupo(grupo) {
     const imagen = grupo.image || "https://placehold.co/120x120/png";
 
     card.innerHTML = `
-    <div class="groupImage">
-        <img src="${imagen}" alt="${grupo.name}">
-    </div>
-
-    <div class="groupInfo">
-
-        <h3>${grupo.name}</h3>
-
-        <p>${grupo.category}</p>
-
-<small style="color:#888;">
-    👁️ ${grupo.views || 0} vistas
-    <br>
-    🕒 ${tiempoTranscurrido(grupo.createdAt)}
-</small>
-
-        <div class="groupActions">
-
-            <button class="favoriteBtn ${esFavorito(grupo.name) ? "active" : ""}">
-                <i class="fa-solid fa-heart"></i>
-            </button>
-
-            <button class="joinBtn">
-                Unirse
-            </button>
-
+        <div class="groupImage">
+            <img src="${imagen}" alt="${grupo.name}">
         </div>
 
-    </div>
-`;
+        <div class="groupInfo">
+
+            <h3>${grupo.name}</h3>
+
+            <p>${grupo.category}</p>
+
+            <small style="color:#888;">
+                👁️ ${grupo.views || 0} vistas
+                <br>
+                🕒 ${tiempoTranscurrido(grupo.createdAt)}
+            </small>
+
+            <div class="groupActions">
+
+                <button class="favoriteBtn ${esFavorito(grupo.name) ? "active" : ""}">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <button class="joinBtn verGrupoBtn">
+                    Ver grupo
+                </button>
+
+            </div>
+
+        </div>
+    `;
 
     const btnFavorito = card.querySelector(".favoriteBtn");
-const btnUnirse = card.querySelector(".joinBtn");
+    const verGrupoBtn = card.querySelector(".verGrupoBtn");
 
-btnFavorito.addEventListener("click", () => {
+    btnFavorito.addEventListener("click", (e) => {
 
-    if (esFavorito(grupo.name)) {
+        e.stopPropagation();
 
-        favorites = favorites.filter(f => f.name !== grupo.name);
+        if (esFavorito(grupo.name)) {
 
-        btnFavorito.classList.remove("active");
+            favorites = favorites.filter(f => f.name !== grupo.name);
+            btnFavorito.classList.remove("active");
 
-    } else {
+        } else {
 
-        favorites.push({
-            name: grupo.name,
-            category: grupo.category,
-            link: grupo.link,
-            image: imagen
-        });
+            favorites.push({
+                name: grupo.name,
+                category: grupo.category,
+                description: grupo.description,
+                link: grupo.link,
+                image: imagen,
+                views: grupo.views,
+                createdAt: grupo.createdAt
+            });
 
-        btnFavorito.classList.add("active");
+            btnFavorito.classList.add("active");
 
-    }
+        }
 
-    guardarFavoritos();
+        guardarFavoritos();
 
-    if (favoritesPage && favoritesPage.style.display === "block") {
-        mostrarFavoritos();
-    }
+        if (favoritesPage && favoritesPage.style.display === "block") {
+            mostrarFavoritos();
+        }
 
-});
+    });
 
-btnUnirse.addEventListener("click", async () => {
+    verGrupoBtn.addEventListener("click", (e) => {
 
-    try {
+        e.stopPropagation();
 
-        await updateDoc(doc(db, "groups", grupo.id), {
-            views: increment(1)
-        });
+        if (main) main.style.display = "none";
+        if (favoritesPage) favoritesPage.style.display = "none";
+        if (explorePage) explorePage.style.display = "none";
+        if (profilePage) profilePage.style.display = "none";
+        if (groupDetailsPage) groupDetailsPage.style.display = "block";
 
-    } catch (error) {
+        detailImage.src = imagen;
+        detailName.textContent = grupo.name;
+        detailCategory.textContent = "📂 " + grupo.category;
+        detailDescription.textContent = grupo.description || "Sin descripción.";
+        detailViews.textContent = "👁️ " + (grupo.views || 0) + " vistas";
+        detailTime.textContent = "🕒 " + tiempoTranscurrido(grupo.createdAt);
 
-        console.error("Error al actualizar vistas:", error);
+        detailJoinBtn.onclick = () => {
+            window.open(grupo.link, "_blank");
+        };
 
-    }
+    });
 
-    window.open(grupo.link, "_blank");
-
-    cargarGrupos();
-
-});
-
-return card;
+    return card;
 
 }
 
