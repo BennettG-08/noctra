@@ -623,7 +623,9 @@ if (profileNavBtn) {
 
         ocultarPantallas();
 
-        profilePage.style.display = "block";
+        if (profilePage) {
+            profilePage.style.display = "block";
+        }
 
         if (fabButton) {
             fabButton.style.display = "none";
@@ -633,9 +635,9 @@ if (profileNavBtn) {
 
         if (user) {
 
-            profileImage.src = user.photoURL;
-            profileName.textContent = user.displayName;
-            profileEmail.textContent = user.email;
+            profileImage.src = user.photoURL || "https://placehold.co/150x150";
+            profileName.textContent = user.displayName || "Usuario";
+            profileEmail.textContent = user.email || "";
 
         } else {
 
@@ -644,6 +646,11 @@ if (profileNavBtn) {
             profileEmail.textContent = "No has iniciado sesión";
 
         }
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
     };
 
@@ -665,6 +672,11 @@ if (homeNavBtn) {
 
         cargarGrupos();
 
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
     };
 
 }
@@ -682,6 +694,13 @@ if (backToHomeBtn) {
         if (fabButton) {
             fabButton.style.display = "flex";
         }
+
+        cargarGrupos();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
     };
 
@@ -708,6 +727,13 @@ if (logoutBtn) {
             profileImage.src = "https://placehold.co/150x150";
             profileName.textContent = "Invitado";
             profileEmail.textContent = "No has iniciado sesión";
+
+            cargarGrupos();
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
 
             alert("Sesión cerrada correctamente.");
 
