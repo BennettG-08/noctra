@@ -474,3 +474,321 @@ if (refreshBtn) {
     };
 
 }
+
+// ==========================
+// FAVORITOS
+// ==========================
+
+function mostrarFavoritos() {
+
+    const lista = document.getElementById("favoritesList");
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    if (favorites.length === 0) {
+
+        lista.innerHTML = `
+            <p style="text-align:center;color:#888;">
+                No tienes grupos favoritos.
+            </p>
+        `;
+
+        return;
+
+    }
+
+    favorites.forEach(grupo => {
+
+        lista.appendChild(crearCardGrupo(grupo));
+
+    });
+
+}
+
+if (favoritesNavBtn) {
+
+    favoritesNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        favoritesPage.style.display = "block";
+
+        if (fabButton) {
+
+            fabButton.style.display = "none";
+
+        }
+
+        mostrarFavoritos();
+
+    };
+
+}
+
+// ==========================
+// EXPLORAR
+// ==========================
+
+if (exploreNavBtn) {
+
+    exploreNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        explorePage.style.display = "block";
+
+        if (fabButton) {
+
+            fabButton.style.display = "none";
+
+        }
+
+        mostrarCategorias();
+
+    };
+
+}
+
+function mostrarCategorias() {
+
+    const categorias = document.querySelectorAll("#explorePage .category");
+    const contenedor = document.getElementById("exploreGroups");
+
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    categorias.forEach(categoria => {
+
+        categoria.onclick = () => {
+
+            contenedor.innerHTML = "";
+
+            const nombre = categoria.textContent
+                .replace(/[^\p{L}\p{N}\s]/gu, "")
+                .trim()
+                .toLowerCase();
+
+            const encontrados = grupos.filter(grupo =>
+                grupo.category.toLowerCase() === nombre
+            );
+
+            if (encontrados.length === 0) {
+
+                contenedor.innerHTML = `
+                    <p style="text-align:center;color:#888;">
+                        No hay grupos en esta categoría.
+                    </p>
+                `;
+
+                return;
+
+            }
+
+            encontrados.forEach(grupo => {
+
+                contenedor.appendChild(crearCardGrupo(grupo));
+
+            });
+
+        };
+
+    });
+
+}
+
+// ==========================
+// PERFIL - INICIO - VOLVER
+// ==========================
+
+if (profileNavBtn) {
+
+    profileNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        profilePage.style.display = "block";
+
+        if (fabButton) {
+            fabButton.style.display = "none";
+        }
+
+        const user = auth.currentUser;
+
+        if (user) {
+
+            profileImage.src = user.photoURL;
+            profileName.textContent = user.displayName;
+            profileEmail.textContent = user.email;
+
+        } else {
+
+            profileImage.src = "https://placehold.co/150x150";
+            profileName.textContent = "Invitado";
+            profileEmail.textContent = "No has iniciado sesión";
+
+        }
+
+    };
+
+}
+
+if (homeNavBtn) {
+
+    homeNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        if (main) {
+            main.style.display = "block";
+        }
+
+        if (fabButton) {
+            fabButton.style.display = "flex";
+        }
+
+        cargarGrupos();
+
+    };
+
+}
+
+if (backToHomeBtn) {
+
+    backToHomeBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        if (main) {
+            main.style.display = "block";
+        }
+
+        if (fabButton) {
+            fabButton.style.display = "flex";
+        }
+
+    };
+
+}
+
+if (logoutBtn) {
+
+    logoutBtn.onclick = async () => {
+
+        try {
+
+            await signOut(auth);
+
+            ocultarPantallas();
+
+            if (main) {
+                main.style.display = "block";
+            }
+
+            if (fabButton) {
+                fabButton.style.display = "flex";
+            }
+
+            profileImage.src = "https://placehold.co/150x150";
+            profileName.textContent = "Invitado";
+            profileEmail.textContent = "No has iniciado sesión";
+
+            alert("Sesión cerrada correctamente.");
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    };
+
+}
+
+// ==========================
+// PUBLICAR GRUPO
+// ==========================
+
+if (publishForm) {
+
+    publishForm.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const name = document.getElementById("groupName").value.trim();
+        const description = document.getElementById("groupDescription").value.trim();
+        const category = document.getElementById("groupCategory").value;
+        const link = document.getElementById("groupLink").value.trim();
+
+        if (!name || !description || !category || !link) {
+            alert("Completa todos los campos.");
+            return;
+        }
+
+        let image = "https://placehold.co/120x120/png";
+
+        const imageInput = document.getElementById("groupImage");
+
+        if (imageInput && imageInput.files.length > 0) {
+
+            image = await new Promise((resolve) => {
+
+                const reader = new FileReader();
+
+                reader.onload = (e) => resolve(e.target.result);
+
+                reader.readAsDataURL(imageInput.files[0]);
+
+            });
+
+        }
+
+        try {
+
+            await addDoc(collection(db, "groups"), {
+
+                name,
+                description,
+                category,
+                link,
+                image,
+                views: 0,
+                createdAt: Date.now()
+
+            });
+
+            publishForm.reset();
+
+            publishModal.style.display = "none";
+
+            await cargarGrupos();
+
+            alert("Grupo publicado correctamente.");
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(error.message);
+
+        }
+
+    });
+
+}
+
+// ==========================
+// NOTIFICACIONES
+// ==========================
+
+if (notificationBtn) {
+
+    notificationBtn.onclick = () => {
+
+        alert("Aún no tienes notificaciones.");
+
+    };
+
+}
