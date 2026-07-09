@@ -317,15 +317,29 @@ function crearCardGrupo(grupo) {
         detailDescription.textContent = grupo.description || "Sin descripción";
         detailTime.textContent = "🕒 " + tiempoTranscurrido(grupo.createdAt);
 
-        try {
+                try {
 
-            await updateDoc(doc(db, "groups", grupo.id), {
-                views: increment(1)
-            });
+            const vistasGuardadas = JSON.parse(localStorage.getItem("groupViews")) || {};
 
-            grupo.views = (grupo.views || 0) + 1;
+            if (!vistasGuardadas[grupo.id]) {
 
-        } catch (e) {}
+                await updateDoc(doc(db, "groups", grupo.id), {
+                    views: increment(1)
+                });
+
+                vistasGuardadas[grupo.id] = true;
+
+                localStorage.setItem("groupViews", JSON.stringify(vistasGuardadas));
+
+                grupo.views = (grupo.views || 0) + 1;
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
 
         detailViews.textContent = "👁️ " + (grupo.views || 0) + " vistas";
 
