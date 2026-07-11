@@ -730,4 +730,151 @@ function mostrarCategorias(){
 
 }
 
+// ==========================
+// NAVEGACIÓN
+// ==========================
+
+if (homeNavBtn) {
+
+    homeNavBtn.onclick = () => {
+
+        mostrarInicio();
+
+        cargarGrupos();
+
+    };
+
+}
+
+if (favoritesNavBtn) {
+
+    favoritesNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        favoritesPage.style.display = "block";
+
+        if (fabButton) {
+
+            fabButton.style.display = "none";
+
+        }
+
+        mostrarFavoritos();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    };
+
+}
+
+if (exploreNavBtn) {
+
+    exploreNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        explorePage.style.display = "block";
+
+        if (fabButton) {
+
+            fabButton.style.display = "none";
+
+        }
+
+        mostrarCategorias();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    };
+
+}
+
+if (profileNavBtn) {
+
+    profileNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        profilePage.style.display = "block";
+
+        if (fabButton) {
+
+            fabButton.style.display = "none";
+
+        }
+
+        const user = auth.currentUser;
+
+        if (user) {
+
+            profileImage.src = user.photoURL || "https://placehold.co/150x150";
+
+            profileName.textContent = user.displayName || "Usuario";
+
+            profileEmail.textContent = user.email || "";
+
+        } else {
+
+            profileImage.src = "https://placehold.co/150x150";
+
+            profileName.textContent = "Invitado";
+
+            profileEmail.textContent = "No has iniciado sesión";
+
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    };
+
+}
+
+if (backToHomeBtn) {
+
+    backToHomeBtn.onclick = () => {
+
+        mostrarInicio();
+
+    };
+
+}
+
+if (logoutBtn) {
+
+    logoutBtn.onclick = async () => {
+
+        try {
+
+            await signOut(auth);
+
+            mostrarInicio();
+
+            profileImage.src = "https://placehold.co/150x150";
+
+            profileName.textContent = "Invitado";
+
+            profileEmail.textContent = "No has iniciado sesión";
+
+            alert("Sesión cerrada correctamente.");
+
+        } catch (error) {
+
+            alert(error.message);
+
+        }
+
+    };
+
+}
+
 
