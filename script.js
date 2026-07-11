@@ -877,4 +877,88 @@ if (logoutBtn) {
 
 }
 
+// ==========================
+// PUBLICAR GRUPO
+// ==========================
+
+if (publishForm) {
+
+    publishForm.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const name = document.getElementById("groupName").value.trim();
+
+        const description = document.getElementById("groupDescription").value.trim();
+
+        const category = document.getElementById("groupCategory").value;
+
+        const link = document.getElementById("groupLink").value.trim();
+
+        if (!name || !description || !category || !link) {
+
+            alert("Completa todos los campos.");
+
+            return;
+
+        }
+
+        let image = "https://placehold.co/300x300/png?text=NOCTRA";
+
+        const imageInput = document.getElementById("groupImage");
+
+        if (imageInput && imageInput.files.length > 0) {
+
+            image = await new Promise((resolve) => {
+
+                const reader = new FileReader();
+
+                reader.onload = (e) => resolve(e.target.result);
+
+                reader.readAsDataURL(imageInput.files[0]);
+
+            });
+
+        }
+
+        try {
+
+            await addDoc(collection(db, "groups"), {
+
+                name,
+
+                description,
+
+                category,
+
+                link,
+
+                image,
+
+                views: 0,
+
+                createdAt: Date.now()
+
+            });
+
+            publishForm.reset();
+
+            publishModal.style.display = "none";
+
+            await cargarGrupos();
+
+            alert("✅ Grupo publicado correctamente.");
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Error al publicar el grupo.");
+
+        }
+
+    });
+
+}
+
 
