@@ -668,3 +668,317 @@ main{
     padding-bottom:140px;
 
 }
+
+/* ==========================
+   MODALES
+========================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.75);
+
+    padding:20px;
+
+    z-index:2000;
+
+}
+
+.modalContent{
+
+    width:100%;
+
+    max-width:430px;
+
+    background:var(--surface);
+
+    border-radius:22px;
+
+    padding:24px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.modalContent h2{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.modalContent input,
+.modalContent textarea,
+.modalContent select{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:var(--surface2);
+
+    color:var(--text);
+
+}
+
+.modalContent textarea{
+
+    resize:vertical;
+
+    min-height:100px;
+
+}
+
+.modalContent button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+/* ==========================
+   PERFIL
+========================== */
+
+.profileCard{
+
+    max-width:420px;
+
+    margin:30px auto;
+
+    background:var(--surface);
+
+    border-radius:22px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.profileCard img{
+
+    width:130px;
+
+    height:130px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    margin-bottom:20px;
+
+}
+
+.profileCard h2{
+
+    margin-bottom:10px;
+
+}
+
+.profileCard p{
+
+    color:var(--muted);
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================
+   DETALLE DEL GRUPO
+========================== */
+
+.groupDetail{
+
+    max-width:500px;
+
+    margin:auto;
+
+    background:var(--surface);
+
+    border-radius:22px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.groupDetail img{
+
+    width:180px;
+
+    height:180px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    margin:0 auto 20px;
+
+}
+
+.groupDetail p{
+
+    margin-top:10px;
+
+    color:var(--muted);
+
+}
+
+/* ==========================
+   FOOTER DEL CREADOR
+========================== */
+
+.creatorFooter{
+
+    padding:40px 20px 120px;
+
+}
+
+.creatorCard{
+
+    max-width:520px;
+
+    margin:auto;
+
+    background:var(--surface);
+
+    border-radius:22px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.creatorCard h2{
+
+    margin-bottom:10px;
+
+}
+
+.creatorCard h3{
+
+    color:var(--secondary);
+
+    margin-bottom:12px;
+
+}
+
+.creatorCard p{
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+}
+
+.creatorSocials{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+.creatorSocials a{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    background:var(--surface2);
+
+    padding:14px;
+
+    border-radius:14px;
+
+    transition:.30s;
+
+}
+
+.creatorSocials a:hover{
+
+    background:var(--primary);
+
+}
+
+/* ==========================
+   ANIMACIONES
+========================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.groupCard,
+.category,
+.creatorCard,
+.profileCard,
+.groupDetail{
+
+    animation:fadeUp .45s ease;
+
+}
