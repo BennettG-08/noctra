@@ -821,6 +821,12 @@ main{
    DETALLE DEL GRUPO
 ========================== */
 
+#groupDetailsPage{
+
+    padding:100px 20px 120px;
+
+}
+
 .groupDetail{
 
     max-width:500px;
