@@ -572,4 +572,162 @@ cargarGrupos();
 
 setInterval(cargarGrupos, 60000);
 
+// ==========================
+// BUSCADOR
+// ==========================
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", () => {
+
+        const texto = searchInput.value
+            .trim()
+            .toLowerCase();
+
+        const featuredContainer = document.getElementById("featuredGroups");
+        const latestContainer = document.getElementById("latestGroups");
+
+        if (featuredContainer) featuredContainer.innerHTML = "";
+        if (latestContainer) latestContainer.innerHTML = "";
+
+        let resultados = grupos;
+
+        if (texto !== "") {
+
+            resultados = grupos.filter(grupo =>
+
+                grupo.name.toLowerCase().includes(texto) ||
+
+                grupo.category.toLowerCase().includes(texto) ||
+
+                (grupo.description || "")
+                    .toLowerCase()
+                    .includes(texto)
+
+            );
+
+        }
+
+        const destacados = [...resultados].sort((a,b)=>(b.views||0)-(a.views||0));
+        const recientes = [...resultados].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+
+        destacados.forEach(grupo=>{
+
+            featuredContainer?.appendChild(
+                crearCardGrupo(grupo)
+            );
+
+        });
+
+        recientes.forEach(grupo=>{
+
+            latestContainer?.appendChild(
+                crearCardGrupo(grupo)
+            );
+
+        });
+
+    });
+
+}
+
+// ==========================
+// FAVORITOS
+// ==========================
+
+function mostrarFavoritos(){
+
+    if(!favoritesList) return;
+
+    favoritesList.innerHTML="";
+
+    if(favorites.length===0){
+
+        favoritesList.innerHTML=`
+
+        <p style="text-align:center;color:#888">
+
+            No tienes grupos favoritos.
+
+        </p>
+
+        `;
+
+        return;
+
+    }
+
+    favorites.forEach(grupo=>{
+
+        favoritesList.appendChild(
+
+            crearCardGrupo(grupo)
+
+        );
+
+    });
+
+}
+
+// ==========================
+// EXPLORAR
+// ==========================
+
+function mostrarCategorias(){
+
+    if(!exploreGroups) return;
+
+    const categorias=document.querySelectorAll(
+        "#explorePage .category"
+    );
+
+    categorias.forEach(categoria=>{
+
+        categoria.onclick=()=>{
+
+            exploreGroups.innerHTML="";
+
+            const nombre=categoria.textContent
+            .replace(/[^\p{L}\p{N}\s]/gu,"")
+            .trim()
+            .toLowerCase();
+
+            const encontrados=grupos.filter(grupo=>
+
+                grupo.category.toLowerCase()===nombre
+
+            );
+
+            if(encontrados.length===0){
+
+                exploreGroups.innerHTML=`
+
+                <p style="text-align:center;color:#888">
+
+                No hay grupos en esta categoría.
+
+                </p>
+
+                `;
+
+                return;
+
+            }
+
+            encontrados.forEach(grupo=>{
+
+                exploreGroups.appendChild(
+
+                    crearCardGrupo(grupo)
+
+                );
+
+            });
+
+        };
+
+    });
+
+}
+
 
