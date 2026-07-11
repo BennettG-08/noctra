@@ -983,24 +983,32 @@ main{
 
 }
 
-/* Aquí termina tu último estilo */
-
-}
-
-/* PEGA ESTO DEBAJO */
+/* ==========================
+   LOGO Y CREADOR
+========================== */
 
 .noctraLogo{
     white-space: nowrap;
     text-align: center;
-    font-size: 2.2rem;
-    font-weight: 700;
-    line-height: 1.2;
 }
 
 .creatorSplash{
-    display: block;
-    margin-top: 10px;
-    font-size: .95rem;
-    color: #a8a8a8;
-    text-align: center;
+    display:block;
+    margin-top:10px;
+    font-size:.95rem;
+    color:#a8a8a8;
+    text-align:center;
+}
+
+.creatorText{
+    text-align:center;
+    line-height:1.7;
+    margin-top:12px;
+}
+
+.noctraBrand{
+    display:inline-block;
+    white-space:nowrap;
+    font-weight:700;
+    font-size:1.2rem;
 }
