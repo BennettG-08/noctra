@@ -488,4 +488,88 @@ function crearCardGrupo(grupo) {
 
 }
 
+// ==========================
+// CARGAR GRUPOS
+// ==========================
+
+async function cargarGrupos() {
+
+    try {
+
+        grupos = [];
+
+        const snapshot = await getDocs(collection(db, "groups"));
+
+        snapshot.forEach((documento) => {
+
+            const grupo = {
+                id: documento.id,
+                ...documento.data()
+            };
+
+            if (grupo.createdAt?.seconds) {
+
+                grupo.createdAt = grupo.createdAt.seconds * 1000;
+
+            }
+
+            grupos.push(grupo);
+
+        });
+
+        // Destacados por vistas
+
+        const destacados = [...grupos].sort((a, b) => (b.views || 0) - (a.views || 0));
+
+        // Nuevos por fecha
+
+        const recientes = [...grupos].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const featuredContainer = document.getElementById("featuredGroups");
+        const latestContainer = document.getElementById("latestGroups");
+
+        if (featuredContainer) {
+
+            featuredContainer.innerHTML = "";
+
+            destacados.forEach(grupo => {
+
+                featuredContainer.appendChild(crearCardGrupo(grupo));
+
+            });
+
+        }
+
+        if (latestContainer) {
+
+            latestContainer.innerHTML = "";
+
+            recientes.forEach(grupo => {
+
+                latestContainer.appendChild(crearCardGrupo(grupo));
+
+            });
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Error al cargar los grupos.");
+
+    }
+
+}
+
+// ==========================
+// CARGA INICIAL
+// ==========================
+
+cargarGrupos();
+
+// Actualizar automáticamente cada minuto
+
+setInterval(cargarGrupos, 60000);
+
 
