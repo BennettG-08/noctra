@@ -176,4 +176,144 @@ function tiempoTranscurrido(fecha) {
 
 }
 
+// ==========================
+// SPLASH SCREEN
+// ==========================
+
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        if (splash) {
+
+            splash.style.opacity = "0";
+
+            setTimeout(() => {
+
+                splash.style.display = "none";
+
+            }, 500);
+
+        }
+
+    }, 1500);
+
+});
+
+// ==========================
+// LOGIN GOOGLE
+// ==========================
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!profileBtn) return;
+
+    if (user) {
+
+        profileBtn.innerHTML = `
+            <img
+                src="${user.photoURL}"
+                style="
+                    width:100%;
+                    height:100%;
+                    border-radius:50%;
+                    object-fit:cover;
+                ">
+        `;
+
+    } else {
+
+        profileBtn.innerHTML = `
+            <i class="fa-solid fa-user"></i>
+        `;
+
+    }
+
+});
+
+if (profileBtn) {
+
+    profileBtn.onclick = async () => {
+
+        try {
+
+            await signInWithPopup(auth, provider);
+
+        } catch (error) {
+
+            if (error.code !== "auth/cancelled-popup-request") {
+
+                alert(error.message);
+
+            }
+
+        }
+
+    };
+
+}
+
+// ==========================
+// BOTÓN PUBLICAR
+// ==========================
+
+if (fabButton) {
+
+    fabButton.onclick = () => {
+
+        publishModal.style.display = "flex";
+
+    };
+
+}
+
+window.addEventListener("click", (e) => {
+
+    if (e.target === publishModal) {
+
+        publishModal.style.display = "none";
+
+    }
+
+});
+
+// ==========================
+// BOTONES SUPERIORES
+// ==========================
+
+if (notificationBtn) {
+
+    notificationBtn.onclick = () => {
+
+        alert("No tienes notificaciones.");
+
+    };
+
+}
+
+if (refreshBtn) {
+
+    refreshBtn.onclick = () => {
+
+        cargarGrupos();
+
+    };
+
+}
+
+if (featuredBtn) {
+
+    featuredBtn.onclick = () => {
+
+        document.querySelector(".latestGroups")
+            ?.scrollIntoView({
+
+                behavior: "smooth"
+
+            });
+
+    };
+
+}
+
 
