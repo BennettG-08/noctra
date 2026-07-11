@@ -316,4 +316,176 @@ if (featuredBtn) {
 
 }
 
+// ==========================
+// CREAR TARJETA DEL GRUPO
+// ==========================
+
+function crearCardGrupo(grupo) {
+
+    const card = document.createElement("div");
+
+    card.className = "groupCard";
+
+    const imagen = grupo.image || "https://placehold.co/120x120/png";
+
+    card.innerHTML = `
+
+        <div class="groupImage">
+
+            <img src="${imagen}" alt="${grupo.name}">
+
+        </div>
+
+        <div class="groupInfo">
+
+            <h3>${grupo.name}</h3>
+
+            <p>${grupo.category}</p>
+
+            <small>
+
+                👁️ ${grupo.views || 0} vistas
+
+                <br>
+
+                🕒 ${tiempoTranscurrido(grupo.createdAt)}
+
+            </small>
+
+            <div class="groupActions">
+
+                <button class="favoriteBtn ${esFavorito(grupo.id) ? "active" : ""}">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </button>
+
+                <button class="joinBtn verGrupoBtn">
+
+                    Ver grupo
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    const favoriteBtn = card.querySelector(".favoriteBtn");
+
+    const verGrupoBtn = card.querySelector(".verGrupoBtn");
+
+    // ==========================
+    // FAVORITOS
+    // ==========================
+
+    favoriteBtn.onclick = (e) => {
+
+        e.stopPropagation();
+
+        if (esFavorito(grupo.id)) {
+
+            favorites = favorites.filter(f => f.id !== grupo.id);
+
+            favoriteBtn.classList.remove("active");
+
+        } else {
+
+            favorites.push(grupo);
+
+            favoriteBtn.classList.add("active");
+
+        }
+
+        guardarFavoritos();
+
+    };
+
+    // ==========================
+    // VER DETALLE
+    // ==========================
+
+    verGrupoBtn.onclick = async () => {
+
+        ocultarPantallas();
+
+        groupDetailsPage.style.display = "block";
+
+        if (fabButton) {
+
+            fabButton.style.display = "none";
+
+        }
+
+        detailImage.src = imagen;
+
+        detailName.textContent = grupo.name;
+
+        detailCategory.textContent = "📂 " + grupo.category;
+
+        detailDescription.textContent = grupo.description || "Sin descripción";
+
+        detailTime.textContent = "🕒 " + tiempoTranscurrido(grupo.createdAt);
+
+        // Contar solo una vista por dispositivo
+
+        if (!viewsCache[grupo.id]) {
+
+            try {
+
+                await updateDoc(
+
+                    doc(db, "groups", grupo.id),
+
+                    {
+
+                        views: increment(1)
+
+                    }
+
+                );
+
+                grupo.views = (grupo.views || 0) + 1;
+
+                viewsCache[grupo.id] = true;
+
+                localStorage.setItem(
+
+                    "groupViews",
+
+                    JSON.stringify(viewsCache)
+
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+
+        detailViews.textContent = `👁️ ${grupo.views || 0} vistas`;
+
+        detailJoinBtn.onclick = () => {
+
+            window.open(grupo.link, "_blank");
+
+        };
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    };
+
+    return card;
+
+}
+
 
