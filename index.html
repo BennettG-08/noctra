@@ -203,3 +203,120 @@
 </section>
 
 </main>
+
+    <!-- =========================
+     BOTÓN PUBLICAR
+========================= -->
+
+<button id="fabButton">
+
+    <i class="fa-solid fa-plus"></i>
+
+</button>
+
+<!-- =========================
+     MENÚ INFERIOR
+========================= -->
+
+<nav class="bottomNav">
+
+    <button class="navItem active" id="homeNavBtn">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Inicio</span>
+
+    </button>
+
+    <button class="navItem" id="exploreNavBtn">
+
+        <i class="fa-solid fa-compass"></i>
+
+        <span>Explorar</span>
+
+    </button>
+
+    <button class="navItem" id="favoritesNavBtn">
+
+        <i class="fa-solid fa-heart"></i>
+
+        <span>Favoritos</span>
+
+    </button>
+
+    <button class="navItem" id="profileNavBtn">
+
+        <i class="fa-solid fa-user"></i>
+
+        <span>Perfil</span>
+
+    </button>
+
+</nav>
+
+<!-- =========================
+     MODAL PUBLICAR
+========================= -->
+
+<div id="publishModal" class="modal">
+
+    <div class="modalContent">
+
+        <h2>Publicar grupo</h2>
+
+        <form id="publishForm">
+
+            <input
+                type="text"
+                id="groupName"
+                placeholder="Nombre del grupo"
+                required>
+
+            <textarea
+                id="groupDescription"
+                placeholder="Descripción"
+                rows="4"
+                required></textarea>
+
+            <select id="groupCategory" required>
+
+                <option value="">Selecciona una categoría</option>
+
+                <option value="Gaming">🎮 Gaming</option>
+                <option value="Música">🎵 Música</option>
+                <option value="Anime">🌸 Anime</option>
+                <option value="Memes">😂 Memes</option>
+                <option value="Deportes">⚽ Deportes</option>
+                <option value="Tecnología">💻 Tecnología</option>
+                <option value="Amistad">❤️ Amistad</option>
+                <option value="Películas">🎬 Películas</option>
+                <option value="Estudios">📚 Estudios</option>
+                <option value="Autos">🚗 Autos</option>
+                <option value="Viajes">🌎 Viajes</option>
+                <option value="Compras">🛍 Compras</option>
+                <option value="Mascotas">🐶 Mascotas</option>
+
+            </select>
+
+            <input
+                type="url"
+                id="groupLink"
+                placeholder="Enlace del grupo"
+                required>
+
+            <input
+                type="file"
+                id="groupImage"
+                accept="image/*">
+
+            <button type="submit">
+
+                Publicar
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
