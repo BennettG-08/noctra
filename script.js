@@ -88,4 +88,92 @@ const detailJoinBtn = document.getElementById("detailJoinBtn");
 
 const backToHomeBtn = document.getElementById("backToHomeBtn");
 
+// ==========================
+// FUNCIONES GENERALES
+// ==========================
+
+function ocultarPantallas() {
+
+    if (main) main.style.display = "none";
+
+    if (profilePage) profilePage.style.display = "none";
+
+    if (favoritesPage) favoritesPage.style.display = "none";
+
+    if (explorePage) explorePage.style.display = "none";
+
+    if (groupDetailsPage) groupDetailsPage.style.display = "none";
+
+}
+
+function mostrarInicio() {
+
+    ocultarPantallas();
+
+    if (main) {
+        main.style.display = "block";
+    }
+
+    if (fabButton) {
+        fabButton.style.display = "flex";
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+function guardarFavoritos() {
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+}
+
+function esFavorito(id) {
+
+    return favorites.some(grupo => grupo.id === id);
+
+}
+
+function tiempoTranscurrido(fecha) {
+
+    if (!fecha) return "Hace un momento";
+
+    if (fecha.seconds) {
+
+        fecha = fecha.seconds * 1000;
+
+    }
+
+    const diferencia = Date.now() - fecha;
+
+    const minutos = Math.floor(diferencia / 60000);
+
+    if (minutos < 1) return "Hace unos segundos";
+
+    if (minutos < 60) {
+
+        return `Hace ${minutos} min`;
+
+    }
+
+    const horas = Math.floor(minutos / 60);
+
+    if (horas < 24) {
+
+        return `Hace ${horas} h`;
+
+    }
+
+    const dias = Math.floor(horas / 24);
+
+    return `Hace ${dias} día${dias > 1 ? "s" : ""}`;
+
+}
+
 
