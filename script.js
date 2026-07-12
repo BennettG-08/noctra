@@ -594,6 +594,8 @@ async function cargarGrupos() {
 
 cargarGrupos();
 
+mostrarCategorias();
+
 // Actualizar automáticamente cada minuto
 
 setInterval(cargarGrupos, 60000);
