@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bennettg-08.github.io/noctra/sitemap.xml
