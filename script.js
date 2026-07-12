@@ -597,7 +597,6 @@ cargarGrupos();
 mostrarCategorias();
 
 // Actualizar automáticamente cada minuto
-
 setInterval(cargarGrupos, 60000);
 
 // ==========================
@@ -703,7 +702,7 @@ function mostrarFavoritos(){
 
 function mostrarCategorias() {
 
-    const categorias = document.querySelectorAll(".category");
+    const categorias = document.querySelectorAll(".homeCategory");
 
     categorias.forEach(categoria => {
 
