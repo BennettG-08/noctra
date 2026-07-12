@@ -699,55 +699,57 @@ function mostrarFavoritos(){
 // EXPLORAR
 // ==========================
 
-function mostrarCategorias(){
+function mostrarCategorias() {
 
-    if(!exploreGroups) return;
+    const categorias = document.querySelectorAll(".category");
 
-    const categorias=document.querySelectorAll(
-        "#explorePage .category"
-    );
+    categorias.forEach(categoria => {
 
-    categorias.forEach(categoria=>{
+        categoria.onclick = () => {
 
-        categoria.onclick=()=>{
+            const nombre = categoria.textContent
+                .replace(/[^\p{L}\p{N}\s]/gu, "")
+                .trim()
+                .toLowerCase();
 
-            exploreGroups.innerHTML="";
+            ocultarPantallas();
 
-            const nombre=categoria.textContent
-            .replace(/[^\p{L}\p{N}\s]/gu,"")
-            .trim()
-            .toLowerCase();
+            if (explorePage) {
+                explorePage.style.display = "block";
+            }
 
-            const encontrados=grupos.filter(grupo=>
+            if (fabButton) {
+                fabButton.style.display = "none";
+            }
 
-                grupo.category.toLowerCase()===nombre
+            if (!exploreGroups) return;
 
+            exploreGroups.innerHTML = "";
+
+            const encontrados = grupos.filter(grupo =>
+                grupo.category.toLowerCase() === nombre
             );
 
-            if(encontrados.length===0){
+            if (encontrados.length === 0) {
 
-                exploreGroups.innerHTML=`
-
-                <p style="text-align:center;color:#888">
-
-                No hay grupos en esta categoría.
-
-                </p>
-
+                exploreGroups.innerHTML = `
+                    <p style="text-align:center;color:#888">
+                        No hay grupos en esta categoría.
+                    </p>
                 `;
 
                 return;
-
             }
 
-            encontrados.forEach(grupo=>{
-
+            encontrados.forEach(grupo => {
                 exploreGroups.appendChild(
-
                     crearCardGrupo(grupo)
-
                 );
+            });
 
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
             });
 
         };
