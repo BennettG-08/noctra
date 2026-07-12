@@ -221,11 +221,19 @@ onAuthStateChanged(auth, (user) => {
                 ">
         `;
 
+        if (logoutBtn) {
+            logoutBtn.textContent = "Cerrar sesión";
+        }
+
     } else {
 
         profileBtn.innerHTML = `
             <i class="fa-solid fa-user"></i>
         `;
+
+        if (logoutBtn) {
+            logoutBtn.textContent = "Iniciar sesión con Google";
+        }
 
     }
 
@@ -234,6 +242,24 @@ onAuthStateChanged(auth, (user) => {
 if (profileBtn) {
 
     profileBtn.onclick = async () => {
+
+        if (auth.currentUser) {
+
+            ocultarPantallas();
+
+            profilePage.style.display = "block";
+
+            if (fabButton) {
+                fabButton.style.display = "none";
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+            return;
+        }
 
         try {
 
@@ -853,31 +879,41 @@ if (logoutBtn) {
 
     logoutBtn.onclick = async () => {
 
-        try {
+        if (auth.currentUser) {
 
-            await signOut(auth);
+            try {
 
-ocultarPantallas();
+                await signOut(auth);
 
-mostrarInicio();
+                profileImage.src = "https://placehold.co/150x150";
+                profileName.textContent = "Invitado";
+                profileEmail.textContent = "No has iniciado sesión";
 
-profileImage.src = "https://placehold.co/150x150";
+                logoutBtn.textContent = "Iniciar sesión";
 
-profileName.textContent = "Invitado";
+                mostrarInicio();
 
-profileEmail.textContent = "No has iniciado sesión";
+            } catch (error) {
 
-if (profileBtn) {
-    profileBtn.innerHTML = `
-        <i class="fa-solid fa-user"></i>
-    `;
-}
+                alert(error.message);
 
-alert("✅ Sesión cerrada correctamente.");
+            }
 
-        } catch (error) {
+        } else {
 
-            alert(error.message);
+            try {
+
+                await signInWithPopup(auth, provider);
+
+            } catch (error) {
+
+                if (error.code !== "auth/cancelled-popup-request") {
+
+                    alert(error.message);
+
+                }
+
+            }
 
         }
 
