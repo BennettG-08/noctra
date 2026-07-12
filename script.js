@@ -857,15 +857,23 @@ if (logoutBtn) {
 
             await signOut(auth);
 
-            mostrarInicio();
+ocultarPantallas();
 
-            profileImage.src = "https://placehold.co/150x150";
+mostrarInicio();
 
-            profileName.textContent = "Invitado";
+profileImage.src = "https://placehold.co/150x150";
 
-            profileEmail.textContent = "No has iniciado sesión";
+profileName.textContent = "Invitado";
 
-            alert("Sesión cerrada correctamente.");
+profileEmail.textContent = "No has iniciado sesión";
+
+if (profileBtn) {
+    profileBtn.innerHTML = `
+        <i class="fa-solid fa-user"></i>
+    `;
+}
+
+alert("✅ Sesión cerrada correctamente.");
 
         } catch (error) {
 
