@@ -34,12 +34,12 @@ let favoritos = JSON.parse(
     localStorage.getItem("favorites")
 ) || [];
 
-let vistas = JSON.parse(
+let vistasLocales = JSON.parse(
     localStorage.getItem("groupViews")
 ) || {};
 
 // ==========================
-// ELEMENTOS
+// ELEMENTOS DEL DOM
 // ==========================
 
 const splash = document.getElementById("splash");
@@ -57,13 +57,16 @@ const fabButton = document.getElementById("fabButton");
 const publishModal = document.getElementById("publishModal");
 const publishForm = document.getElementById("publishForm");
 
-const profileBtn = document.getElementById("profileBtn");
 const notificationBtn = document.getElementById("notificationBtn");
+const profileBtn = document.getElementById("profileBtn");
 
 const homeNavBtn = document.getElementById("homeNavBtn");
 const exploreNavBtn = document.getElementById("exploreNavBtn");
 const favoritesNavBtn = document.getElementById("favoritesNavBtn");
 const profileNavBtn = document.getElementById("profileNavBtn");
+
+const featuredBtn = document.getElementById("featuredBtn");
+const refreshBtn = document.getElementById("refreshBtn");
 
 const profilePage = document.getElementById("profilePage");
 const favoritesPage = document.getElementById("favoritesPage");
@@ -92,9 +95,13 @@ const detailJoinBtn = document.getElementById("detailJoinBtn");
 function ocultarPantallas() {
 
     if (main) main.style.display = "none";
+
     if (profilePage) profilePage.style.display = "none";
+
     if (favoritesPage) favoritesPage.style.display = "none";
+
     if (explorePage) explorePage.style.display = "none";
+
     if (groupDetailsPage) groupDetailsPage.style.display = "none";
 
 }
@@ -104,22 +111,31 @@ function mostrarInicio() {
     ocultarPantallas();
 
     if (main) {
+
         main.style.display = "block";
+
     }
 
     if (fabButton) {
+
         fabButton.style.display = "flex";
+
     }
 
-    document
-        .querySelectorAll(".navItem")
-        .forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".navItem").forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
 
     homeNavBtn?.classList.add("active");
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
 
 }
@@ -127,21 +143,30 @@ function mostrarInicio() {
 function guardarFavoritos() {
 
     localStorage.setItem(
+
         "favorites",
+
         JSON.stringify(favoritos)
+
     );
 
 }
 
 function esFavorito(id) {
 
-    return favoritos.some(g => g.id === id);
+    return favoritos.some(grupo => grupo.id === id);
 
 }
 
 function tiempoTranscurrido(fecha) {
 
     if (!fecha) return "Hace un momento";
+
+    if (fecha.seconds) {
+
+        fecha = fecha.seconds * 1000;
+
+    }
 
     const diferencia = Date.now() - fecha;
 
@@ -150,13 +175,17 @@ function tiempoTranscurrido(fecha) {
     if (minutos < 1) return "Hace unos segundos";
 
     if (minutos < 60) {
+
         return `Hace ${minutos} min`;
+
     }
 
     const horas = Math.floor(minutos / 60);
 
     if (horas < 24) {
+
         return `Hace ${horas} h`;
+
     }
 
     const dias = Math.floor(horas / 24);
@@ -209,13 +238,19 @@ onAuthStateChanged(auth, (user) => {
         `;
 
         if (profileImage) {
-            profileImage.src = user.photoURL;
-            profileName.textContent = user.displayName;
-            profileEmail.textContent = user.email;
+
+            profileImage.src = user.photoURL || "https://placehold.co/150x150";
+
+            profileName.textContent = user.displayName || "Usuario";
+
+            profileEmail.textContent = user.email || "";
+
         }
 
         if (logoutBtn) {
+
             logoutBtn.textContent = "Cerrar sesión";
+
         }
 
     } else {
@@ -225,13 +260,19 @@ onAuthStateChanged(auth, (user) => {
         `;
 
         if (profileImage) {
+
             profileImage.src = "https://placehold.co/150x150";
+
             profileName.textContent = "Invitado";
+
             profileEmail.textContent = "No has iniciado sesión";
+
         }
 
         if (logoutBtn) {
+
             logoutBtn.textContent = "Iniciar sesión con Google";
+
         }
 
     }
@@ -246,10 +287,12 @@ profileBtn?.addEventListener("click", async () => {
 
             await signInWithPopup(auth, provider);
 
-        } catch (e) {
+        } catch (error) {
 
-            if (e.code !== "auth/cancelled-popup-request") {
-                alert(e.message);
+            if (error.code !== "auth/cancelled-popup-request") {
+
+                alert(error.message);
+
             }
 
         }
@@ -263,7 +306,9 @@ profileBtn?.addEventListener("click", async () => {
     profilePage.style.display = "block";
 
     if (fabButton) {
+
         fabButton.style.display = "none";
+
     }
 
 });
@@ -276,9 +321,9 @@ logoutBtn?.addEventListener("click", async () => {
 
             await signInWithPopup(auth, provider);
 
-        } catch (e) {
+        } catch (error) {
 
-            alert(e.message);
+            alert(error.message);
 
         }
 
@@ -293,7 +338,7 @@ logoutBtn?.addEventListener("click", async () => {
 });
 
 // ==========================
-// BOTONES
+// BOTONES Y NAVEGACIÓN
 // ==========================
 
 fabButton?.addEventListener("click", () => {
@@ -318,12 +363,6 @@ notificationBtn?.addEventListener("click", () => {
 
 });
 
-backToHomeBtn?.addEventListener("click", () => {
-
-    mostrarInicio();
-
-});
-
 homeNavBtn?.addEventListener("click", () => {
 
     mostrarInicio();
@@ -336,11 +375,17 @@ exploreNavBtn?.addEventListener("click", () => {
 
     explorePage.style.display = "block";
 
-    fabButton.style.display = "none";
+    if (fabButton) {
 
-    document
-        .querySelectorAll(".navItem")
-        .forEach(btn => btn.classList.remove("active"));
+        fabButton.style.display = "none";
+
+    }
+
+    document.querySelectorAll(".navItem").forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
 
     exploreNavBtn.classList.add("active");
 
@@ -352,11 +397,17 @@ favoritesNavBtn?.addEventListener("click", () => {
 
     favoritesPage.style.display = "block";
 
-    fabButton.style.display = "none";
+    if (fabButton) {
 
-    document
-        .querySelectorAll(".navItem")
-        .forEach(btn => btn.classList.remove("active"));
+        fabButton.style.display = "none";
+
+    }
+
+    document.querySelectorAll(".navItem").forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
 
     favoritesNavBtn.classList.add("active");
 
@@ -378,13 +429,25 @@ profileNavBtn?.addEventListener("click", () => {
 
     profilePage.style.display = "block";
 
-    fabButton.style.display = "none";
+    if (fabButton) {
 
-    document
-        .querySelectorAll(".navItem")
-        .forEach(btn => btn.classList.remove("active"));
+        fabButton.style.display = "none";
+
+    }
+
+    document.querySelectorAll(".navItem").forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
 
     profileNavBtn.classList.add("active");
+
+});
+
+backToHomeBtn?.addEventListener("click", () => {
+
+    mostrarInicio();
 
 });
 
@@ -402,9 +465,7 @@ function crearCardGrupo(grupo) {
 
     card.innerHTML = `
         <div class="groupImage">
-
             <img src="${imagen}" alt="${grupo.name}">
-
         </div>
 
         <div class="groupInfo">
@@ -414,25 +475,19 @@ function crearCardGrupo(grupo) {
             <p>📂 ${grupo.category}</p>
 
             <small>
-
                 👁️ ${grupo.views || 0} vistas
                 <br>
                 🕒 ${tiempoTranscurrido(grupo.createdAt)}
-
             </small>
 
             <div class="groupActions">
 
                 <button class="favoriteBtn ${esFavorito(grupo.id) ? "active" : ""}">
-
                     <i class="fa-solid fa-heart"></i>
-
                 </button>
 
                 <button class="joinBtn verGrupoBtn">
-
                     Ver grupo
-
                 </button>
 
             </div>
@@ -463,7 +518,7 @@ function crearCardGrupo(grupo) {
 
     };
 
-    verGrupoBtn.onclick = () => {
+    verGrupoBtn.onclick = async () => {
 
         ocultarPantallas();
 
@@ -479,7 +534,39 @@ function crearCardGrupo(grupo) {
         detailName.textContent = grupo.name;
         detailCategory.textContent = "📂 " + grupo.category;
         detailDescription.textContent = grupo.description || "";
-        detailViews.textContent = "👁️ " + (grupo.views || 0) + " vistas";
+
+        // Aumentar vistas una sola vez por dispositivo
+
+        if (!vistasLocales[grupo.id]) {
+
+            try {
+
+                await updateDoc(
+                    doc(db, "groups", grupo.id),
+                    {
+                        views: increment(1)
+                    }
+                );
+
+                grupo.views = (grupo.views || 0) + 1;
+
+                vistasLocales[grupo.id] = true;
+
+                localStorage.setItem(
+                    "groupViews",
+                    JSON.stringify(vistasLocales)
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+
+        detailViews.textContent = `👁️ ${grupo.views || 0} vistas`;
+
         detailTime.textContent = "🕒 " + tiempoTranscurrido(grupo.createdAt);
 
         detailJoinBtn.onclick = () => {
@@ -491,6 +578,7 @@ function crearCardGrupo(grupo) {
         window.scrollTo({
 
             top: 0,
+
             behavior: "smooth"
 
         });
@@ -507,32 +595,39 @@ function crearCardGrupo(grupo) {
 
 async function cargarGrupos() {
 
-    grupos = [];
+    try {
 
-    const snapshot = await getDocs(collection(db, "groups"));
+        grupos = [];
 
-    snapshot.forEach((docSnap) => {
+        const snapshot = await getDocs(collection(db, "groups"));
 
-        const grupo = {
-            id: docSnap.id,
-            ...docSnap.data()
-        };
+        snapshot.forEach((docSnap) => {
 
-        if (grupo.createdAt?.seconds) {
-            grupo.createdAt = grupo.createdAt.seconds * 1000;
-        }
+            const grupo = {
+                id: docSnap.id,
+                ...docSnap.data()
+            };
 
-        grupos.push(grupo);
+            if (grupo.createdAt?.seconds) {
+                grupo.createdAt = grupo.createdAt.seconds * 1000;
+            }
 
-    });
+            grupos.push(grupo);
 
-    grupos.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        });
 
-    if (featuredGroups) {
+        const destacados = [...grupos].sort(
+            (a, b) => (b.views || 0) - (a.views || 0)
+        );
+
+        const recientes = [...grupos].sort(
+            (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
+        );
 
         featuredGroups.innerHTML = "";
+        latestGroups.innerHTML = "";
 
-        grupos.slice(0, 6).forEach(grupo => {
+        destacados.slice(0, 6).forEach(grupo => {
 
             featuredGroups.appendChild(
                 crearCardGrupo(grupo)
@@ -540,13 +635,7 @@ async function cargarGrupos() {
 
         });
 
-    }
-
-    if (latestGroups) {
-
-        latestGroups.innerHTML = "";
-
-        grupos.forEach(grupo => {
+        recientes.forEach(grupo => {
 
             latestGroups.appendChild(
                 crearCardGrupo(grupo)
@@ -554,12 +643,18 @@ async function cargarGrupos() {
 
         });
 
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Error al cargar los grupos.");
+
     }
 
 }
 
 // ==========================
-// BUSCADOR + EXPLORAR + CATEGORÍAS
+// BUSCADOR + CATEGORÍAS
 // ==========================
 
 function mostrarGrupos(lista, contenedor) {
@@ -569,9 +664,9 @@ function mostrarGrupos(lista, contenedor) {
     if (lista.length === 0) {
 
         contenedor.innerHTML = `
-        <p style="text-align:center;color:#999;padding:30px;">
-            No se encontraron grupos.
-        </p>
+            <p style="text-align:center;padding:30px;color:#888;">
+                No se encontraron grupos.
+            </p>
         `;
 
         return;
@@ -595,33 +690,33 @@ function abrirCategoria(nombre) {
     explorePage.style.display = "block";
 
     if (fabButton) {
+
         fabButton.style.display = "none";
+
     }
 
-    document.querySelectorAll(".navItem")
-        .forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".navItem").forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
 
     exploreNavBtn.classList.add("active");
 
     const filtrados = grupos.filter(grupo =>
+
         grupo.category &&
         grupo.category.toLowerCase() === nombre.toLowerCase()
+
     );
 
     mostrarGrupos(filtrados, exploreGroups);
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
 }
-
-// Categorías de Inicio
 
 document.querySelectorAll(".homeCategory").forEach(categoria => {
 
-    categoria.addEventListener("click", () => {
+    categoria.onclick = () => {
 
         const nombre = categoria.textContent
             .replace(/[^\p{L}\p{N}\s]/gu, "")
@@ -629,15 +724,13 @@ document.querySelectorAll(".homeCategory").forEach(categoria => {
 
         abrirCategoria(nombre);
 
-    });
+    };
 
 });
-
-// Categorías de Explorar
 
 document.querySelectorAll("#explorePage .category").forEach(categoria => {
 
-    categoria.addEventListener("click", () => {
+    categoria.onclick = () => {
 
         const nombre = categoria.textContent
             .replace(/[^\p{L}\p{N}\s]/gu, "")
@@ -645,17 +738,21 @@ document.querySelectorAll("#explorePage .category").forEach(categoria => {
 
         abrirCategoria(nombre);
 
-    });
+    };
 
 });
 
-// Buscador
-
 searchInput?.addEventListener("input", () => {
 
-    const texto = searchInput.value
-        .trim()
-        .toLowerCase();
+    const texto = searchInput.value.trim().toLowerCase();
+
+    if (texto === "") {
+
+        cargarGrupos();
+
+        return;
+
+    }
 
     const resultados = grupos.filter(grupo =>
 
@@ -663,13 +760,19 @@ searchInput?.addEventListener("input", () => {
 
         grupo.category.toLowerCase().includes(texto) ||
 
-        (grupo.description || "")
-            .toLowerCase()
-            .includes(texto)
+        (grupo.description || "").toLowerCase().includes(texto)
 
     );
 
-    mostrarGrupos(resultados, latestGroups);
+    latestGroups.innerHTML = "";
+
+    resultados.forEach(grupo => {
+
+        latestGroups.appendChild(
+            crearCardGrupo(grupo)
+        );
+
+    });
 
 });
 
@@ -678,6 +781,8 @@ searchInput?.addEventListener("input", () => {
 // ==========================
 
 function mostrarFavoritos() {
+
+    if (!favoritesList) return;
 
     favoritesList.innerHTML = "";
 
@@ -711,49 +816,86 @@ publishForm?.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const nuevoGrupo = {
+    const name = document.getElementById("groupName").value.trim();
+    const description = document.getElementById("groupDescription").value.trim();
+    const category = document.getElementById("groupCategory").value;
+    const link = document.getElementById("groupLink").value.trim();
 
-        name: groupName.value.trim(),
-        description: groupDescription.value.trim(),
-        category: groupCategory.value,
-        link: groupLink.value.trim(),
-        image: "https://placehold.co/300x300/png?text=NOCTRA",
-        views: 0,
-        createdAt: Date.now()
+    const imageInput = document.getElementById("groupImage");
 
-    };
+    if (!name || !description || !category || !link) {
+
+        alert("Completa todos los campos.");
+
+        return;
+
+    }
+
+    let image = "https://placehold.co/300x300/png?text=NOCTRA";
+
+    if (imageInput.files.length > 0) {
+
+        image = await new Promise((resolve) => {
+
+            const reader = new FileReader();
+
+            reader.onload = (evento) => {
+
+                resolve(evento.target.result);
+
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+
+        });
+
+    }
 
     try {
 
-        await addDoc(collection(db, "groups"), nuevoGrupo);
+        await addDoc(collection(db, "groups"), {
 
-        publishModal.style.display = "none";
+            name,
+            description,
+            category,
+            link,
+            image,
+            views: 0,
+            createdAt: Date.now()
+
+        });
 
         publishForm.reset();
 
+        publishModal.style.display = "none";
+
         await cargarGrupos();
 
-        alert("Grupo publicado correctamente.");
+        alert("✅ Grupo publicado correctamente.");
 
-    } catch (e) {
+    } catch (error) {
 
-        alert("Error al publicar.");
+        console.error(error);
 
-        console.error(e);
+        alert("Error al publicar el grupo.");
 
     }
 
 });
 
 // ==========================
-// INICIO
+// BOTONES FINALES
 // ==========================
 
-refreshBtn?.addEventListener("click", cargarGrupos);
+refreshBtn?.addEventListener("click", () => {
+
+    cargarGrupos();
+
+});
 
 featuredBtn?.addEventListener("click", () => {
 
-    latestGroups.scrollIntoView({
+    latestGroups?.scrollIntoView({
 
         behavior: "smooth"
 
@@ -761,6 +903,19 @@ featuredBtn?.addEventListener("click", () => {
 
 });
 
+// ==========================
+// INICIAR APLICACIÓN
+// ==========================
+
+mostrarInicio();
+
 cargarGrupos();
 
-setInterval(cargarGrupos, 60000);
+setInterval(() => {
+
+    cargarGrupos();
+
+}, 60000);
+
+                              
+
