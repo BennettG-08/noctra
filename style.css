@@ -1,5 +1,5 @@
 /* ==========================
-   𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
+ 𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
    Desarrollado por Bennett
 ========================== */
 
@@ -31,7 +31,6 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-
     font-family:"Poppins",sans-serif;
 
 }
@@ -45,31 +44,20 @@ html{
 body{
 
     background:var(--bg);
-
     color:var(--text);
-
-    overflow-x:hidden;
-
     min-height:100vh;
+    overflow-x:hidden;
 
 }
 
 img{
 
+    display:block;
     max-width:100%;
 
-    display:block;
-
 }
 
-button{
-
-    font-family:inherit;
-
-    cursor:pointer;
-
-}
-
+button,
 input,
 textarea,
 select{
@@ -78,10 +66,15 @@ select{
 
 }
 
+button{
+
+    cursor:pointer;
+
+}
+
 a{
 
     color:inherit;
-
     text-decoration:none;
 
 }
@@ -93,16 +86,13 @@ a{
 #splash{
 
     position:fixed;
-
     inset:0;
 
-    background:linear-gradient(135deg,#09090f,#171727);
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
+
+    background:linear-gradient(135deg,#09090f,#171727);
 
     z-index:9999;
 
@@ -113,40 +103,34 @@ a{
 .logoSplash{
 
     text-align:center;
-
     animation:fadeUp 1s ease;
 
 }
 
-.logoSplash h1{
+.noctraLogo{
 
-    font-size:42px;
-
+    white-space:nowrap;
+    font-size:2.2rem;
+    font-weight:700;
     color:var(--primary);
-
-    letter-spacing:2px;
-
-    margin-bottom:12px;
 
 }
 
 .logoSplash p{
 
+    margin-top:12px;
     color:var(--muted);
-
-    font-size:15px;
-
-    margin-bottom:10px;
 
 }
 
 .creatorSplash{
 
-    display:inline-block;
+    display:block;
+    margin-top:10px;
 
     color:var(--secondary);
 
-    font-size:13px;
+    font-size:.95rem;
 
 }
 
@@ -157,7 +141,6 @@ a{
 #app{
 
     width:100%;
-
     min-height:100vh;
 
 }
@@ -171,28 +154,24 @@ a{
     position:fixed;
 
     top:0;
-
     left:0;
 
     width:100%;
-
     height:70px;
 
     padding:0 18px;
 
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
-    background:rgba(9,9,15,.85);
+    background:rgba(9,9,15,.90);
 
     backdrop-filter:blur(15px);
 
-    z-index:1000;
-
     border-bottom:1px solid rgba(255,255,255,.05);
+
+    z-index:1000;
 
 }
 
@@ -200,14 +179,11 @@ a{
 
     font-size:20px;
 
-    color:var(--text);
-
 }
 
 .actions{
 
     display:flex;
-
     gap:12px;
 
 }
@@ -215,18 +191,16 @@ a{
 .actions button{
 
     width:42px;
-
     height:42px;
 
     border:none;
-
     border-radius:50%;
 
     background:var(--surface);
 
-    color:white;
+    color:#fff;
 
-    transition:var(--transition);
+    transition:.30s;
 
 }
 
@@ -240,31 +214,32 @@ a{
    HERO
 ========================== */
 
+main{
+
+    padding-top:70px;
+    padding-bottom:140px;
+
+}
+
 .hero{
 
-    padding:100px 20px 30px;
+    padding:30px 20px;
 
 }
 
 .hero h1{
 
     font-size:30px;
-
     font-weight:700;
-
     line-height:1.3;
-
-    margin-bottom:12px;
 
 }
 
 .hero p{
 
+    margin-top:12px;
     color:var(--muted);
-
     line-height:1.7;
-
-    margin-bottom:20px;
 
 }
 
@@ -274,17 +249,17 @@ a{
 
 .searchBox{
 
+    margin-top:22px;
+
     display:flex;
-
     align-items:center;
-
     gap:12px;
-
-    background:var(--surface);
 
     padding:15px 18px;
 
-    border-radius:var(--radius);
+    background:var(--surface);
+
+    border-radius:18px;
 
     box-shadow:var(--shadow);
 
@@ -294,8 +269,6 @@ a{
 
     color:var(--secondary);
 
-    font-size:18px;
-
 }
 
 .searchBox input{
@@ -303,12 +276,11 @@ a{
     flex:1;
 
     border:none;
-
     outline:none;
 
     background:transparent;
 
-    color:var(--text);
+    color:#fff;
 
     font-size:15px;
 
@@ -321,7 +293,6 @@ a{
 section{
 
     padding:0 20px;
-
     margin-bottom:35px;
 
 }
@@ -329,9 +300,7 @@ section{
 .sectionHeader{
 
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
     margin-bottom:18px;
@@ -347,8 +316,7 @@ section{
 .sectionHeader button{
 
     border:none;
-
-    background:transparent;
+    background:none;
 
     color:var(--secondary);
 
@@ -357,39 +325,31 @@ section{
 }
 
 /* ==========================
-   LISTA DE GRUPOS
+   TARJETAS DE GRUPOS
 ========================== */
 
 .groupList{
 
     display:flex;
-
     flex-direction:column;
-
     gap:16px;
 
 }
 
-
-/* ==========================
-   TARJETA DE GRUPO
-========================== */
-
 .groupCard{
+
+    display:flex;
+    gap:16px;
+
+    padding:16px;
 
     background:var(--surface);
 
     border-radius:20px;
 
-    padding:16px;
-
-    display:flex;
-
-    gap:16px;
-
     box-shadow:var(--shadow);
 
-    transition:var(--transition);
+    transition:.30s;
 
 }
 
@@ -402,7 +362,6 @@ section{
 .groupImage img{
 
     width:90px;
-
     height:90px;
 
     object-fit:cover;
@@ -427,17 +386,25 @@ section{
 
 .groupInfo p{
 
-    color:var(--muted);
-
-    font-size:14px;
-
     margin-bottom:8px;
+
+    color:var(--muted);
 
 }
 
 .groupInfo small{
 
     color:#8d8d98;
+
+}
+
+.groupActions{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin-top:14px;
 
 }
 
@@ -461,25 +428,13 @@ section{
 
     font-weight:600;
 
-    transition:var(--transition);
+    transition:.30s;
 
 }
 
 .joinBtn:hover{
 
     transform:translateY(-2px);
-
-}
-
-.groupActions{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-top:14px;
 
 }
 
@@ -499,13 +454,7 @@ section{
 
     font-size:18px;
 
-    transition:var(--transition);
-
-}
-
-.favoriteBtn:hover{
-
-    transform:scale(1.08);
+    transition:.30s;
 
 }
 
@@ -514,6 +463,12 @@ section{
     background:#ff4d6d;
 
     color:#fff;
+
+}
+
+.favoriteBtn:hover{
+
+    transform:scale(1.08);
 
 }
 
@@ -543,9 +498,11 @@ section{
 
     font-weight:600;
 
-    transition:var(--transition);
-
     box-shadow:var(--shadow);
+
+    transition:.30s;
+
+    cursor:pointer;
 
 }
 
@@ -558,7 +515,7 @@ section{
 }
 
 /* ==========================
-   BOTÓN FLOTANTE
+   BOTÓN PUBLICAR
 ========================== */
 
 #fabButton{
@@ -566,15 +523,12 @@ section{
     position:fixed;
 
     right:20px;
-
     bottom:90px;
 
     width:60px;
-
     height:60px;
 
     border:none;
-
     border-radius:50%;
 
     background:linear-gradient(135deg,var(--primary),var(--secondary));
@@ -587,7 +541,7 @@ section{
 
     z-index:900;
 
-    transition:var(--transition);
+    transition:.30s;
 
 }
 
@@ -605,23 +559,19 @@ section{
 
     position:fixed;
 
+    left:0;
     bottom:0;
 
-    left:0;
-
     width:100%;
-
     height:72px;
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
 
     background:rgba(9,9,15,.92);
 
     backdrop-filter:blur(18px);
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
 
     border-top:1px solid rgba(255,255,255,.06);
 
@@ -631,19 +581,15 @@ section{
 
 .navItem{
 
-    background:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
 
+    background:none;
     border:none;
 
     color:var(--muted);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:5px;
 
     font-size:12px;
 
@@ -661,33 +607,22 @@ section{
 
 }
 
-/* Evita que el menú inferior tape el último grupo */
-
-main{
-
-    padding-bottom:140px;
-
-}
-
 /* ==========================
-   MODALES
+   MODAL
 ========================== */
 
 .modal{
 
     position:fixed;
-
     inset:0;
 
     display:none;
-
     justify-content:center;
-
     align-items:center;
 
-    background:rgba(0,0,0,.75);
-
     padding:20px;
+
+    background:rgba(0,0,0,.75);
 
     z-index:2000;
 
@@ -696,7 +631,6 @@ main{
 .modalContent{
 
     width:100%;
-
     max-width:430px;
 
     background:var(--surface);
@@ -712,7 +646,6 @@ main{
 .modalContent h2{
 
     text-align:center;
-
     margin-bottom:20px;
 
 }
@@ -728,21 +661,19 @@ main{
     margin-bottom:15px;
 
     border:none;
-
     outline:none;
 
     border-radius:14px;
 
     background:var(--surface2);
 
-    color:var(--text);
+    color:#fff;
 
 }
 
 .modalContent textarea{
 
     resize:vertical;
-
     min-height:100px;
 
 }
@@ -759,7 +690,7 @@ main{
 
     background:linear-gradient(135deg,var(--primary),var(--secondary));
 
-    color:white;
+    color:#fff;
 
     font-weight:600;
 
@@ -772,7 +703,6 @@ main{
 .profileCard{
 
     max-width:420px;
-
     margin:30px auto;
 
     background:var(--surface);
@@ -790,22 +720,13 @@ main{
 .profileCard img{
 
     width:130px;
-
     height:130px;
 
-    margin:auto;
+    margin:auto auto 20px;
 
     border-radius:50%;
 
     object-fit:cover;
-
-    margin-bottom:20px;
-
-}
-
-.profileCard h2{
-
-    margin-bottom:10px;
 
 }
 
@@ -813,7 +734,7 @@ main{
 
     color:var(--muted);
 
-    margin-bottom:20px;
+    margin:15px 0 20px;
 
 }
 
@@ -848,14 +769,13 @@ main{
 .groupDetail img{
 
     width:180px;
-
     height:180px;
+
+    margin:0 auto 20px;
 
     object-fit:cover;
 
     border-radius:20px;
-
-    margin:0 auto 20px;
 
 }
 
@@ -868,7 +788,7 @@ main{
 }
 
 /* ==========================
-   FOOTER DEL CREADOR
+   FOOTER
 ========================== */
 
 .creatorFooter{
@@ -895,25 +815,27 @@ main{
 
 }
 
-.creatorCard h2{
-
-    margin-bottom:10px;
-
-}
-
 .creatorCard h3{
 
     color:var(--secondary);
 
-    margin-bottom:12px;
+    margin:10px 0;
 
 }
 
-.creatorCard p{
+.creatorText{
 
     color:var(--muted);
 
     line-height:1.7;
+
+}
+
+.noctraBrand{
+
+    font-weight:700;
+
+    color:#fff;
 
 }
 
@@ -933,19 +855,19 @@ main{
 
     display:flex;
 
-    align-items:center;
-
     justify-content:center;
+
+    align-items:center;
 
     gap:10px;
 
-    background:var(--surface2);
-
     padding:14px;
+
+    background:var(--surface2);
 
     border-radius:14px;
 
-    transition:.30s;
+    transition:.3s;
 
 }
 
@@ -965,7 +887,7 @@ main{
 
         opacity:0;
 
-        transform:translateY(30px);
+        transform:translateY(25px);
 
     }
 
@@ -981,40 +903,10 @@ main{
 
 .groupCard,
 .category,
-.creatorCard,
 .profileCard,
-.groupDetail{
+.groupDetail,
+.creatorCard{
 
     animation:fadeUp .45s ease;
 
-}
-
-/* ==========================
-   LOGO Y CREADOR
-========================== */
-
-.noctraLogo{
-    white-space: nowrap;
-    text-align: center;
-}
-
-.creatorSplash{
-    display:block;
-    margin-top:10px;
-    font-size:.95rem;
-    color:#a8a8a8;
-    text-align:center;
-}
-
-.creatorText{
-    text-align:center;
-    line-height:1.7;
-    margin-top:12px;
-}
-
-.noctraBrand{
-    display:inline-block;
-    white-space:nowrap;
-    font-weight:700;
-    font-size:1.2rem;
 }
