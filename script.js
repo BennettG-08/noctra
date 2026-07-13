@@ -636,8 +636,10 @@ alert("Voy a mostrar grupos");
     alert("Creando tarjeta: " + grupo.name);
 
     featuredGroups.appendChild(
-        crearCardGrupo(grupo)
-    );
+    crearCardGrupo(grupo)
+);
+
+alert("Tarjeta agregada a destacados");
 
 });
 
