@@ -629,6 +629,8 @@ alert("Grupos encontrados: " + snapshot.size);
         featuredGroups.innerHTML = "";
         latestGroups.innerHTML = "";
 
+        alert("Voy a mostrar grupos");
+
         destacados.slice(0, 6).forEach(grupo => {
 
             featuredGroups.appendChild(
