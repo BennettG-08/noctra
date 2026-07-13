@@ -110,9 +110,19 @@ a{
 .noctraLogo{
 
     white-space:nowrap;
-    font-size:2.2rem;
-    font-weight:700;
-    color:var(--primary);
+    font-size:2.4rem;
+    font-weight:800;
+
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #00d4ff
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    letter-spacing:2px;
 
 }
 
@@ -908,5 +918,68 @@ section{
 .creatorCard{
 
     animation:fadeUp .45s ease;
+
+}
+
+.hidden{
+
+    opacity:0;
+    pointer-events:none;
+
+}
+
+.show{
+
+    opacity:1;
+    pointer-events:auto;
+
+}
+
+/* ==========================
+   RESPONSIVE DESKTOP
+========================== */
+
+@media(min-width:768px){
+
+    .hero,
+    section{
+
+        max-width:900px;
+        margin-left:auto;
+        margin-right:auto;
+
+    }
+
+
+    .groupList{
+
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+
+    .categoryGrid{
+
+        grid-template-columns:repeat(4,1fr);
+
+    }
+
+
+    .bottomNav{
+
+        width:500px;
+        left:50%;
+        transform:translateX(-50%);
+        border-radius:25px 25px 0 0;
+
+    }
+
+
+    #fabButton{
+
+        right:40px;
+
+    }
 
 }
