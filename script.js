@@ -457,6 +457,10 @@ backToHomeBtn?.addEventListener("click", () => {
 
 function crearCardGrupo(grupo) {
 
+    alert("Entró a crear tarjeta");
+
+    const card = document.createElement("div");
+
     const card = document.createElement("div");
 
 card.className = "groupCard";
