@@ -461,6 +461,8 @@ function crearCardGrupo(grupo) {
 
     card.className = "groupCard";
 
+alert("Tarjeta creada: " + grupo.name);
+
     const imagen = grupo.image || "https://placehold.co/300x300/png?text=NOCTRA";
 
     card.innerHTML = `
