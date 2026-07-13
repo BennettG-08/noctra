@@ -461,8 +461,6 @@ function crearCardGrupo(grupo) {
 
     const card = document.createElement("div");
 
-    const card = document.createElement("div");
-
 card.className = "groupCard";
 
 alert("Tarjeta creada: " + grupo.name);
