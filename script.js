@@ -601,7 +601,7 @@ async function cargarGrupos() {
 
         const snapshot = await getDocs(collection(db, "groups"));
 
-console.log("Grupos encontrados:", snapshot.size);
+alert("Grupos encontrados: " + snapshot.size);
 
         snapshot.forEach((docSnap) => {
 
