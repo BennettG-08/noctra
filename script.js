@@ -633,11 +633,13 @@ alert("Voy a mostrar grupos");
 
         destacados.slice(0, 6).forEach(grupo => {
 
-            featuredGroups.appendChild(
-                crearCardGrupo(grupo)
-            );
+    alert("Creando tarjeta: " + grupo.name);
 
-        });
+    featuredGroups.appendChild(
+        crearCardGrupo(grupo)
+    );
+
+});
 
         recientes.forEach(grupo => {
 
