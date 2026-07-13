@@ -499,8 +499,10 @@ alert("Tarjeta creada: " + grupo.name);
         </div>
     `;
 
-    const favoriteBtn = card.querySelector(".favoriteBtn");
-    const verGrupoBtn = card.querySelector(".verGrupoBtn");
+    alert("HTML de tarjeta creado");
+
+const favoriteBtn = card.querySelector(".favoriteBtn");
+const verGrupoBtn = card.querySelector(".verGrupoBtn");
 
     favoriteBtn.onclick = () => {
 
