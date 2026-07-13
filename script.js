@@ -627,9 +627,9 @@ alert("Grupos encontrados: " + snapshot.size);
         );
 
         featuredGroups.innerHTML = "";
-        latestGroups.innerHTML = "";
+latestGroups.innerHTML = "";
 
-        alert("Voy a mostrar grupos");
+alert("Voy a mostrar grupos");
 
         destacados.slice(0, 6).forEach(grupo => {
 
