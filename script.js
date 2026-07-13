@@ -2,8 +2,8 @@ import { app, db } from "./firebase.js";
 
 import {
     collection,
-    addDoc,
     getDocs,
+    addDoc,
     updateDoc,
     doc,
     increment
@@ -13,8 +13,8 @@ import {
     getAuth,
     GoogleAuthProvider,
     signInWithPopup,
-    onAuthStateChanged,
-    signOut
+    signOut,
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 // ==========================
@@ -30,52 +30,51 @@ const provider = new GoogleAuthProvider();
 
 let grupos = [];
 
-let favorites = JSON.parse(
+let favoritos = JSON.parse(
     localStorage.getItem("favorites")
 ) || [];
 
-const viewsCache = JSON.parse(
+let vistas = JSON.parse(
     localStorage.getItem("groupViews")
 ) || {};
 
 // ==========================
-// ELEMENTOS DEL DOM
+// ELEMENTOS
 // ==========================
 
 const splash = document.getElementById("splash");
 
 const main = document.querySelector("main");
 
+const featuredGroups = document.getElementById("featuredGroups");
+const latestGroups = document.getElementById("latestGroups");
+const exploreGroups = document.getElementById("exploreGroups");
+const favoritesList = document.getElementById("favoritesList");
+
+const searchInput = document.getElementById("searchInput");
+
 const fabButton = document.getElementById("fabButton");
-
-const notificationBtn = document.getElementById("notificationBtn");
-const profileBtn = document.getElementById("profileBtn");
-
 const publishModal = document.getElementById("publishModal");
 const publishForm = document.getElementById("publishForm");
+
+const profileBtn = document.getElementById("profileBtn");
+const notificationBtn = document.getElementById("notificationBtn");
 
 const homeNavBtn = document.getElementById("homeNavBtn");
 const exploreNavBtn = document.getElementById("exploreNavBtn");
 const favoritesNavBtn = document.getElementById("favoritesNavBtn");
 const profileNavBtn = document.getElementById("profileNavBtn");
 
-const featuredBtn = document.getElementById("featuredBtn");
-const refreshBtn = document.getElementById("refreshBtn");
-
-const searchInput = document.getElementById("searchInput");
-
 const profilePage = document.getElementById("profilePage");
 const favoritesPage = document.getElementById("favoritesPage");
 const explorePage = document.getElementById("explorePage");
 const groupDetailsPage = document.getElementById("groupDetailsPage");
 
-const favoritesList = document.getElementById("favoritesList");
-const exploreGroups = document.getElementById("exploreGroups");
+const backToHomeBtn = document.getElementById("backToHomeBtn");
 
 const profileImage = document.getElementById("profileImage");
 const profileName = document.getElementById("profileName");
 const profileEmail = document.getElementById("profileEmail");
-
 const logoutBtn = document.getElementById("logoutBtn");
 
 const detailImage = document.getElementById("detailImage");
@@ -86,8 +85,6 @@ const detailViews = document.getElementById("detailViews");
 const detailTime = document.getElementById("detailTime");
 const detailJoinBtn = document.getElementById("detailJoinBtn");
 
-const backToHomeBtn = document.getElementById("backToHomeBtn");
-
 // ==========================
 // FUNCIONES GENERALES
 // ==========================
@@ -95,13 +92,9 @@ const backToHomeBtn = document.getElementById("backToHomeBtn");
 function ocultarPantallas() {
 
     if (main) main.style.display = "none";
-
     if (profilePage) profilePage.style.display = "none";
-
     if (favoritesPage) favoritesPage.style.display = "none";
-
     if (explorePage) explorePage.style.display = "none";
-
     if (groupDetailsPage) groupDetailsPage.style.display = "none";
 
 }
@@ -111,23 +104,22 @@ function mostrarInicio() {
     ocultarPantallas();
 
     if (main) {
-
         main.style.display = "block";
-
     }
 
     if (fabButton) {
-
         fabButton.style.display = "flex";
-
     }
 
+    document
+        .querySelectorAll(".navItem")
+        .forEach(btn => btn.classList.remove("active"));
+
+    homeNavBtn?.classList.add("active");
+
     window.scrollTo({
-
         top: 0,
-
         behavior: "smooth"
-
     });
 
 }
@@ -135,30 +127,21 @@ function mostrarInicio() {
 function guardarFavoritos() {
 
     localStorage.setItem(
-
         "favorites",
-
-        JSON.stringify(favorites)
-
+        JSON.stringify(favoritos)
     );
 
 }
 
 function esFavorito(id) {
 
-    return favorites.some(grupo => grupo.id === id);
+    return favoritos.some(g => g.id === id);
 
 }
 
 function tiempoTranscurrido(fecha) {
 
     if (!fecha) return "Hace un momento";
-
-    if (fecha.seconds) {
-
-        fecha = fecha.seconds * 1000;
-
-    }
 
     const diferencia = Date.now() - fecha;
 
@@ -167,17 +150,13 @@ function tiempoTranscurrido(fecha) {
     if (minutos < 1) return "Hace unos segundos";
 
     if (minutos < 60) {
-
         return `Hace ${minutos} min`;
-
     }
 
     const horas = Math.floor(minutos / 60);
 
     if (horas < 24) {
-
         return `Hace ${horas} h`;
-
     }
 
     const dias = Math.floor(horas / 24);
@@ -216,8 +195,6 @@ window.addEventListener("load", () => {
 
 onAuthStateChanged(auth, (user) => {
 
-    if (!profileBtn) return;
-
     if (user) {
 
         profileBtn.innerHTML = `
@@ -231,25 +208,14 @@ onAuthStateChanged(auth, (user) => {
                 ">
         `;
 
+        if (profileImage) {
+            profileImage.src = user.photoURL;
+            profileName.textContent = user.displayName;
+            profileEmail.textContent = user.email;
+        }
+
         if (logoutBtn) {
-
             logoutBtn.textContent = "Cerrar sesión";
-            logoutBtn.onclick = async () => {
-
-                try {
-
-                    await signOut(auth);
-
-                    mostrarInicio();
-
-                } catch (error) {
-
-                    alert(error.message);
-
-                }
-
-            };
-
         }
 
     } else {
@@ -258,95 +224,83 @@ onAuthStateChanged(auth, (user) => {
             <i class="fa-solid fa-user"></i>
         `;
 
+        if (profileImage) {
+            profileImage.src = "https://placehold.co/150x150";
+            profileName.textContent = "Invitado";
+            profileEmail.textContent = "No has iniciado sesión";
+        }
+
         if (logoutBtn) {
-
             logoutBtn.textContent = "Iniciar sesión con Google";
-            logoutBtn.onclick = async () => {
-
-                try {
-
-                    await signInWithPopup(auth, provider);
-
-                } catch (error) {
-
-                    if (error.code !== "auth/cancelled-popup-request") {
-
-                        alert(error.message);
-
-                    }
-
-                }
-
-            };
-
         }
 
     }
 
 });
 
-if (profileBtn) {
+profileBtn?.addEventListener("click", async () => {
 
-    profileBtn.onclick = async () => {
+    if (!auth.currentUser) {
 
-        if (auth.currentUser) {
+        try {
 
-            ocultarPantallas();
+            await signInWithPopup(auth, provider);
 
-            profilePage.style.display = "block";
+        } catch (e) {
 
-            if (fabButton) {
-
-                fabButton.style.display = "none";
-
-            }
-
-            const user = auth.currentUser;
-
-            profileImage.src = user.photoURL || "https://placehold.co/150x150";
-            profileName.textContent = user.displayName || "Usuario";
-            profileEmail.textContent = user.email || "";
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        } else {
-
-            try {
-
-                await signInWithPopup(auth, provider);
-
-            } catch (error) {
-
-                if (error.code !== "auth/cancelled-popup-request") {
-
-                    alert(error.message);
-
-                }
-
+            if (e.code !== "auth/cancelled-popup-request") {
+                alert(e.message);
             }
 
         }
 
-    };
+        return;
 
-}
+    }
+
+    ocultarPantallas();
+
+    profilePage.style.display = "block";
+
+    if (fabButton) {
+        fabButton.style.display = "none";
+    }
+
+});
+
+logoutBtn?.addEventListener("click", async () => {
+
+    if (!auth.currentUser) {
+
+        try {
+
+            await signInWithPopup(auth, provider);
+
+        } catch (e) {
+
+            alert(e.message);
+
+        }
+
+        return;
+
+    }
+
+    await signOut(auth);
+
+    mostrarInicio();
+
+});
 
 // ==========================
-// BOTÓN PUBLICAR
+// BOTONES
 // ==========================
 
-if (fabButton) {
+fabButton?.addEventListener("click", () => {
 
-    fabButton.onclick = () => {
+    publishModal.style.display = "flex";
 
-        publishModal.style.display = "flex";
-
-    };
-
-}
+});
 
 window.addEventListener("click", (e) => {
 
@@ -358,43 +312,81 @@ window.addEventListener("click", (e) => {
 
 });
 
-// ==========================
-// BOTONES SUPERIORES
-// ==========================
+notificationBtn?.addEventListener("click", () => {
 
-if (notificationBtn) {
+    alert("No tienes notificaciones.");
 
-    notificationBtn.onclick = () => {
+});
 
-        alert("No tienes notificaciones.");
+backToHomeBtn?.addEventListener("click", () => {
 
-    };
+    mostrarInicio();
 
-}
+});
 
-if (refreshBtn) {
+homeNavBtn?.addEventListener("click", () => {
 
-    refreshBtn.onclick = () => {
+    mostrarInicio();
 
-        cargarGrupos();
+});
 
-    };
+exploreNavBtn?.addEventListener("click", () => {
 
-}
+    ocultarPantallas();
 
-if (featuredBtn) {
+    explorePage.style.display = "block";
 
-    featuredBtn.onclick = () => {
+    fabButton.style.display = "none";
 
-        document.querySelector(".latestGroups")?.scrollIntoView({
+    document
+        .querySelectorAll(".navItem")
+        .forEach(btn => btn.classList.remove("active"));
 
-            behavior: "smooth"
+    exploreNavBtn.classList.add("active");
 
-        });
+});
 
-    };
+favoritesNavBtn?.addEventListener("click", () => {
 
-}
+    ocultarPantallas();
+
+    favoritesPage.style.display = "block";
+
+    fabButton.style.display = "none";
+
+    document
+        .querySelectorAll(".navItem")
+        .forEach(btn => btn.classList.remove("active"));
+
+    favoritesNavBtn.classList.add("active");
+
+    mostrarFavoritos();
+
+});
+
+profileNavBtn?.addEventListener("click", () => {
+
+    if (!auth.currentUser) {
+
+        signInWithPopup(auth, provider);
+
+        return;
+
+    }
+
+    ocultarPantallas();
+
+    profilePage.style.display = "block";
+
+    fabButton.style.display = "none";
+
+    document
+        .querySelectorAll(".navItem")
+        .forEach(btn => btn.classList.remove("active"));
+
+    profileNavBtn.classList.add("active");
+
+});
 
 // ==========================
 // CREAR TARJETA DEL GRUPO
@@ -410,29 +402,37 @@ function crearCardGrupo(grupo) {
 
     card.innerHTML = `
         <div class="groupImage">
+
             <img src="${imagen}" alt="${grupo.name}">
+
         </div>
 
         <div class="groupInfo">
 
             <h3>${grupo.name}</h3>
 
-            <p>${grupo.category}</p>
+            <p>📂 ${grupo.category}</p>
 
             <small>
+
                 👁️ ${grupo.views || 0} vistas
                 <br>
                 🕒 ${tiempoTranscurrido(grupo.createdAt)}
+
             </small>
 
             <div class="groupActions">
 
                 <button class="favoriteBtn ${esFavorito(grupo.id) ? "active" : ""}">
+
                     <i class="fa-solid fa-heart"></i>
+
                 </button>
 
                 <button class="joinBtn verGrupoBtn">
+
                     Ver grupo
+
                 </button>
 
             </div>
@@ -443,19 +443,17 @@ function crearCardGrupo(grupo) {
     const favoriteBtn = card.querySelector(".favoriteBtn");
     const verGrupoBtn = card.querySelector(".verGrupoBtn");
 
-    favoriteBtn.onclick = (e) => {
-
-        e.stopPropagation();
+    favoriteBtn.onclick = () => {
 
         if (esFavorito(grupo.id)) {
 
-            favorites = favorites.filter(f => f.id !== grupo.id);
+            favoritos = favoritos.filter(g => g.id !== grupo.id);
 
             favoriteBtn.classList.remove("active");
 
         } else {
 
-            favorites.push(grupo);
+            favoritos.push(grupo);
 
             favoriteBtn.classList.add("active");
 
@@ -465,7 +463,7 @@ function crearCardGrupo(grupo) {
 
     };
 
-    verGrupoBtn.onclick = async () => {
+    verGrupoBtn.onclick = () => {
 
         ocultarPantallas();
 
@@ -480,38 +478,9 @@ function crearCardGrupo(grupo) {
         detailImage.src = imagen;
         detailName.textContent = grupo.name;
         detailCategory.textContent = "📂 " + grupo.category;
-        detailDescription.textContent = grupo.description || "Sin descripción";
+        detailDescription.textContent = grupo.description || "";
+        detailViews.textContent = "👁️ " + (grupo.views || 0) + " vistas";
         detailTime.textContent = "🕒 " + tiempoTranscurrido(grupo.createdAt);
-
-        if (!viewsCache[grupo.id]) {
-
-            try {
-
-                await updateDoc(
-                    doc(db, "groups", grupo.id),
-                    {
-                        views: increment(1)
-                    }
-                );
-
-                grupo.views = (grupo.views || 0) + 1;
-
-                viewsCache[grupo.id] = true;
-
-                localStorage.setItem(
-                    "groupViews",
-                    JSON.stringify(viewsCache)
-                );
-
-            } catch (error) {
-
-                console.error(error);
-
-            }
-
-        }
-
-        detailViews.textContent = `👁️ ${grupo.views || 0} vistas`;
 
         detailJoinBtn.onclick = () => {
 
@@ -522,7 +491,6 @@ function crearCardGrupo(grupo) {
         window.scrollTo({
 
             top: 0,
-
             behavior: "smooth"
 
         });
@@ -539,216 +507,121 @@ function crearCardGrupo(grupo) {
 
 async function cargarGrupos() {
 
-    try {
+    grupos = [];
 
-        grupos = [];
+    const snapshot = await getDocs(collection(db, "groups"));
 
-        const snapshot = await getDocs(collection(db, "groups"));
+    snapshot.forEach((docSnap) => {
 
-        snapshot.forEach((documento) => {
+        const grupo = {
+            id: docSnap.id,
+            ...docSnap.data()
+        };
 
-            const grupo = {
-
-                id: documento.id,
-
-                ...documento.data()
-
-            };
-
-            if (grupo.createdAt?.seconds) {
-
-                grupo.createdAt = grupo.createdAt.seconds * 1000;
-
-            }
-
-            grupos.push(grupo);
-
-        });
-
-        const destacados = [...grupos].sort(
-
-            (a, b) => (b.views || 0) - (a.views || 0)
-
-        );
-
-        const recientes = [...grupos].sort(
-
-            (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
-
-        );
-
-        const featuredContainer = document.getElementById("featuredGroups");
-        const latestContainer = document.getElementById("latestGroups");
-
-        if (featuredContainer) {
-
-            featuredContainer.innerHTML = "";
-
-            destacados.forEach(grupo => {
-
-                featuredContainer.appendChild(
-
-                    crearCardGrupo(grupo)
-
-                );
-
-            });
-
+        if (grupo.createdAt?.seconds) {
+            grupo.createdAt = grupo.createdAt.seconds * 1000;
         }
 
-        if (latestContainer) {
-
-            latestContainer.innerHTML = "";
-
-            recientes.forEach(grupo => {
-
-                latestContainer.appendChild(
-
-                    crearCardGrupo(grupo)
-
-                );
-
-            });
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Error al cargar los grupos.");
-
-    }
-
-}
-
-// ==========================
-// INICIO
-// ==========================
-
-cargarGrupos();
-
-setInterval(cargarGrupos, 60000);
-
-// ==========================
-// BUSCADOR
-// ==========================
-
-if (searchInput) {
-
-    searchInput.addEventListener("input", () => {
-
-        const texto = searchInput.value
-            .trim()
-            .toLowerCase();
-
-        const featuredContainer = document.getElementById("featuredGroups");
-        const latestContainer = document.getElementById("latestGroups");
-
-        featuredContainer.innerHTML = "";
-        latestContainer.innerHTML = "";
-
-        const resultados = grupos.filter(grupo =>
-
-            grupo.name.toLowerCase().includes(texto) ||
-
-            grupo.category.toLowerCase().includes(texto) ||
-
-            (grupo.description || "")
-                .toLowerCase()
-                .includes(texto)
-
-        );
-
-        const destacados = [...resultados].sort(
-
-            (a, b) => (b.views || 0) - (a.views || 0)
-
-        );
-
-        const recientes = [...resultados].sort(
-
-            (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
-
-        );
-
-        destacados.forEach(grupo => {
-
-            featuredContainer.appendChild(
-
-                crearCardGrupo(grupo)
-
-            );
-
-        });
-
-        recientes.forEach(grupo => {
-
-            latestContainer.appendChild(
-
-                crearCardGrupo(grupo)
-
-            );
-
-        });
+        grupos.push(grupo);
 
     });
 
-}
+    grupos.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
-// ==========================
-// CATEGORÍAS
-// ==========================
+    if (featuredGroups) {
 
-function abrirCategoria(nombreCategoria) {
+        featuredGroups.innerHTML = "";
 
-    ocultarPantallas();
+        grupos.slice(0, 6).forEach(grupo => {
 
-    explorePage.style.display = "block";
+            featuredGroups.appendChild(
+                crearCardGrupo(grupo)
+            );
 
-    if (fabButton) {
-
-        fabButton.style.display = "none";
+        });
 
     }
 
-    exploreGroups.innerHTML = "";
+    if (latestGroups) {
 
-    const encontrados = grupos.filter(grupo =>
+        latestGroups.innerHTML = "";
 
-        grupo.category.toLowerCase() === nombreCategoria.toLowerCase()
+        grupos.forEach(grupo => {
 
-    );
+            latestGroups.appendChild(
+                crearCardGrupo(grupo)
+            );
 
-    if (encontrados.length === 0) {
+        });
 
-        exploreGroups.innerHTML = `
-            <p style="text-align:center;color:#888;">
-                No hay grupos en esta categoría.
-            </p>
+    }
+
+}
+
+// ==========================
+// BUSCADOR + EXPLORAR + CATEGORÍAS
+// ==========================
+
+function mostrarGrupos(lista, contenedor) {
+
+    contenedor.innerHTML = "";
+
+    if (lista.length === 0) {
+
+        contenedor.innerHTML = `
+        <p style="text-align:center;color:#999;padding:30px;">
+            No se encontraron grupos.
+        </p>
         `;
 
         return;
 
     }
 
-    encontrados.forEach(grupo => {
+    lista.forEach(grupo => {
 
-        exploreGroups.appendChild(
-
+        contenedor.appendChild(
             crearCardGrupo(grupo)
-
         );
 
     });
 
 }
 
-// Categorías del Inicio
+function abrirCategoria(nombre) {
+
+    ocultarPantallas();
+
+    explorePage.style.display = "block";
+
+    if (fabButton) {
+        fabButton.style.display = "none";
+    }
+
+    document.querySelectorAll(".navItem")
+        .forEach(btn => btn.classList.remove("active"));
+
+    exploreNavBtn.classList.add("active");
+
+    const filtrados = grupos.filter(grupo =>
+        grupo.category &&
+        grupo.category.toLowerCase() === nombre.toLowerCase()
+    );
+
+    mostrarGrupos(filtrados, exploreGroups);
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+// Categorías de Inicio
 
 document.querySelectorAll(".homeCategory").forEach(categoria => {
 
-    categoria.onclick = () => {
+    categoria.addEventListener("click", () => {
 
         const nombre = categoria.textContent
             .replace(/[^\p{L}\p{N}\s]/gu, "")
@@ -756,7 +629,7 @@ document.querySelectorAll(".homeCategory").forEach(categoria => {
 
         abrirCategoria(nombre);
 
-    };
+    });
 
 });
 
@@ -764,7 +637,7 @@ document.querySelectorAll(".homeCategory").forEach(categoria => {
 
 document.querySelectorAll("#explorePage .category").forEach(categoria => {
 
-    categoria.onclick = () => {
+    categoria.addEventListener("click", () => {
 
         const nombre = categoria.textContent
             .replace(/[^\p{L}\p{N}\s]/gu, "")
@@ -772,7 +645,31 @@ document.querySelectorAll("#explorePage .category").forEach(categoria => {
 
         abrirCategoria(nombre);
 
-    };
+    });
+
+});
+
+// Buscador
+
+searchInput?.addEventListener("input", () => {
+
+    const texto = searchInput.value
+        .trim()
+        .toLowerCase();
+
+    const resultados = grupos.filter(grupo =>
+
+        grupo.name.toLowerCase().includes(texto) ||
+
+        grupo.category.toLowerCase().includes(texto) ||
+
+        (grupo.description || "")
+            .toLowerCase()
+            .includes(texto)
+
+    );
+
+    mostrarGrupos(resultados, latestGroups);
 
 });
 
@@ -782,15 +679,13 @@ document.querySelectorAll("#explorePage .category").forEach(categoria => {
 
 function mostrarFavoritos() {
 
-    if (!favoritesList) return;
-
     favoritesList.innerHTML = "";
 
-    if (favorites.length === 0) {
+    if (favoritos.length === 0) {
 
         favoritesList.innerHTML = `
-            <p style="text-align:center;color:#888;">
-                No tienes grupos favoritos.
+            <p style="text-align:center;padding:30px;color:#888;">
+                Aún no tienes grupos favoritos.
             </p>
         `;
 
@@ -798,12 +693,10 @@ function mostrarFavoritos() {
 
     }
 
-    favorites.forEach(grupo => {
+    favoritos.forEach(grupo => {
 
         favoritesList.appendChild(
-
             crearCardGrupo(grupo)
-
         );
 
     });
@@ -811,248 +704,63 @@ function mostrarFavoritos() {
 }
 
 // ==========================
-// NAVEGACIÓN
+// PUBLICAR GRUPO
 // ==========================
 
-if (homeNavBtn) {
+publishForm?.addEventListener("submit", async (e) => {
 
-    homeNavBtn.onclick = () => {
+    e.preventDefault();
 
-        mostrarInicio();
+    const nuevoGrupo = {
 
-        cargarGrupos();
-
-    };
-
-}
-
-if (exploreNavBtn) {
-
-    exploreNavBtn.onclick = () => {
-
-        ocultarPantallas();
-
-        explorePage.style.display = "block";
-
-        if (fabButton) {
-
-            fabButton.style.display = "none";
-
-        }
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
+        name: groupName.value.trim(),
+        description: groupDescription.value.trim(),
+        category: groupCategory.value,
+        link: groupLink.value.trim(),
+        image: "https://placehold.co/300x300/png?text=NOCTRA",
+        views: 0,
+        createdAt: Date.now()
 
     };
 
-}
+    try {
 
-if (favoritesNavBtn) {
+        await addDoc(collection(db, "groups"), nuevoGrupo);
 
-    favoritesNavBtn.onclick = () => {
+        publishModal.style.display = "none";
 
-        ocultarPantallas();
+        publishForm.reset();
 
-        favoritesPage.style.display = "block";
+        await cargarGrupos();
 
-        if (fabButton) {
+        alert("Grupo publicado correctamente.");
 
-            fabButton.style.display = "none";
+    } catch (e) {
 
-        }
+        alert("Error al publicar.");
 
-        mostrarFavoritos();
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    };
-
-}
-
-if (profileNavBtn) {
-
-    profileNavBtn.onclick = () => {
-
-        ocultarPantallas();
-
-        profilePage.style.display = "block";
-
-        if (fabButton) {
-
-            fabButton.style.display = "none";
-
-        }
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    };
-
-}
-
-if (backToHomeBtn) {
-
-    backToHomeBtn.onclick = () => {
-
-        mostrarInicio();
-
-    };
-
-}
-
-// ==========================
-// PERFIL Y CERRAR SESIÓN
-// ==========================
-
-if (logoutBtn) {
-
-    logoutBtn.onclick = async () => {
-
-        try {
-
-            await signOut(auth);
-
-            mostrarInicio();
-
-            alert("Sesión cerrada correctamente.");
-
-        } catch (error) {
-
-            alert(error.message);
-
-        }
-
-    };
-
-}
-
-onAuthStateChanged(auth, (user) => {
-
-    if (user) {
-
-        profileBtn.innerHTML = `
-            <img
-                src="${user.photoURL}"
-                style="
-                    width:100%;
-                    height:100%;
-                    border-radius:50%;
-                    object-fit:cover;
-                ">
-        `;
-
-        if (profileImage) {
-
-            profileImage.src = user.photoURL || "https://placehold.co/150x150";
-            profileName.textContent = user.displayName || "Usuario";
-            profileEmail.textContent = user.email || "";
-
-        }
-
-    } else {
-
-        profileBtn.innerHTML = `
-            <i class="fa-solid fa-user"></i>
-        `;
-
-        if (profileImage) {
-
-            profileImage.src = "https://placehold.co/150x150";
-            profileName.textContent = "Invitado";
-            profileEmail.textContent = "No has iniciado sesión";
-
-        }
+        console.error(e);
 
     }
 
 });
 
 // ==========================
-// PUBLICAR GRUPO
+// INICIO
 // ==========================
 
-if (publishForm) {
+refreshBtn?.addEventListener("click", cargarGrupos);
 
-    publishForm.addEventListener("submit", async (e) => {
+featuredBtn?.addEventListener("click", () => {
 
-        e.preventDefault();
+    latestGroups.scrollIntoView({
 
-        const name = document.getElementById("groupName").value.trim();
-        const description = document.getElementById("groupDescription").value.trim();
-        const category = document.getElementById("groupCategory").value;
-        const link = document.getElementById("groupLink").value.trim();
-
-        if (!name || !description || !category || !link) {
-
-            alert("Completa todos los campos.");
-            return;
-
-        }
-
-        let image = "https://placehold.co/300x300/png?text=NOCTRA";
-
-        const imageInput = document.getElementById("groupImage");
-
-        if (imageInput.files.length > 0) {
-
-            image = await new Promise((resolve) => {
-
-                const reader = new FileReader();
-
-                reader.onload = (e) => resolve(e.target.result);
-
-                reader.readAsDataURL(imageInput.files[0]);
-
-            });
-
-        }
-
-        try {
-
-            await addDoc(collection(db, "groups"), {
-
-                name,
-                description,
-                category,
-                link,
-                image,
-                views: 0,
-                createdAt: Date.now()
-
-            });
-
-            publishForm.reset();
-
-            publishModal.style.display = "none";
-
-            await cargarGrupos();
-
-            alert("✅ Grupo publicado correctamente.");
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Error al publicar el grupo.");
-
-        }
+        behavior: "smooth"
 
     });
 
-}
+});
+
+cargarGrupos();
+
+setInterval(cargarGrupos, 60000);
