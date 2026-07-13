@@ -111,16 +111,23 @@ function mostrarInicio() {
     ocultarPantallas();
 
     if (main) {
+
         main.style.display = "block";
+
     }
 
     if (fabButton) {
+
         fabButton.style.display = "flex";
+
     }
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
 
 }
@@ -128,8 +135,11 @@ function mostrarInicio() {
 function guardarFavoritos() {
 
     localStorage.setItem(
+
         "favorites",
+
         JSON.stringify(favorites)
+
     );
 
 }
@@ -177,7 +187,7 @@ function tiempoTranscurrido(fecha) {
 }
 
 // ==========================
-// SPLASH SCREEN
+// SPLASH
 // ==========================
 
 window.addEventListener("load", () => {
@@ -222,7 +232,24 @@ onAuthStateChanged(auth, (user) => {
         `;
 
         if (logoutBtn) {
+
             logoutBtn.textContent = "Cerrar sesión";
+            logoutBtn.onclick = async () => {
+
+                try {
+
+                    await signOut(auth);
+
+                    mostrarInicio();
+
+                } catch (error) {
+
+                    alert(error.message);
+
+                }
+
+            };
+
         }
 
     } else {
@@ -232,7 +259,26 @@ onAuthStateChanged(auth, (user) => {
         `;
 
         if (logoutBtn) {
+
             logoutBtn.textContent = "Iniciar sesión con Google";
+            logoutBtn.onclick = async () => {
+
+                try {
+
+                    await signInWithPopup(auth, provider);
+
+                } catch (error) {
+
+                    if (error.code !== "auth/cancelled-popup-request") {
+
+                        alert(error.message);
+
+                    }
+
+                }
+
+            };
+
         }
 
     }
@@ -250,26 +296,35 @@ if (profileBtn) {
             profilePage.style.display = "block";
 
             if (fabButton) {
+
                 fabButton.style.display = "none";
+
             }
+
+            const user = auth.currentUser;
+
+            profileImage.src = user.photoURL || "https://placehold.co/150x150";
+            profileName.textContent = user.displayName || "Usuario";
+            profileEmail.textContent = user.email || "";
 
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
 
-            return;
-        }
+        } else {
 
-        try {
+            try {
 
-            await signInWithPopup(auth, provider);
+                await signInWithPopup(auth, provider);
 
-        } catch (error) {
+            } catch (error) {
 
-            if (error.code !== "auth/cancelled-popup-request") {
+                if (error.code !== "auth/cancelled-popup-request") {
 
-                alert(error.message);
+                    alert(error.message);
+
+                }
 
             }
 
@@ -331,12 +386,11 @@ if (featuredBtn) {
 
     featuredBtn.onclick = () => {
 
-        document.querySelector(".latestGroups")
-            ?.scrollIntoView({
+        document.querySelector(".latestGroups")?.scrollIntoView({
 
-                behavior: "smooth"
+            behavior: "smooth"
 
-            });
+        });
 
     };
 
@@ -352,14 +406,11 @@ function crearCardGrupo(grupo) {
 
     card.className = "groupCard";
 
-    const imagen = grupo.image || "https://placehold.co/120x120/png";
+    const imagen = grupo.image || "https://placehold.co/300x300/png?text=NOCTRA";
 
     card.innerHTML = `
-
         <div class="groupImage">
-
             <img src="${imagen}" alt="${grupo.name}">
-
         </div>
 
         <div class="groupInfo">
@@ -369,42 +420,28 @@ function crearCardGrupo(grupo) {
             <p>${grupo.category}</p>
 
             <small>
-
                 👁️ ${grupo.views || 0} vistas
-
                 <br>
-
                 🕒 ${tiempoTranscurrido(grupo.createdAt)}
-
             </small>
 
             <div class="groupActions">
 
                 <button class="favoriteBtn ${esFavorito(grupo.id) ? "active" : ""}">
-
                     <i class="fa-solid fa-heart"></i>
-
                 </button>
 
                 <button class="joinBtn verGrupoBtn">
-
                     Ver grupo
-
                 </button>
 
             </div>
 
         </div>
-
     `;
 
     const favoriteBtn = card.querySelector(".favoriteBtn");
-
     const verGrupoBtn = card.querySelector(".verGrupoBtn");
-
-    // ==========================
-    // FAVORITOS
-    // ==========================
 
     favoriteBtn.onclick = (e) => {
 
@@ -428,10 +465,6 @@ function crearCardGrupo(grupo) {
 
     };
 
-    // ==========================
-    // VER DETALLE
-    // ==========================
-
     verGrupoBtn.onclick = async () => {
 
         ocultarPantallas();
@@ -445,31 +478,20 @@ function crearCardGrupo(grupo) {
         }
 
         detailImage.src = imagen;
-
         detailName.textContent = grupo.name;
-
         detailCategory.textContent = "📂 " + grupo.category;
-
         detailDescription.textContent = grupo.description || "Sin descripción";
-
         detailTime.textContent = "🕒 " + tiempoTranscurrido(grupo.createdAt);
-
-        // Contar solo una vista por dispositivo
 
         if (!viewsCache[grupo.id]) {
 
             try {
 
                 await updateDoc(
-
                     doc(db, "groups", grupo.id),
-
                     {
-
                         views: increment(1)
-
                     }
-
                 );
 
                 grupo.views = (grupo.views || 0) + 1;
@@ -477,11 +499,8 @@ function crearCardGrupo(grupo) {
                 viewsCache[grupo.id] = true;
 
                 localStorage.setItem(
-
                     "groupViews",
-
                     JSON.stringify(viewsCache)
-
                 );
 
             } catch (error) {
@@ -529,8 +548,11 @@ async function cargarGrupos() {
         snapshot.forEach((documento) => {
 
             const grupo = {
+
                 id: documento.id,
+
                 ...documento.data()
+
             };
 
             if (grupo.createdAt?.seconds) {
@@ -543,13 +565,17 @@ async function cargarGrupos() {
 
         });
 
-        // Destacados por vistas
+        const destacados = [...grupos].sort(
 
-        const destacados = [...grupos].sort((a, b) => (b.views || 0) - (a.views || 0));
+            (a, b) => (b.views || 0) - (a.views || 0)
 
-        // Nuevos por fecha
+        );
 
-        const recientes = [...grupos].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        const recientes = [...grupos].sort(
+
+            (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
+
+        );
 
         const featuredContainer = document.getElementById("featuredGroups");
         const latestContainer = document.getElementById("latestGroups");
@@ -560,7 +586,11 @@ async function cargarGrupos() {
 
             destacados.forEach(grupo => {
 
-                featuredContainer.appendChild(crearCardGrupo(grupo));
+                featuredContainer.appendChild(
+
+                    crearCardGrupo(grupo)
+
+                );
 
             });
 
@@ -572,7 +602,11 @@ async function cargarGrupos() {
 
             recientes.forEach(grupo => {
 
-                latestContainer.appendChild(crearCardGrupo(grupo));
+                latestContainer.appendChild(
+
+                    crearCardGrupo(grupo)
+
+                );
 
             });
 
@@ -589,14 +623,11 @@ async function cargarGrupos() {
 }
 
 // ==========================
-// CARGA INICIAL
+// INICIO
 // ==========================
 
 cargarGrupos();
 
-mostrarCategorias();
-
-// Actualizar automáticamente cada minuto
 setInterval(cargarGrupos, 60000);
 
 // ==========================
@@ -614,42 +645,49 @@ if (searchInput) {
         const featuredContainer = document.getElementById("featuredGroups");
         const latestContainer = document.getElementById("latestGroups");
 
-        if (featuredContainer) featuredContainer.innerHTML = "";
-        if (latestContainer) latestContainer.innerHTML = "";
+        featuredContainer.innerHTML = "";
+        latestContainer.innerHTML = "";
 
-        let resultados = grupos;
+        const resultados = grupos.filter(grupo =>
 
-        if (texto !== "") {
+            grupo.name.toLowerCase().includes(texto) ||
 
-            resultados = grupos.filter(grupo =>
+            grupo.category.toLowerCase().includes(texto) ||
 
-                grupo.name.toLowerCase().includes(texto) ||
+            (grupo.description || "")
+                .toLowerCase()
+                .includes(texto)
 
-                grupo.category.toLowerCase().includes(texto) ||
+        );
 
-                (grupo.description || "")
-                    .toLowerCase()
-                    .includes(texto)
+        const destacados = [...resultados].sort(
 
-            );
+            (a, b) => (b.views || 0) - (a.views || 0)
 
-        }
+        );
 
-        const destacados = [...resultados].sort((a,b)=>(b.views||0)-(a.views||0));
-        const recientes = [...resultados].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+        const recientes = [...resultados].sort(
 
-        destacados.forEach(grupo=>{
+            (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
 
-            featuredContainer?.appendChild(
+        );
+
+        destacados.forEach(grupo => {
+
+            featuredContainer.appendChild(
+
                 crearCardGrupo(grupo)
+
             );
 
         });
 
-        recientes.forEach(grupo=>{
+        recientes.forEach(grupo => {
 
-            latestContainer?.appendChild(
+            latestContainer.appendChild(
+
                 crearCardGrupo(grupo)
+
             );
 
         });
@@ -659,34 +697,44 @@ if (searchInput) {
 }
 
 // ==========================
-// FAVORITOS
+// CATEGORÍAS
 // ==========================
 
-function mostrarFavoritos(){
+function abrirCategoria(nombreCategoria) {
 
-    if(!favoritesList) return;
+    ocultarPantallas();
 
-    favoritesList.innerHTML="";
+    explorePage.style.display = "block";
 
-    if(favorites.length===0){
+    if (fabButton) {
 
-        favoritesList.innerHTML=`
+        fabButton.style.display = "none";
 
-        <p style="text-align:center;color:#888">
+    }
 
-            No tienes grupos favoritos.
+    exploreGroups.innerHTML = "";
 
-        </p>
+    const encontrados = grupos.filter(grupo =>
 
+        grupo.category.toLowerCase() === nombreCategoria.toLowerCase()
+
+    );
+
+    if (encontrados.length === 0) {
+
+        exploreGroups.innerHTML = `
+            <p style="text-align:center;color:#888;">
+                No hay grupos en esta categoría.
+            </p>
         `;
 
         return;
 
     }
 
-    favorites.forEach(grupo=>{
+    encontrados.forEach(grupo => {
 
-        favoritesList.appendChild(
+        exploreGroups.appendChild(
 
             crearCardGrupo(grupo)
 
@@ -696,64 +744,67 @@ function mostrarFavoritos(){
 
 }
 
+// Categorías del Inicio
+
+document.querySelectorAll(".homeCategory").forEach(categoria => {
+
+    categoria.onclick = () => {
+
+        const nombre = categoria.textContent
+            .replace(/[^\p{L}\p{N}\s]/gu, "")
+            .trim();
+
+        abrirCategoria(nombre);
+
+    };
+
+});
+
+// Categorías de Explorar
+
+document.querySelectorAll("#explorePage .category").forEach(categoria => {
+
+    categoria.onclick = () => {
+
+        const nombre = categoria.textContent
+            .replace(/[^\p{L}\p{N}\s]/gu, "")
+            .trim();
+
+        abrirCategoria(nombre);
+
+    };
+
+});
+
 // ==========================
-// EXPLORAR
+// FAVORITOS
 // ==========================
 
-function mostrarCategorias() {
+function mostrarFavoritos() {
 
-    const categorias = document.querySelectorAll(".homeCategory");
+    if (!favoritesList) return;
 
-    categorias.forEach(categoria => {
+    favoritesList.innerHTML = "";
 
-        categoria.onclick = () => {
+    if (favorites.length === 0) {
 
-            const nombre = categoria.textContent
-                .replace(/[^\p{L}\p{N}\s]/gu, "")
-                .trim()
-                .toLowerCase();
+        favoritesList.innerHTML = `
+            <p style="text-align:center;color:#888;">
+                No tienes grupos favoritos.
+            </p>
+        `;
 
-            ocultarPantallas();
+        return;
 
-            if (explorePage) {
-                explorePage.style.display = "block";
-            }
+    }
 
-            if (fabButton) {
-                fabButton.style.display = "none";
-            }
+    favorites.forEach(grupo => {
 
-            if (!exploreGroups) return;
+        favoritesList.appendChild(
 
-            exploreGroups.innerHTML = "";
+            crearCardGrupo(grupo)
 
-            const encontrados = grupos.filter(grupo =>
-                grupo.category.toLowerCase() === nombre
-            );
-
-            if (encontrados.length === 0) {
-
-                exploreGroups.innerHTML = `
-                    <p style="text-align:center;color:#888">
-                        No hay grupos en esta categoría.
-                    </p>
-                `;
-
-                return;
-            }
-
-            encontrados.forEach(grupo => {
-                exploreGroups.appendChild(
-                    crearCardGrupo(grupo)
-                );
-            });
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        };
+        );
 
     });
 
@@ -770,6 +821,32 @@ if (homeNavBtn) {
         mostrarInicio();
 
         cargarGrupos();
+
+    };
+
+}
+
+if (exploreNavBtn) {
+
+    exploreNavBtn.onclick = () => {
+
+        ocultarPantallas();
+
+        explorePage.style.display = "block";
+
+        if (fabButton) {
+
+            fabButton.style.display = "none";
+
+        }
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
 
     };
 
@@ -792,33 +869,11 @@ if (favoritesNavBtn) {
         mostrarFavoritos();
 
         window.scrollTo({
+
             top: 0,
+
             behavior: "smooth"
-        });
 
-    };
-
-}
-
-if (exploreNavBtn) {
-
-    exploreNavBtn.onclick = () => {
-
-        ocultarPantallas();
-
-        explorePage.style.display = "block";
-
-        if (fabButton) {
-
-            fabButton.style.display = "none";
-
-        }
-
-        mostrarCategorias();
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
         });
 
     };
@@ -839,29 +894,12 @@ if (profileNavBtn) {
 
         }
 
-        const user = auth.currentUser;
-
-        if (user) {
-
-            profileImage.src = user.photoURL || "https://placehold.co/150x150";
-
-            profileName.textContent = user.displayName || "Usuario";
-
-            profileEmail.textContent = user.email || "";
-
-        } else {
-
-            profileImage.src = "https://placehold.co/150x150";
-
-            profileName.textContent = "Invitado";
-
-            profileEmail.textContent = "No has iniciado sesión";
-
-        }
-
         window.scrollTo({
+
             top: 0,
+
             behavior: "smooth"
+
         });
 
     };
@@ -878,51 +916,72 @@ if (backToHomeBtn) {
 
 }
 
+// ==========================
+// PERFIL Y CERRAR SESIÓN
+// ==========================
+
 if (logoutBtn) {
 
     logoutBtn.onclick = async () => {
 
-        if (auth.currentUser) {
+        try {
 
-            try {
+            await signOut(auth);
 
-                await signOut(auth);
+            mostrarInicio();
 
-                profileImage.src = "https://placehold.co/150x150";
-                profileName.textContent = "Invitado";
-                profileEmail.textContent = "No has iniciado sesión";
+            alert("Sesión cerrada correctamente.");
 
-                logoutBtn.textContent = "Iniciar sesión";
+        } catch (error) {
 
-                mostrarInicio();
-
-            } catch (error) {
-
-                alert(error.message);
-
-            }
-
-        } else {
-
-            try {
-
-                await signInWithPopup(auth, provider);
-
-            } catch (error) {
-
-                if (error.code !== "auth/cancelled-popup-request") {
-
-                    alert(error.message);
-
-                }
-
-            }
+            alert(error.message);
 
         }
 
     };
 
 }
+
+onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+        profileBtn.innerHTML = `
+            <img
+                src="${user.photoURL}"
+                style="
+                    width:100%;
+                    height:100%;
+                    border-radius:50%;
+                    object-fit:cover;
+                ">
+        `;
+
+        if (profileImage) {
+
+            profileImage.src = user.photoURL || "https://placehold.co/150x150";
+            profileName.textContent = user.displayName || "Usuario";
+            profileEmail.textContent = user.email || "";
+
+        }
+
+    } else {
+
+        profileBtn.innerHTML = `
+            <i class="fa-solid fa-user"></i>
+        `;
+
+        if (profileImage) {
+
+            profileImage.src = "https://placehold.co/150x150";
+            profileName.textContent = "Invitado";
+            profileEmail.textContent = "No has iniciado sesión";
+
+        }
+
+    }
+
+});
 
 // ==========================
 // PUBLICAR GRUPO
@@ -935,17 +994,13 @@ if (publishForm) {
         e.preventDefault();
 
         const name = document.getElementById("groupName").value.trim();
-
         const description = document.getElementById("groupDescription").value.trim();
-
         const category = document.getElementById("groupCategory").value;
-
         const link = document.getElementById("groupLink").value.trim();
 
         if (!name || !description || !category || !link) {
 
             alert("Completa todos los campos.");
-
             return;
 
         }
@@ -954,7 +1009,7 @@ if (publishForm) {
 
         const imageInput = document.getElementById("groupImage");
 
-        if (imageInput && imageInput.files.length > 0) {
+        if (imageInput.files.length > 0) {
 
             image = await new Promise((resolve) => {
 
@@ -973,17 +1028,11 @@ if (publishForm) {
             await addDoc(collection(db, "groups"), {
 
                 name,
-
                 description,
-
                 category,
-
                 link,
-
                 image,
-
                 views: 0,
-
                 createdAt: Date.now()
 
             });
@@ -1007,5 +1056,3 @@ if (publishForm) {
     });
 
 }
-
-
