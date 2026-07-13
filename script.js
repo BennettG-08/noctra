@@ -714,29 +714,21 @@ function abrirCategoria(nombre) {
 
 }
 
-document.querySelectorAll(".homeCategory").forEach(categoria => {
+document.querySelectorAll("#explorePage .category").forEach(categoria => {
 
     categoria.onclick = () => {
 
-        const nombre = categoria.textContent
-            .replace(/[^\p{L}\p{N}\s]/gu, "")
-            .trim();
-
-        abrirCategoria(nombre);
+        abrirCategoria(categoria.dataset.category);
 
     };
 
 });
 
-document.querySelectorAll("#explorePage .category").forEach(categoria => {
+document.querySelectorAll(".homeCategory").forEach(categoria => {
 
     categoria.onclick = () => {
 
-        const nombre = categoria.textContent
-            .replace(/[^\p{L}\p{N}\s]/gu, "")
-            .trim();
-
-        abrirCategoria(nombre);
+        abrirCategoria(categoria.dataset.category);
 
     };
 
