@@ -20,7 +20,10 @@ orderBy,
 limit,
 
 serverTimestamp,
-increment
+increment,
+
+loginGoogle,
+logoutUser
 
 } from "./firebase.js";
 
