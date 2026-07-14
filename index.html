@@ -9,23 +9,13 @@
 
 <title>𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪 | Descubre grupos de WhatsApp</title>
 
-<meta name="description" content="Descubre y comparte grupos públicos de WhatsApp.">
+<meta name="description" content="NOCTRA es una plataforma para descubrir y compartir grupos públicos de WhatsApp.">
 
-<meta name="keywords" content="WhatsApp, grupos, NOCTRA">
+<meta name="keywords" content="grupos WhatsApp, comunidades, amigos, gaming, anime, música">
 
-<meta name="robots" content="index,follow">
+<meta name="author" content="NOCTRA">
 
 <meta name="theme-color" content="#09090f">
-
-<link rel="canonical" href="https://bennettg-08.github.io/noctra/">
-
-<meta property="og:title" content="𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪">
-
-<meta property="og:description" content="Descubre y comparte grupos públicos de WhatsApp.">
-
-<meta property="og:type" content="website">
-
-<meta property="og:url" content="https://bennettg-08.github.io/noctra/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -33,45 +23,56 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
 <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
+
 <body>
+
+
+<!-- CARGA INICIAL -->
 
 <div id="splash">
 
-    <div class="logoSplash">
+    <div class="splash-content">
 
         <h1>𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪</h1>
 
-        <p>Descubre y comparte grupos de WhatsApp</p>
-
-        <span>Desarrollado por <strong>Bennett</strong></span>
+        <p>Descubre nuevas comunidades</p>
 
     </div>
 
 </div>
 
+
+
+<!-- APLICACIÓN -->
+
 <div id="app">
+
 
 <header class="topbar">
 
-    <div class="logo">
+    <div class="brand">
 
-        <h2>𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪</h2>
+        <h2>
+            𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
+        </h2>
 
     </div>
 
-    <div class="actions">
+
+    <div class="header-actions">
 
         <button id="notificationBtn">
 
             <i class="fa-solid fa-bell"></i>
 
         </button>
+
 
         <button id="profileBtn">
 
@@ -81,393 +82,709 @@
 
     </div>
 
+
 </header>
+
+
 
 <main>
 
-<section class="hero">
 
-    <h1>Encuentra grupos de WhatsApp</h1>
+<!-- INICIO -->
 
-    <p>Explora comunidades, publica tus grupos y conoce nuevas personas.</p>
+<section id="homePage">
 
-    <div class="searchBox">
 
-        <i class="fa-solid fa-magnifying-glass"></i>
+<div class="hero">
 
-        <input
-            id="searchInput"
-            type="text"
-            placeholder="Buscar grupos...">
 
-    </div>
+<h1>
+Encuentra tu próxima comunidad
+</h1>
+
+
+<p>
+Explora, comparte y descubre grupos de WhatsApp.
+</p>
+
+
+
+<div class="search-container">
+
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+
+<input 
+id="searchInput"
+type="text"
+placeholder="Buscar grupos..."
+>
+
+
+</div>
+
+
+</div>
+
+<!-- GRUPOS DESTACADOS -->
+
+<div class="section-title">
+
+    <h2>🔥 Grupos destacados</h2>
+
+    <button id="viewAllBtn">
+        Ver todos
+    </button>
+
+</div>
+
+
+<div 
+id="featuredGroups"
+class="groups-container">
+
+</div>
+
+
+
+
+
+<!-- CATEGORÍAS -->
+
+<div class="section-title">
+
+    <h2>📂 Categorías</h2>
+
+</div>
+
+
+
+<div 
+class="categories-container"
+id="categoriesContainer">
+
+
+<button class="category-btn" data-category="Amistad">
+❤️ Amistad
+</button>
+
+
+<button class="category-btn" data-category="Gaming">
+🎮 Gaming
+</button>
+
+
+<button class="category-btn" data-category="Anime">
+🌸 Anime
+</button>
+
+
+<button class="category-btn" data-category="Música">
+🎵 Música
+</button>
+
+
+<button class="category-btn" data-category="Memes">
+😂 Memes
+</button>
+
+
+<button class="category-btn" data-category="Tecnología">
+💻 Tecnología
+</button>
+
+
+<button class="category-btn" data-category="Deportes">
+⚽ Deportes
+</button>
+
+
+<button class="category-btn" data-category="Películas">
+🎬 Películas
+</button>
+
+
+<button class="category-btn" data-category="Estudios">
+📚 Estudios
+</button>
+
+
+<button class="category-btn" data-category="Mascotas">
+🐶 Mascotas
+</button>
+
+
+<button class="category-btn" data-category="Viajes">
+🌎 Viajes
+</button>
+
+
+<button class="category-btn" data-category="Otros">
+✨ Otros
+</button>
+
+
+</div>
+
+
+
+
+
+<!-- ÚLTIMOS GRUPOS -->
+
+
+<div class="section-title">
+
+    <h2>🆕 Últimos grupos</h2>
+
+</div>
+
+
+
+<div 
+id="latestGroups"
+class="groups-container">
+
+</div>
+
+
 
 </section>
 
-<!-- ==========================
-GRUPOS DESTACADOS
-========================== -->
+<!-- EXPLORAR GRUPOS -->
 
-<section>
+<section 
+id="explorePage"
+class="hidden-page">
 
-    <div class="sectionHeader">
 
-        <h2>🔥 Grupos destacados</h2>
+<div class="section-title">
 
-        <button id="seeFeaturedBtn">
-            Ver todos
-        </button>
+    <h2>🔎 Explorar grupos</h2>
 
-    </div>
+</div>
 
-    <div
-        id="featuredGroups"
-        class="groupList">
 
-    </div>
+<div 
+id="exploreGroups"
+class="groups-container">
 
-</section>
+</div>
 
-<!-- ==========================
-CATEGORÍAS
-========================== -->
-
-<section>
-
-    <div class="sectionHeader">
-
-        <h2>📂 Categorías</h2>
-
-    </div>
-
-    <div
-        id="categoryGrid"
-        class="categoryGrid">
-
-        <div class="category" data-category="Amistad">❤️ Amistad</div>
-
-        <div class="category" data-category="Gaming">🎮 Gaming</div>
-
-        <div class="category" data-category="Anime">🌸 Anime</div>
-
-        <div class="category" data-category="Música">🎵 Música</div>
-
-        <div class="category" data-category="Memes">😂 Memes</div>
-
-        <div class="category" data-category="Tecnología">💻 Tecnología</div>
-
-        <div class="category" data-category="Películas">🎬 Películas</div>
-
-        <div class="category" data-category="Deportes">⚽ Deportes</div>
-
-        <div class="category" data-category="Estudios">📚 Estudios</div>
-
-        <div class="category" data-category="Viajes">🌎 Viajes</div>
-
-        <div class="category" data-category="Mascotas">🐶 Mascotas</div>
-
-        <div class="category" data-category="Otros">✨ Otros</div>
-
-    </div>
 
 </section>
 
-<!-- ==========================
-ÚLTIMOS GRUPOS
-========================== -->
 
-<section>
 
-    <div class="sectionHeader">
 
-        <h2>🆕 Últimos grupos</h2>
 
-        <button id="refreshGroupsBtn">
-            Actualizar
-        </button>
+<!-- FAVORITOS -->
 
-    </div>
+<section 
+id="favoritesPage"
+class="hidden-page">
 
-    <div
-        id="latestGroups"
-        class="groupList">
 
-    </div>
+<div class="section-title">
 
-</section>
+    <h2>❤️ Mis favoritos</h2>
 
-<!-- ==========================
-EXPLORAR
-========================== -->
+</div>
 
-<section
-    id="explorePage"
-    style="display:none;">
 
-    <div class="sectionHeader">
+<div 
+id="favoritesGroups"
+class="groups-container">
 
-        <h2>🔎 Explorar</h2>
+</div>
 
-    </div>
-
-    <div
-        id="exploreGroups"
-        class="groupList">
-
-    </div>
 
 </section>
 
-<!-- ==========================
-FAVORITOS
-========================== -->
 
-<section
-    id="favoritesPage"
-    style="display:none;">
 
-    <div class="sectionHeader">
 
-        <h2>❤️ Favoritos</h2>
 
-    </div>
+<!-- PERFIL -->
 
-    <div
-        id="favoritesList"
-        class="groupList">
+<section 
+id="profilePage"
+class="hidden-page">
 
-    </div>
 
-</section>
+<div class="profile-card">
 
-<!-- ==========================
-PERFIL
-========================== -->
 
-<section
-    id="profilePage"
-    style="display:none;">
+<img 
+id="userPhoto"
+src="https://placehold.co/150x150"
+alt="Foto de perfil"
+>
 
-    <div class="profileCard">
 
-        <img
-            id="profileImage"
-            src="https://placehold.co/150x150"
-            alt="Perfil">
+<h2 id="userName">
+Usuario
+</h2>
 
-        <h2 id="profileName">
-            Invitado
-        </h2>
 
-        <p id="profileEmail">
-            Inicia sesión con Google
-        </p>
+<p id="userEmail">
+Inicia sesión para continuar
+</p>
 
-        <p>
-            Seguidores:
-            <strong id="followersCount">0</strong>
-        </p>
 
-        <button
-            id="loginBtn"
-            class="joinBtn">
 
-            Iniciar sesión con Google
+<div class="followers-box">
 
-        </button>
 
-        <button
-            id="logoutBtn"
-            class="joinBtn"
-            style="display:none;">
+<h3>
+Seguidores
+</h3>
 
-            Cerrar sesión
 
-        </button>
+<span id="followersCount">
+0
+</span>
 
-    </div>
 
-</section>
+</div>
 
-<!-- ==========================
-DETALLE DEL GRUPO
-========================== -->
 
-<section
-    id="groupDetailsPage"
-    style="display:none;">
 
-    <div class="groupDetail">
+<button 
+id="loginBtn"
+class="main-btn">
 
-        <button id="backToHomeBtn">
-            ← Regresar
-        </button>
-
-        <img
-            id="detailImage"
-            src="https://placehold.co/600x300"
-            alt="Grupo">
-
-        <h2 id="detailName"></h2>
-
-        <p id="detailCategory"></p>
-
-        <p id="detailDescription"></p>
-
-        <p>
-            👁️ <span id="detailViews">0</span> vistas
-        </p>
-
-        <p id="detailTime"></p>
-
-        <p>
-            Publicado por:
-            <strong id="detailCreator"></strong>
-        </p>
-
-        <button
-            id="detailJoinBtn"
-            class="joinBtn">
-
-            Unirse al grupo
-
-        </button>
-
-        <hr>
-
-        <h3>Comentarios</h3>
-
-        <div id="commentsList"></div>
-
-        <textarea
-            id="commentInput"
-            placeholder="Escribe un comentario..."></textarea>
-
-        <button
-            id="sendCommentBtn"
-            class="joinBtn">
-
-            Enviar comentario
-
-        </button>
-
-        <button
-            id="reportBtn"
-            class="favoriteBtn">
-
-            Reportar grupo
-
-        </button>
-
-    </div>
-
-</section>
-
-</main>
-
-<!-- BOTÓN PUBLICAR -->
-
-<button id="fabButton">
-
-    <i class="fa-solid fa-plus"></i>
+Iniciar sesión con Google
 
 </button>
 
-<!-- ==========================
-MODAL PUBLICAR GRUPO
-========================== -->
 
-<div
-    id="publishModal"
-    class="modal">
 
-    <div class="modalContent">
+<button 
+id="logoutBtn"
+class="main-btn hidden">
 
-        <h2>Publicar grupo</h2>
+Cerrar sesión
 
-        <form id="publishForm">
+</button>
 
-            <input
-                id="groupName"
-                type="text"
-                placeholder="Nombre del grupo"
-                required>
-
-            <textarea
-                id="groupDescription"
-                placeholder="Descripción"
-                required></textarea>
-
-            <select
-                id="groupCategory"
-                required>
-
-                <option value="">Selecciona una categoría</option>
-
-                <option>Amistad</option>
-                <option>Gaming</option>
-                <option>Anime</option>
-                <option>Música</option>
-                <option>Memes</option>
-                <option>Tecnología</option>
-                <option>Películas</option>
-                <option>Deportes</option>
-                <option>Estudios</option>
-                <option>Viajes</option>
-                <option>Mascotas</option>
-                <option>Otros</option>
-
-            </select>
-
-            <input
-                id="groupLink"
-                type="url"
-                placeholder="Enlace del grupo de WhatsApp"
-                required>
-
-            <button
-                type="submit"
-                class="joinBtn">
-
-                Publicar
-
-            </button>
-
-        </form>
-
-    </div>
 
 </div>
 
-<!-- NAVEGACIÓN -->
 
-<nav class="bottomNav">
+</section>
 
-    <button id="homeNavBtn" class="navItem active">
-        <i class="fa-solid fa-house"></i>
-        <span>Inicio</span>
-    </button>
+<!-- DETALLE DEL GRUPO -->
 
-    <button id="exploreNavBtn" class="navItem">
-        <i class="fa-solid fa-compass"></i>
-        <span>Explorar</span>
-    </button>
+<section 
+id="groupDetailsPage"
+class="hidden-page">
 
-    <button id="favoritesNavBtn" class="navItem">
-        <i class="fa-solid fa-heart"></i>
-        <span>Favoritos</span>
-    </button>
 
-    <button id="profileNavBtn" class="navItem">
-        <i class="fa-solid fa-user"></i>
-        <span>Perfil</span>
-    </button>
+<button 
+id="backBtn"
+class="back-btn">
+
+<i class="fa-solid fa-arrow-left"></i>
+Volver
+
+</button>
+
+
+
+<div class="group-detail-card">
+
+
+<img
+id="detailImage"
+src="https://placehold.co/600x300"
+alt="Grupo"
+>
+
+
+
+<h1 id="detailName">
+Nombre del grupo
+</h1>
+
+
+
+<p id="detailCategory">
+Categoría
+</p>
+
+
+
+<p id="detailDescription">
+Descripción del grupo
+</p>
+
+
+
+
+<div class="group-stats">
+
+
+<span>
+👁️ 
+<strong id="detailViews">
+0
+</strong>
+vistas
+</span>
+
+
+
+<span>
+❤️
+<strong id="detailLikes">
+0
+</strong>
+favoritos
+</span>
+
+
+
+</div>
+
+
+
+
+
+<button 
+id="joinGroupBtn"
+class="main-btn">
+
+Unirse al grupo
+
+</button>
+
+
+
+<button 
+id="favoriteBtn"
+class="favorite-btn">
+
+❤️ Agregar a favoritos
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+<!-- COMENTARIOS -->
+
+
+<div class="comments-section">
+
+
+<h2>
+💬 Comentarios
+</h2>
+
+
+
+<div 
+id="commentsList">
+
+</div>
+
+
+
+<textarea 
+id="commentInput"
+placeholder="Escribe un comentario..."
+></textarea>
+
+
+
+<button 
+id="sendCommentBtn"
+class="main-btn">
+
+Comentar
+
+</button>
+
+
+</div>
+
+
+</section>
+
+<!-- PUBLICAR GRUPO -->
+
+<div 
+id="publishModal"
+class="modal">
+
+
+<div class="modal-box">
+
+
+<button 
+id="closeModalBtn"
+class="close-modal">
+
+✕
+
+</button>
+
+
+
+<h2>
+📢 Publicar grupo
+</h2>
+
+
+
+
+<form id="publishForm">
+
+
+
+<input
+id="groupName"
+type="text"
+placeholder="Nombre del grupo"
+required
+>
+
+
+
+<input
+id="groupImage"
+type="url"
+placeholder="Imagen del grupo"
+>
+
+
+
+<select 
+id="groupCategory"
+required>
+
+
+<option value="">
+Selecciona categoría
+</option>
+
+
+<option>
+Amistad
+</option>
+
+<option>
+Gaming
+</option>
+
+<option>
+Anime
+</option>
+
+<option>
+Música
+</option>
+
+<option>
+Memes
+</option>
+
+<option>
+Tecnología
+</option>
+
+<option>
+Deportes
+</option>
+
+<option>
+Películas
+</option>
+
+<option>
+Estudios
+</option>
+
+<option>
+Mascotas
+</option>
+
+<option>
+Viajes
+</option>
+
+<option>
+Otros
+</option>
+
+
+</select>
+
+
+
+
+<textarea
+id="groupDescription"
+placeholder="Descripción del grupo"
+required
+></textarea>
+
+
+
+
+
+<input
+id="groupLink"
+type="url"
+placeholder="Link de WhatsApp"
+required
+>
+
+
+
+
+<button 
+type="submit"
+class="main-btn">
+
+Publicar grupo
+
+</button>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- BOTÓN FLOTANTE -->
+
+
+<button 
+id="addGroupBtn"
+class="floating-btn">
+
+
+<i class="fa-solid fa-plus"></i>
+
+
+</button>
+
+
+
+
+
+
+<!-- NAVEGACIÓN INFERIOR -->
+
+
+<nav class="bottom-nav">
+
+
+
+<button 
+class="nav-btn active"
+data-page="homePage">
+
+
+<i class="fa-solid fa-house"></i>
+
+<span>
+Inicio
+</span>
+
+
+</button>
+
+
+
+
+
+<button 
+class="nav-btn"
+data-page="explorePage">
+
+
+<i class="fa-solid fa-compass"></i>
+
+<span>
+Explorar
+</span>
+
+
+</button>
+
+
+
+
+
+<button 
+class="nav-btn"
+data-page="favoritesPage">
+
+
+<i class="fa-solid fa-heart"></i>
+
+<span>
+Favoritos
+</span>
+
+
+</button>
+
+
+
+
+
+<button 
+class="nav-btn"
+data-page="profilePage">
+
+
+<i class="fa-solid fa-user"></i>
+
+<span>
+Perfil
+</span>
+
+
+</button>
+
+
 
 </nav>
 
-<script type="module" src="script.js"></script>
+
+
+</main>
+
 
 </div>
+
+
+
+
+<script 
+type="module"
+src="script.js">
+</script>
+
 
 </body>
 
