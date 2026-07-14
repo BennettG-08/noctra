@@ -4,1140 +4,753 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪</title>
 
-<title>
-𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪 | Comunidades de WhatsApp
-</title>
+<meta name="description" content="Descubre y comparte comunidades de WhatsApp con 
+𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪.">
 
+<meta name="keywords" content="WhatsApp, grupos, comunidades, 
+𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪">
 
-
-<meta name="description" content="𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪 - Descubre y comparte grupos de WhatsApp.">
-
+<meta name="author" content="Bennett">
 
 <meta name="theme-color" content="#09090f">
 
-
+<meta name="color-scheme" content="dark">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-
-
-<link rel="stylesheet" href="style.css">
-
-
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+<link rel="stylesheet" href="style.css">
 
 </head>
 
-
-
 <body>
 
+<!-- SPLASH -->
 
+<div id="splashScreen">
 
-<!-- CARGA INICIAL -->
+<div class="splashContent">
 
-<div id="splash">
+<h1 class="logo">
 
+𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
 
-<div class="splash-content">
-
-
-<h1>
-𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪
 </h1>
 
-
-
 <p>
-Descubre nuevas comunidades
+
+Descubre comunidades de WhatsApp
+
 </p>
 
-
+</div>
 
 </div>
 
-
-</div>
-
-
-
-
-
-
-<!-- APLICACIÓN -->
-
+<!-- APP -->
 
 <div id="app">
 
+<header id="mainHeader">
 
+<div class="headerLeft">
 
-<header class="top-header">
+<h1 class="logoText">
 
+𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
 
-
-<div class="brand">
-
-
-<h2>
-𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪
-</h2>
-
+</h1>
 
 </div>
 
+<div class="headerRight">
 
-
-
-<div class="header-actions">
-
-
-<button id="notificationsBtn">
+<button id="notificationsButton" class="iconButton">
 
 <i class="fa-solid fa-bell"></i>
 
 </button>
 
-
-
-
-<button id="profileBtn">
+<button id="profileButton" class="iconButton">
 
 <i class="fa-solid fa-user"></i>
 
 </button>
 
-
-
 </div>
-
-
 
 </header>
 
-
-
-
-
 <main>
 
-
-<section id="homePage">
-
+<section id="homePage" class="page active">
 
 <div class="hero">
 
+<h2>
 
-<h1>
-Encuentra tu comunidad
-</h1>
+Encuentra tu próxima comunidad
 
-
+</h2>
 
 <p>
-Explora grupos de WhatsApp y conecta con personas.
+
+Miles de grupos públicos de WhatsApp en un solo lugar.
+
 </p>
 
+</div>
 
-
-
-<div class="search-container">
-
+<div class="searchContainer">
 
 <i class="fa-solid fa-magnifying-glass"></i>
 
-
-
-<input 
+<input
 id="searchInput"
-type="text"
+type="search"
 placeholder="Buscar grupos..."
->
-
-
+autocomplete="off">
 
 </div>
 
+  <!-- ========================= -->
+<!-- TENDENCIAS -->
+<!-- ========================= -->
 
-</div>
+<section class="contentSection">
 
-<!-- GRUPOS DESTACADOS -->
+<div class="sectionHeader">
 
+<h3>🔥 Tendencias</h3>
 
-<div class="section-header">
+<button id="seeAllTrending" class="textButton">
 
-
-<h2>
-🔥 Grupos destacados
-</h2>
-
-
-<button id="viewAllGroups">
-
-Ver todos
+Ver todo
 
 </button>
 
+</div>
+
+<div id="trendingGroups" class="groupsGrid"></div>
+
+</section>
+
+<!-- ========================= -->
+<!-- DESTACADOS -->
+<!-- ========================= -->
+
+<section class="contentSection">
+
+<div class="sectionHeader">
+
+<h3>⭐ Destacados</h3>
+
+<button id="seeAllFeatured" class="textButton">
+
+Ver todo
+
+</button>
 
 </div>
 
+<div id="featuredGroups" class="groupsGrid"></div>
 
+</section>
 
+<!-- ========================= -->
+<!-- NUEVOS -->
+<!-- ========================= -->
 
-<div 
-id="featuredGroups"
-class="groups-container">
+<section class="contentSection">
 
+<div class="sectionHeader">
+
+<h3>🆕 Nuevos grupos</h3>
 
 </div>
 
+<div id="latestGroups" class="groupsGrid"></div>
 
+</section>
 
-
-
-
+<!-- ========================= -->
 <!-- CATEGORÍAS -->
+<!-- ========================= -->
 
+<section class="contentSection">
 
-<div class="section-header">
+<div class="sectionHeader">
 
-
-<h2>
-📂 Categorías
-</h2>
-
+<h3>📂 Categorías</h3>
 
 </div>
 
+<div id="categoriesGrid" class="categoriesGrid">
 
+<button class="categoryButton" data-category="Amistad">❤️ Amistad</button>
 
+<button class="categoryButton" data-category="Gaming">🎮 Gaming</button>
 
-<div 
-id="categoriesContainer"
-class="categories-container">
+<button class="categoryButton" data-category="Anime">🌸 Anime</button>
 
+<button class="categoryButton" data-category="Música">🎵 Música</button>
 
+<button class="categoryButton" data-category="Memes">😂 Memes</button>
 
-<button 
-class="category-btn"
-data-category="Gaming">
+<button class="categoryButton" data-category="Tecnología">💻 Tecnología</button>
 
-🎮 Gaming
+<button class="categoryButton" data-category="Películas">🎬 Películas</button>
 
-</button>
+<button class="categoryButton" data-category="Deportes">⚽ Deportes</button>
 
+<button class="categoryButton" data-category="Estudios">📚 Estudios</button>
 
+<button class="categoryButton" data-category="Programación">💻 Programación</button>
 
-<button 
-class="category-btn"
-data-category="Anime">
+<button class="categoryButton" data-category="Negocios">💼 Negocios</button>
 
-🌸 Anime
+<button class="categoryButton" data-category="Autos">🚗 Autos</button>
 
-</button>
+<button class="categoryButton" data-category="Viajes">✈️ Viajes</button>
 
+<button class="categoryButton" data-category="Fotografía">📸 Fotografía</button>
 
+<button class="categoryButton" data-category="Fitness">🏋️ Fitness</button>
 
-<button 
-class="category-btn"
-data-category="Música">
+<button class="categoryButton" data-category="Mascotas">🐶 Mascotas</button>
 
-🎵 Música
+<button class="categoryButton" data-category="Cocina">🍳 Cocina</button>
 
-</button>
-
-
-
-<button 
-class="category-btn"
-data-category="Memes">
-
-😂 Memes
-
-</button>
-
-
-
-<button 
-class="category-btn"
-data-category="Amistad">
-
-❤️ Amistad
-
-</button>
-
-
-
-<button 
-class="category-btn"
-data-category="Tecnología">
-
-💻 Tecnología
-
-</button>
-
-
-
-<button 
-class="category-btn"
-data-category="Deportes">
-
-⚽ Deportes
-
-</button>
-
-
-
-<button 
-class="category-btn"
-data-category="Películas">
-
-🎬 Películas
-
-</button>
-
-
-
-<button 
-class="category-btn"
-data-category="Estudios">
-
-📚 Estudios
-
-</button>
-
-
-
-<button 
-class="category-btn"
-data-category="Otros">
-
-✨ Otros
-
-</button>
-
-
+<button class="categoryButton" data-category="Otros">✨ Otros</button>
 
 </div>
-
-
-
-
-
-
-
-<!-- ÚLTIMOS GRUPOS -->
-
-
-<div class="section-header">
-
-
-<h2>
-🆕 Últimos grupos
-</h2>
-
-
-</div>
-
-
-
-
-<div
-id="latestGroups"
-class="groups-container">
-
-
-</div>
-
-
 
 </section>
 
-<!-- EXPLORAR GRUPOS -->
+</section>
 
+  <!-- ========================= -->
+<!-- EXPLORAR -->
+<!-- ========================= -->
 
-<section 
-id="explorePage"
-class="hidden-page">
+<section id="explorePage" class="page">
 
+<div class="pageHeader">
 
+<button id="backExploreButton" class="backButton">
 
-<div class="section-header">
-
-
-
-<h2>
-🔎 Explorar grupos
-</h2>
-
-
-
-<button id="backExplore">
-
-← Volver
+<i class="fa-solid fa-arrow-left"></i>
 
 </button>
 
-
-
-</div>
-
-
-
-
-<div 
-id="exploreGroups"
-class="groups-container">
-
+<h2>Explorar grupos</h2>
 
 </div>
 
+<div id="exploreGroups" class="groupsGrid">
 
+</div>
 
 </section>
 
-
-
-
-
-
-
+<!-- ========================= -->
 <!-- DETALLE DEL GRUPO -->
+<!-- ========================= -->
 
+<section id="groupPage" class="page">
 
-<section 
-id="groupDetailsPage"
-class="hidden-page">
-
-
-
-<button 
-id="backButton"
-class="back-button">
-
+<button id="backGroupButton" class="backButton">
 
 <i class="fa-solid fa-arrow-left"></i>
 
 Volver
 
-
 </button>
 
-
-
-
-
-<div class="group-details-card">
-
-
-
-
-
-<img 
-id="detailsImage"
-src="https://placehold.co/600x300"
-alt="Grupo"
->
-
-
-
-
-
-<h1 id="detailsName">
-
-Nombre del grupo
-
-</h1>
-
-
-
-
-
-<div class="creator-info">
-
-
+<div class="groupBanner">
 
 <img
-id="creatorImage"
-src="https://placehold.co/100x100"
-alt="Creador"
->
-
-
-
-
-<div>
-
-
-
-<h3 id="creatorName">
-
-Creador
-
-</h3>
-
-
-
-
-<p id="creatorSocials">
-
-Redes sociales
-
-</p>
-
-
+id="groupImage"
+src=""
+alt="Grupo">
 
 </div>
 
+<div class="groupContent">
 
+<h2 id="groupName"></h2>
 
-</div>
+<p id="groupCategory"></p>
 
+<p id="groupDescription"></p>
 
+<div class="creatorCard">
 
+<img
+id="creatorPhoto"
+src=""
+alt="Creador">
 
+<div class="creatorInfo">
 
+<h3 id="creatorName"></h3>
 
-<p id="detailsCategory">
+<p id="creatorBio"></p>
 
-Categoría
+<a
+id="creatorInstagram"
+target="_blank">
 
-</p>
+Instagram
 
+</a>
 
+<a
+id="creatorTikTok"
+target="_blank">
 
+TikTok
 
-
-<p id="detailsDescription">
-
-Descripción del grupo
-
-</p>
-
-
-
-
-
-
-
-<div class="group-stats">
-
-
-
-<span>
-
-👁️
-
-<b id="detailsViews">
-
-0
-
-</b>
-
-vistas
-
-</span>
-
-
-
-
-
-<span>
-
-❤️
-
-<b id="detailsFavorites">
-
-0
-
-</b>
-
-favoritos
-
-</span>
-
-
-
-
+</a>
 
 </div>
 
+</div>
 
+<div class="groupButtons">
 
-
-
-
-
-<button 
-id="joinGroupButton"
-class="primary-btn">
-
+<button id="joinGroupButton">
 
 Entrar al grupo
 
+</button>
+
+<button id="favoriteGroupButton">
+
+❤️ Favorito
 
 </button>
 
+<button id="shareGroupButton">
 
-
-
-
-
-<button 
-id="favoriteGroupButton"
-class="secondary-btn">
-
-
-❤️ Agregar favorito
-
+📤 Compartir
 
 </button>
 
+<button id="copyGroupButton">
 
-
-
-
-<button 
-id="reportGroupButton"
-class="report-btn">
-
-
-🚩 Reportar grupo
-
+📋 Copiar enlace
 
 </button>
 
+<button id="reportGroupButton">
 
+🚩 Reportar
 
-
+</button>
 
 </div>
 
+<div class="groupStats">
 
+<span id="groupViews">
 
+0 vistas
 
+</span>
 
+<span id="groupFavorites">
 
+0 favoritos
 
+</span>
+
+<span id="groupComments">
+
+0 comentarios
+
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+  <!-- ========================= -->
 <!-- COMENTARIOS -->
+<!-- ========================= -->
 
+<section id="commentsPage" class="page">
 
-<div class="comments-section">
+<div class="pageHeader">
 
+<button id="backCommentsButton" class="backButton">
 
+<i class="fa-solid fa-arrow-left"></i>
 
-<h2>
+</button>
 
-💬 Comentarios
-
-</h2>
-
-
-
-
-
-<div 
-id="commentsList">
-
+<h2>Comentarios</h2>
 
 </div>
 
+<div id="commentsList">
 
+</div>
 
-
-
+<div class="commentBox">
 
 <textarea
 id="commentInput"
-placeholder="Escribe un comentario..."
-></textarea>
+placeholder="Escribe un comentario..."></textarea>
 
+<button id="sendCommentButton">
 
-
-
-
-
-<button 
-id="sendCommentButton"
-class="primary-btn">
-
-
-Comentar
+Enviar
 
 </button>
 
-
-
-
-
 </div>
-
-
-
 
 </section>
 
-<!-- FAVORITOS -->
-
-
-<section 
-id="favoritesPage"
-class="hidden-page">
-
-
-<div class="section-header">
-
-
-<h2>
-❤️ Mis favoritos
-</h2>
-
-
-<button id="backFavorites">
-
-← Volver
-
-</button>
-
-
-</div>
-
-
-
-
-<div
-id="favoriteGroups"
-class="groups-container">
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- PERFIL DEL USUARIO -->
-
-
-<section 
-id="profilePage"
-class="hidden-page">
-
-
-
-<div class="profile-card">
-
-
-
-<img
-id="profilePhoto"
-src="https://placehold.co/150x150"
-alt="Perfil"
->
-
-
-
-
-<h2 id="profileName">
-
-Usuario
-
-</h2>
-
-
-
-
-<p id="profileEmail">
-
-Inicia sesión para continuar
-
-</p>
-
-
-
-
-
-
-
-<div class="profile-stats">
-
-
-
-<div>
-
-
-<strong id="followersCount">
-
-0
-
-</strong>
-
-
-
-<span>
-
-Seguidores
-
-</span>
-
-
-</div>
-
-
-
-
-
-<div>
-
-
-<strong id="groupsCount">
-
-0
-
-</strong>
-
-
-
-<span>
-
-Grupos publicados
-
-</span>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="social-links">
-
-
-
-<p id="profileInstagram">
-
-Instagram:
-
-</p>
-
-
-
-
-<p id="profileTikTok">
-
-TikTok:
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-<button 
-id="loginButton"
-class="primary-btn">
-
-
-Iniciar sesión con Google
-
-
-</button>
-
-
-
-
-
-
-<button 
-id="logoutButton"
-class="secondary-btn">
-
-
-Cerrar sesión
-
-
-</button>
-
-
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- NOTIFICACIONES -->
-
-
-<section 
-id="notificationsPage"
-class="hidden-page">
-
-
-
-<div class="section-header">
-
-
-
-<h2>
-🔔 Notificaciones
-</h2>
-
-
-
-<button id="backNotifications">
-
-← Volver
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-<div 
-id="notificationsList">
-
-
-</div>
-
-
-
-</section>
-
+<!-- ========================= -->
 <!-- PUBLICAR GRUPO -->
+<!-- ========================= -->
 
+<section id="publishPage" class="page">
 
-<div 
-id="publishModal"
-class="modal">
+<div class="pageHeader">
 
+<button id="backPublishButton" class="backButton">
 
-
-<div class="modal-box">
-
-
-
-<button 
-id="closePublishModal"
-class="close-modal">
-
-✕
+<i class="fa-solid fa-arrow-left"></i>
 
 </button>
 
+<h2>Publicar grupo</h2>
 
-
-
-
-<h2>
-📢 Publicar grupo
-</h2>
-
-
-
-
+</div>
 
 <form id="publishForm">
 
-
-
-
-
 <input
-id="groupName"
 type="text"
+id="publishName"
 placeholder="Nombre del grupo"
-required
->
-
-
-
-
-
-<input
-id="groupImage"
-type="url"
-placeholder="Imagen del grupo"
->
-
-
-
-
-
-
-<select 
-id="groupCategory"
 required>
 
+<textarea
+id="publishDescription"
+placeholder="Descripción del grupo"
+required></textarea>
 
-<option value="">
+<select id="publishCategory" required>
 
-Selecciona categoría
-
-</option>
-
-
-<option>Gaming</option>
-
-<option>Anime</option>
-
-<option>Música</option>
-
-<option>Memes</option>
+<option value="">Selecciona una categoría</option>
 
 <option>Amistad</option>
-
+<option>Gaming</option>
+<option>Anime</option>
+<option>Música</option>
+<option>Memes</option>
 <option>Tecnología</option>
-
-<option>Deportes</option>
-
 <option>Películas</option>
-
+<option>Deportes</option>
 <option>Estudios</option>
-
+<option>Programación</option>
+<option>Negocios</option>
+<option>Autos</option>
+<option>Viajes</option>
+<option>Fotografía</option>
+<option>Fitness</option>
+<option>Mascotas</option>
+<option>Cocina</option>
 <option>Otros</option>
-
 
 </select>
 
-
-
-
-
-
-<textarea
-id="groupDescription"
-placeholder="Descripción del grupo"
-required
-></textarea>
-
-
-
-
-
-
+<input
+type="url"
+id="publishLink"
+placeholder="Enlace del grupo de WhatsApp"
+required>
 
 <input
-id="groupLink"
 type="url"
-placeholder="Link de WhatsApp"
-required
->
+id="publishImage"
+placeholder="Imagen del grupo (opcional)">
 
-
-
-
-
-
-<button 
+<button
 type="submit"
-class="primary-btn">
-
+id="publishButton">
 
 Publicar grupo
 
-
 </button>
-
-
-
-
 
 </form>
 
+</section>
 
+  <!-- ========================= -->
+<!-- PERFIL -->
+<!-- ========================= -->
+
+<section id="profilePage" class="page">
+
+<div class="pageHeader">
+
+<button id="backProfileButton" class="backButton">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+<h2>Mi perfil</h2>
 
 </div>
 
+<div class="profileCard">
 
+<img
+id="profilePhoto"
+src=""
+alt="Foto de perfil">
+
+<h2 id="profileName"></h2>
+
+<p id="profileEmail"></p>
+
+<input
+type="url"
+id="profileInstagram"
+placeholder="Instagram">
+
+<input
+type="url"
+id="profileTikTok"
+placeholder="TikTok">
+
+<textarea
+id="profileBio"
+placeholder="Biografía (opcional)"></textarea>
+
+<div class="profileStats">
+
+<div>
+
+<strong id="profileGroups">0</strong>
+
+<span>Grupos</span>
 
 </div>
 
+<div>
 
+<strong id="profileViews">0</strong>
 
+<span>Vistas</span>
 
+</div>
 
+<div>
 
+<strong id="profileFavorites">0</strong>
 
+<span>Favoritos</span>
 
-<!-- PERFIL OFICIAL NOCTRA -->
+</div>
 
+</div>
 
-<footer class="noctra-footer">
+<button id="saveProfileButton">
 
+Guardar cambios
 
+</button>
+
+<button id="logoutButton">
+
+Cerrar sesión
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- NOTIFICACIONES -->
+<!-- ========================= -->
+
+<section id="notificationsPage" class="page">
+
+<div class="pageHeader">
+
+<button id="backNotificationsButton" class="backButton">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+<h2>Notificaciones</h2>
+
+</div>
+
+<div id="notificationsList">
+
+</div>
+
+</section>
+
+  <!-- ========================= -->
+<!-- PANEL DE ADMINISTRACIÓN -->
+<!-- ========================= -->
+
+<section id="adminPage" class="page">
+
+<div class="pageHeader">
+
+<button id="backAdminButton" class="backButton">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+<h2>Panel de administración</h2>
+
+</div>
+
+<div class="adminStats">
+
+<div class="adminCard">
+
+<h3 id="totalUsers">0</h3>
+
+<p>Usuarios</p>
+
+</div>
+
+<div class="adminCard">
+
+<h3 id="totalGroups">0</h3>
+
+<p>Grupos</p>
+
+</div>
+
+<div class="adminCard">
+
+<h3 id="totalReports">0</h3>
+
+<p>Reportes</p>
+
+</div>
+
+</div>
+
+<div class="adminActions">
+
+<button id="manageGroupsButton">
+
+Administrar grupos
+
+</button>
+
+<button id="manageReportsButton">
+
+Revisar reportes
+
+</button>
+
+<button id="sendAnnouncementButton">
+
+Enviar aviso
+
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- ========================= -->
+<!-- NAVEGACIÓN INFERIOR -->
+<!-- ========================= -->
+
+<nav id="bottomNavigation">
+
+<button class="navButton active" data-page="homePage">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Inicio</span>
+
+</button>
+
+<button class="navButton" data-page="explorePage">
+
+<i class="fa-solid fa-compass"></i>
+
+<span>Explorar</span>
+
+</button>
+
+<button class="navButton" data-page="publishPage">
+
+<i class="fa-solid fa-plus"></i>
+
+<span>Publicar</span>
+
+</button>
+
+<button class="navButton" data-page="notificationsPage">
+
+<i class="fa-solid fa-bell"></i>
+
+<span>Alertas</span>
+
+</button>
+
+<button class="navButton" data-page="profilePage">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Perfil</span>
+
+</button>
+
+</nav>
+
+<footer id="mainFooter">
 
 <h2>
 
-𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪
+𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
 
 </h2>
 
-
-
-
 <p>
 
-Desarrollado por Bennett
+Desarrollado por <strong>Bennett</strong>
 
 </p>
 
+<div class="footerLinks">
 
-
-
-
-<div class="official-links">
-
-
-
-<a 
+<a
 href="https://www.instagram.com/bk.ls08"
 target="_blank">
 
@@ -1145,11 +758,7 @@ Instagram
 
 </a>
 
-
-
-
-
-<a 
+<a
 href="https://www.tiktok.com/@bk.ls08"
 target="_blank">
 
@@ -1157,152 +766,30 @@ TikTok
 
 </a>
 
-
-
-
-
-<a 
+<a
 href="https://whatsapp.com/channel/0029VbDEdJEInlqWAjSdTr0A"
 target="_blank">
 
-Canal WhatsApp
+Canal oficial
 
 </a>
 
-
-
 </div>
-
-
-
-
 
 <p>
 
-©2026 𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪
+©2026
 
 </p>
 
-
-
 </footer>
-
-
-
-
-
-
-
-<!-- BOTÓN CREAR -->
-
-
-<button 
-id="createGroupButton"
-class="floating-button">
-
-
-<i class="fa-solid fa-plus"></i>
-
-
-</button>
-
-
-
-
-
-
-
-<!-- NAVEGACIÓN INFERIOR -->
-
-
-<nav class="bottom-nav">
-
-
-
-<button 
-class="nav-btn active"
-data-page="homePage">
-
-
-<i class="fa-solid fa-house"></i>
-
-Inicio
-
-
-</button>
-
-
-
-
-
-<button 
-class="nav-btn"
-data-page="explorePage">
-
-
-<i class="fa-solid fa-compass"></i>
-
-Explorar
-
-
-</button>
-
-
-
-
-
-<button 
-class="nav-btn"
-data-page="favoritesPage">
-
-
-<i class="fa-solid fa-heart"></i>
-
-Favoritos
-
-
-</button>
-
-
-
-
-
-<button 
-class="nav-btn"
-data-page="profilePage">
-
-
-<i class="fa-solid fa-user"></i>
-
-Perfil
-
-
-</button>
-
-
-
-</nav>
-
-</main>
-
 
 </div>
 
+<script type="module" src="firebase.js"></script>
 
-
-
-
-<!-- FIREBASE / SCRIPT PRINCIPAL -->
-
-
-<script 
-type="module"
-src="script.js">
-</script>
-
-
+<script type="module" src="script.js"></script>
 
 </body>
-
 
 </html>
