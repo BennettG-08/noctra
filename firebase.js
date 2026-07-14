@@ -36,17 +36,19 @@ import {
 
 const firebaseConfig = {
 
-    apiKey: "TU_API_KEY",
+    apiKey: "AIzaSyDavM_1KqDWtuM5t88lrQnp3spnZxi-8GM",
 
-    authDomain: "TU_AUTH_DOMAIN",
+    authDomain: "noctra-bbdaf.firebaseapp.com",
 
-    projectId: "TU_PROJECT_ID",
+    projectId: "noctra-bbdaf",
 
-    storageBucket: "TU_STORAGE_BUCKET",
+    storageBucket: "noctra-bbdaf.firebasestorage.app",
 
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+    messagingSenderId: "1047689936282",
 
-    appId: "TU_APP_ID"
+    appId: "1:1047689936282:web:bc83f1c390256821b3ce23",
+
+    measurementId: "G-6C20CHJNX8"
 
 };
 
@@ -98,7 +100,7 @@ return result.user;
 
 }catch(error){
 
-console.error(error);
+console.error("Error login:", error);
 
 }
 
@@ -113,18 +115,26 @@ await signOut(auth);
 
 }catch(error){
 
-console.error(error);
+console.error("Error cerrar sesión:", error);
 
 }
 
 }
 
+
+// ===========================
+// ESTADO DE SESIÓN
+// ===========================
 
 onAuthStateChanged(auth,(user)=>{
 
 if(user){
 
 console.log("Usuario conectado:", user.email);
+
+}else{
+
+console.log("Usuario sin sesión");
 
 }
 
