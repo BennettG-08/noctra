@@ -1182,7 +1182,7 @@ lista.appendChild(item);
 // PERFIL DE USUARIO
 // ===========================
 
-function cargarDatosPerfil(){
+async function cargarDatosPerfil(){
 
 
 if(!usuarioActual) return;
@@ -1195,6 +1195,10 @@ document.getElementById("profileName");
 
 const email =
 document.getElementById("profileEmail");
+
+
+const foto =
+document.getElementById("profilePhoto");
 
 
 
@@ -1216,17 +1220,138 @@ usuarioActual.email;
 
 
 
-const foto =
-document.getElementById("profilePhoto");
-
-
-
 if(foto && usuarioActual.photoURL){
 
 foto.src =
 usuarioActual.photoURL;
 
 }
+
+
+// ===========================
+// CONTADORES DEL PERFIL
+// ===========================
+
+try{
+
+
+const gruposRef =
+query(
+
+collection(db,"groups"),
+
+where(
+"creator",
+"==",
+usuarioActual.displayName
+
+)
+
+);
+
+
+
+const snapshot =
+await getDocs(gruposRef);
+
+
+
+let gruposTotal = 0;
+
+let vistasTotal = 0;
+
+
+
+snapshot.forEach((doc)=>{
+
+
+const grupo =
+doc.data();
+
+
+gruposTotal++;
+
+
+vistasTotal +=
+grupo.views || 0;
+
+
+});
+
+
+
+const profileGroups =
+document.getElementById("profileGroups");
+
+
+const profileViews =
+document.getElementById("profileViews");
+
+
+
+if(profileGroups){
+
+profileGroups.textContent =
+gruposTotal;
+
+}
+
+
+
+if(profileViews){
+
+profileViews.textContent =
+vistasTotal;
+
+}
+
+
+
+// FAVORITOS
+
+const favoritosRef =
+collection(
+
+db,
+
+"users",
+
+usuarioActual.uid,
+
+"favorites"
+
+);
+
+
+
+const favoritosSnapshot =
+await getDocs(favoritosRef);
+
+
+
+const profileFavorites =
+document.getElementById("profileFavorites");
+
+
+
+if(profileFavorites){
+
+profileFavorites.textContent =
+favoritosSnapshot.size;
+
+}
+
+
+
+}catch(error){
+
+console.error(
+"Error cargando perfil:",
+error
+);
+
+}
+
 
 
 }
