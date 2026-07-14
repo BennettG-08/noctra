@@ -94,17 +94,37 @@ async function loginGoogle(){
 
 try{
 
-const result = await signInWithPopup(auth,provider);
+const result = await signInWithPopup(
+auth,
+provider
+);
+
+console.log(
+"Login correcto:",
+result.user.email
+);
 
 return result.user;
 
+
 }catch(error){
 
-console.error("Error login:", error);
+console.error(
+"Error login:",
+error.code,
+error.message
+);
+
+alert(
+"Error al iniciar sesión: " + error.message
+);
+
+return null;
 
 }
 
 }
+
 
 
 async function logoutUser(){
@@ -113,9 +133,18 @@ try{
 
 await signOut(auth);
 
+console.log(
+"Sesión cerrada correctamente"
+);
+
+
 }catch(error){
 
-console.error("Error cerrar sesión:", error);
+console.error(
+"Error cerrar sesión:",
+error.code,
+error.message
+);
 
 }
 
@@ -130,11 +159,16 @@ onAuthStateChanged(auth,(user)=>{
 
 if(user){
 
-console.log("Usuario conectado:", user.email);
+console.log(
+"Usuario conectado:",
+user.email
+);
 
 }else{
 
-console.log("Usuario sin sesión");
+console.log(
+"Usuario sin sesión"
+);
 
 }
 
