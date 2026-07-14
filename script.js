@@ -1863,23 +1863,32 @@ onAuthStateChanged(
 auth,
 async(user)=>{
 
+usuarioActual = user || null;
 
-usuarioActual=user;
-
-
+const loginButton = document.getElementById("loginButton");
+const logoutButton = document.getElementById("logoutButton");
 
 if(user){
 
+if(loginButton)
+loginButton.style.display="none";
+
+if(logoutButton)
+logoutButton.style.display="block";
 
 await crearUsuario(user);
 
-
 cargarDatosPerfil();
 
+}else{
+
+if(loginButton)
+loginButton.style.display="block";
+
+if(logoutButton)
+logoutButton.style.display="none";
 
 }
-
-
 
 });
 
