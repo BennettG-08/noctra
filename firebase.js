@@ -1,19 +1,38 @@
-// =================================
-// FIREBASE CONFIG - 𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪
-// =================================
+// ===========================
+// FIREBASE.JS - 𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
+// ===========================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-import { 
-    getFirestore 
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    query,
+    where,
+    orderBy,
+    limit,
+    serverTimestamp,
+    increment
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
-    getAuth
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
-// COLOCA AQUÍ LOS DATOS DE TU PROYECTO FIREBASE
+// ===========================
+// CONFIGURACIÓN FIREBASE
+// ===========================
 
 const firebaseConfig = {
 
@@ -32,22 +51,116 @@ const firebaseConfig = {
 };
 
 
+// ===========================
 // INICIAR FIREBASE
+// ===========================
 
 const app = initializeApp(firebaseConfig);
-
-
-// SERVICIOS
 
 const db = getFirestore(app);
 
 const auth = getAuth(app);
 
 
+// ===========================
+// PROVEEDOR LOGIN
+// ===========================
+
+const provider = new GoogleAuthProvider();
+
+
+// ===========================
+// COLECCIONES
+// ===========================
+
+const groupsCollection = collection(db,"groups");
+
+const usersCollection = collection(db,"users");
+
+const reportsCollection = collection(db,"reports");
+
+const commentsCollection = collection(db,"comments");
+
+const notificationsCollection = collection(db,"notifications");
+
+
+// ===========================
+// FUNCIONES DE USUARIO
+// ===========================
+
+async function loginGoogle(){
+
+try{
+
+const result = await signInWithPopup(auth,provider);
+
+return result.user;
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+
+async function logoutUser(){
+
+try{
+
+await signOut(auth);
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+console.log("Usuario conectado:", user.email);
+
+}
+
+});
+
+
+// ===========================
 // EXPORTAR
+// ===========================
 
 export {
-    app,
-    db,
-    auth
+
+app,
+db,
+auth,
+
+groupsCollection,
+usersCollection,
+reportsCollection,
+commentsCollection,
+notificationsCollection,
+
+addDoc,
+getDocs,
+getDoc,
+doc,
+updateDoc,
+deleteDoc,
+query,
+where,
+orderBy,
+limit,
+serverTimestamp,
+increment,
+
+loginGoogle,
+logoutUser
+
 };
