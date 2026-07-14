@@ -37,7 +37,8 @@ onAuthStateChanged
 
 import {
 
-collection
+collection,
+setDoc
 
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
@@ -600,29 +601,19 @@ return;
 try{
 
 
-const favoritoRef = doc(
+await setDoc(
 
+doc(
 db,
-
 "users",
-
 usuarioActual.uid,
-
 "favorites",
-
 grupoId
-
-);
-
-
-
-await updateDoc(
-
-doc(db,"groups",grupoId),
+),
 
 {
 
-favorites:increment(1)
+createdAt: serverTimestamp()
 
 }
 
@@ -630,14 +621,34 @@ favorites:increment(1)
 
 
 
-console.log("Favorito agregado");
+await updateDoc(
 
+doc(
+db,
+"groups",
+grupoId
+),
+
+{
+
+favorites: increment(1)
+
+}
+
+);
+
+
+
+console.log("Favorito agregado correctamente");
 
 
 }catch(error){
 
 
-console.error(error);
+console.error(
+"Error guardando favorito:",
+error
+);
 
 
 }
