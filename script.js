@@ -1833,9 +1833,9 @@ await getDoc(referencia);
 if(!usuario.exists()){
 
 
-await addDoc(
+await setDoc(
 
-collection(db,"users"),
+referencia,
 
 {
 
@@ -1844,11 +1844,21 @@ uid:user.uid,
 name:
 user.displayName || "Usuario",
 
+
 email:
 user.email,
 
+
 photo:
 user.photoURL || "",
+
+
+instagram:"",
+
+tiktok:"",
+
+bio:"",
+
 
 createdAt:
 serverTimestamp()
