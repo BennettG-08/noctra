@@ -1205,7 +1205,7 @@ document.getElementById("profilePhoto");
 if(nombre){
 
 nombre.textContent =
-usuarioActual.displayName || "Usuario";
+usuarioActual.displayName || "Bennett";
 
 }
 
@@ -1228,6 +1228,7 @@ usuarioActual.photoURL;
 }
 
 
+
 // ===========================
 // CONTADORES DEL PERFIL
 // ===========================
@@ -1243,7 +1244,7 @@ collection(db,"groups"),
 where(
 "creator",
 "==",
-usuarioActual.displayName
+"Bennett"
 
 )
 
@@ -1251,28 +1252,29 @@ usuarioActual.displayName
 
 
 
-const snapshot =
+const gruposSnapshot =
 await getDocs(gruposRef);
 
 
 
-let gruposTotal = 0;
+let totalGrupos = 0;
 
-let vistasTotal = 0;
+let totalVistas = 0;
 
 
 
-snapshot.forEach((doc)=>{
+gruposSnapshot.forEach((item)=>{
 
 
 const grupo =
-doc.data();
+item.data();
 
 
-gruposTotal++;
+
+totalGrupos++;
 
 
-vistasTotal +=
+totalVistas +=
 grupo.views || 0;
 
 
@@ -1280,28 +1282,28 @@ grupo.views || 0;
 
 
 
-const profileGroups =
+const grupos =
 document.getElementById("profileGroups");
 
 
-const profileViews =
+const vistas =
 document.getElementById("profileViews");
 
 
 
-if(profileGroups){
+if(grupos){
 
-profileGroups.textContent =
-gruposTotal;
+grupos.textContent =
+totalGrupos;
 
 }
 
 
 
-if(profileViews){
+if(vistas){
 
-profileViews.textContent =
-vistasTotal;
+vistas.textContent =
+totalVistas;
 
 }
 
@@ -1329,14 +1331,14 @@ await getDocs(favoritosRef);
 
 
 
-const profileFavorites =
+const favoritos =
 document.getElementById("profileFavorites");
 
 
 
-if(profileFavorites){
+if(favoritos){
 
-profileFavorites.textContent =
+favoritos.textContent =
 favoritosSnapshot.size;
 
 }
@@ -1346,7 +1348,7 @@ favoritosSnapshot.size;
 }catch(error){
 
 console.error(
-"Error cargando perfil:",
+"Error cargando datos del perfil:",
 error
 );
 
