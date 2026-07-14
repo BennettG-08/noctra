@@ -1,37 +1,30 @@
-/* ===================================================
-   𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
-   Desarrollado por Bennett
-=================================================== */
+/* ==========================
+𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 :root{
 
     --bg:#09090f;
-    --surface:#141421;
-    --surface2:#1b1b2b;
+    --surface:#15151d;
+    --surface2:#1f1f29;
 
     --primary:#7c3aed;
     --secondary:#00d4ff;
 
-    --success:#22c55e;
-    --danger:#ef4444;
-
     --text:#ffffff;
-    --muted:#9ca3af;
+    --muted:#b8b8c5;
 
-    --radius:20px;
+    --radius:18px;
 
     --shadow:0 15px 35px rgba(0,0,0,.35);
 
-    --transition:.30s;
-
-}
-
-*{
-
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Poppins",sans-serif;
+    --transition:.25s;
 
 }
 
@@ -43,28 +36,21 @@ html{
 
 body{
 
-    background:var(--bg);
-    color:var(--text);
+    font-family:"Poppins",sans-serif;
 
-    overflow-x:hidden;
+    background:var(--bg);
+
+    color:var(--text);
 
     min-height:100vh;
 
 }
 
-img{
+a{
 
-    max-width:100%;
-    display:block;
+    color:inherit;
 
-}
-
-button,
-input,
-textarea,
-select{
-
-    font-family:inherit;
+    text-decoration:none;
 
 }
 
@@ -72,12 +58,21 @@ button{
 
     cursor:pointer;
 
+    font-family:inherit;
+
 }
 
-a{
+img{
 
-    text-decoration:none;
-    color:inherit;
+    display:block;
+
+    max-width:100%;
+
+}
+
+section{
+
+    padding:20px;
 
 }
 
@@ -109,8 +104,6 @@ SPLASH
 
     text-align:center;
 
-    animation:fadeUp .8s ease;
-
 }
 
 .logoSplash h1{
@@ -119,11 +112,7 @@ SPLASH
 
     font-weight:800;
 
-    background:linear-gradient(
-        135deg,
-        var(--primary),
-        var(--secondary)
-    );
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
 
     -webkit-background-clip:text;
 
@@ -133,7 +122,7 @@ SPLASH
 
 .logoSplash p{
 
-    margin-top:15px;
+    margin-top:12px;
 
     color:var(--muted);
 
@@ -156,12 +145,21 @@ APP
 #app{
 
     width:100%;
+
     min-height:100vh;
 
 }
 
+main{
+
+    padding-top:80px;
+
+    padding-bottom:120px;
+
+}
+
 /* ==========================
-BARRA SUPERIOR
+TOPBAR
 ========================== */
 
 .topbar{
@@ -169,18 +167,22 @@ BARRA SUPERIOR
     position:fixed;
 
     top:0;
+
     left:0;
 
     width:100%;
+
     height:70px;
 
-    padding:0 18px;
-
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
-    background:rgba(9,9,15,.92);
+    padding:0 20px;
+
+    background:rgba(9,9,15,.95);
 
     backdrop-filter:blur(15px);
 
@@ -207,6 +209,7 @@ BARRA SUPERIOR
 .actions button{
 
     width:42px;
+
     height:42px;
 
     border:none;
@@ -228,47 +231,36 @@ BARRA SUPERIOR
 }
 
 /* ==========================
-CONTENIDO
+HERO
 ========================== */
-
-main{
-
-    padding-top:80px;
-    padding-bottom:120px;
-
-}
 
 .hero{
 
-    padding:25px 20px;
+    text-align:center;
+
+    padding:30px 20px;
 
 }
 
 .hero h1{
 
-    font-size:30px;
+    font-size:32px;
 
     font-weight:700;
+
+    margin-bottom:10px;
 
 }
 
 .hero p{
 
-    margin-top:12px;
-
     color:var(--muted);
 
-    line-height:1.7;
+    margin-bottom:25px;
 
 }
 
-/* ==========================
-BUSCADOR
-========================== */
-
 .searchBox{
-
-    margin-top:25px;
 
     display:flex;
 
@@ -280,7 +272,7 @@ BUSCADOR
 
     background:var(--surface);
 
-    border-radius:18px;
+    border-radius:16px;
 
     box-shadow:var(--shadow);
 
@@ -304,21 +296,13 @@ BUSCADOR
 
     color:#fff;
 
-    font-size:15px;
+    font-size:16px;
 
 }
 
 /* ==========================
 SECCIONES
 ========================== */
-
-section{
-
-    padding:0 20px;
-
-    margin-bottom:35px;
-
-}
 
 .sectionHeader{
 
@@ -342,7 +326,7 @@ section{
 
     border:none;
 
-    background:none;
+    background:transparent;
 
     color:var(--secondary);
 
@@ -351,27 +335,26 @@ section{
 }
 
 /* ==========================
-TARJETAS DE GRUPOS
+GRUPOS
 ========================== */
 
 .groupList{
 
     display:flex;
+
     flex-direction:column;
-    gap:16px;
+
+    gap:18px;
 
 }
 
 .groupCard{
 
-    display:flex;
-    gap:16px;
-
-    padding:16px;
-
     background:var(--surface);
 
-    border-radius:20px;
+    border-radius:18px;
+
+    padding:18px;
 
     box-shadow:var(--shadow);
 
@@ -385,43 +368,27 @@ TARJETAS DE GRUPOS
 
 }
 
-.groupImage{
-
-    width:90px;
-    height:90px;
-
-    border-radius:16px;
-
-    overflow:hidden;
-
-    flex-shrink:0;
-
-}
-
-.groupImage img{
+.groupCard img{
 
     width:100%;
-    height:100%;
+
+    height:180px;
 
     object-fit:cover;
 
-}
+    border-radius:14px;
 
-.groupInfo{
-
-    flex:1;
+    margin-bottom:14px;
 
 }
 
-.groupInfo h3{
+.groupCard h3{
 
-    font-size:18px;
-
-    margin-bottom:8px;
+    margin-bottom:10px;
 
 }
 
-.groupInfo p{
+.groupCard p{
 
     color:var(--muted);
 
@@ -429,35 +396,28 @@ TARJETAS DE GRUPOS
 
 }
 
-.groupInfo small{
-
-    color:#8d8d98;
-
-}
-
-.groupActions{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-top:15px;
-
-}
-
 /* ==========================
 BOTONES
 ========================== */
 
-.joinBtn{
-
-    padding:11px 18px;
+.joinBtn,
+.favoriteBtn{
 
     border:none;
 
-    border-radius:12px;
+    border-radius:14px;
+
+    padding:12px 18px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.joinBtn{
 
     background:linear-gradient(
         135deg,
@@ -467,43 +427,20 @@ BOTONES
 
     color:#fff;
 
-    font-weight:600;
-
-    transition:var(--transition);
-
-}
-
-.joinBtn:hover{
-
-    transform:translateY(-2px);
-
 }
 
 .favoriteBtn{
 
-    width:44px;
-
-    height:44px;
-
-    border:none;
-
-    border-radius:50%;
-
     background:var(--surface2);
 
-    color:#ff4d6d;
-
-    font-size:18px;
-
-    transition:var(--transition);
+    color:#fff;
 
 }
 
-.favoriteBtn.active{
+.joinBtn:hover,
+.favoriteBtn:hover{
 
-    background:#ff4d6d;
-
-    color:#fff;
+    transform:scale(1.03);
 
 }
 
@@ -517,7 +454,7 @@ CATEGORÍAS
 
     grid-template-columns:repeat(2,1fr);
 
-    gap:14px;
+    gap:15px;
 
 }
 
@@ -527,17 +464,15 @@ CATEGORÍAS
 
     padding:18px;
 
-    border-radius:18px;
+    border-radius:16px;
 
     text-align:center;
 
     font-weight:600;
 
-    cursor:pointer;
-
     transition:var(--transition);
 
-    box-shadow:var(--shadow);
+    cursor:pointer;
 
 }
 
@@ -545,12 +480,10 @@ CATEGORÍAS
 
     background:var(--primary);
 
-    transform:translateY(-4px);
-
 }
 
 /* ==========================
-BOTÓN PUBLICAR
+BOTÓN FLOTANTE
 ========================== */
 
 #fabButton{
@@ -558,9 +491,11 @@ BOTÓN PUBLICAR
     position:fixed;
 
     right:20px;
+
     bottom:90px;
 
     width:60px;
+
     height:60px;
 
     border:none;
@@ -577,11 +512,15 @@ BOTÓN PUBLICAR
 
     font-size:22px;
 
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
     box-shadow:var(--shadow);
 
-    z-index:900;
-
-    transition:var(--transition);
+    z-index:1000;
 
 }
 
@@ -618,13 +557,14 @@ MODAL
 .modalContent{
 
     width:100%;
-    max-width:430px;
+
+    max-width:450px;
 
     background:var(--surface);
 
-    border-radius:22px;
+    border-radius:20px;
 
-    padding:24px;
+    padding:25px;
 
     box-shadow:var(--shadow);
 
@@ -650,55 +590,51 @@ MODAL
 
     border:none;
 
-    outline:none;
-
     border-radius:14px;
 
     background:var(--surface2);
 
     color:#fff;
 
+    outline:none;
+
 }
 
 .modalContent textarea{
 
+    min-height:120px;
+
     resize:vertical;
-
-    min-height:110px;
-
-}
-
-.modalContent button{
-
-    width:100%;
 
 }
 
 /* ==========================
-PERFIL
+PERFIL Y DETALLE
 ========================== */
 
-.profileCard{
-
-    max-width:450px;
-
-    margin:30px auto;
+.profileCard,
+.groupDetail{
 
     background:var(--surface);
 
-    border-radius:22px;
+    border-radius:20px;
 
-    padding:30px;
-
-    text-align:center;
+    padding:25px;
 
     box-shadow:var(--shadow);
+
+}
+
+.profileCard{
+
+    text-align:center;
 
 }
 
 .profileCard img{
 
     width:120px;
+
     height:120px;
 
     border-radius:50%;
@@ -709,71 +645,13 @@ PERFIL
 
 }
 
-.profileCard p{
-
-    margin:12px 0;
-
-    color:var(--muted);
-
-}
-
-/* ==========================
-DETALLE DEL GRUPO
-========================== */
-
-.groupDetail{
-
-    max-width:550px;
-
-    margin:auto;
-
-    background:var(--surface);
-
-    border-radius:22px;
-
-    padding:25px;
-
-    box-shadow:var(--shadow);
-
-}
-
-.groupDetail h2{
-
-    margin-bottom:15px;
-
-}
-
-.groupDetail p{
-
-    margin-bottom:10px;
-
-    color:var(--muted);
-
-}
-
-#commentsList{
-
-    margin-top:20px;
-
-}
-
-#commentInput{
+.groupDetail img{
 
     width:100%;
 
-    margin-top:15px;
+    border-radius:16px;
 
-    padding:14px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:var(--surface2);
-
-    color:#fff;
-
-    resize:none;
+    margin-bottom:20px;
 
 }
 
@@ -786,10 +664,12 @@ NAVEGACIÓN INFERIOR
     position:fixed;
 
     left:0;
+
     bottom:0;
 
     width:100%;
-    height:72px;
+
+    height:70px;
 
     display:flex;
 
@@ -797,17 +677,23 @@ NAVEGACIÓN INFERIOR
 
     align-items:center;
 
-    background:rgba(9,9,15,.95);
-
-    backdrop-filter:blur(16px);
+    background:rgba(9,9,15,.96);
 
     border-top:1px solid rgba(255,255,255,.05);
+
+    backdrop-filter:blur(15px);
 
     z-index:1000;
 
 }
 
 .navItem{
+
+    background:none;
+
+    border:none;
+
+    color:var(--muted);
 
     display:flex;
 
@@ -816,12 +702,6 @@ NAVEGACIÓN INFERIOR
     align-items:center;
 
     gap:5px;
-
-    border:none;
-
-    background:none;
-
-    color:var(--muted);
 
     font-size:12px;
 
@@ -840,115 +720,14 @@ NAVEGACIÓN INFERIOR
 }
 
 /* ==========================
-CREADOR
-========================== */
-
-.creatorFooter{
-
-    padding:40px 20px 120px;
-
-}
-
-.creatorCard{
-
-    max-width:550px;
-
-    margin:auto;
-
-    padding:30px;
-
-    border-radius:22px;
-
-    text-align:center;
-
-    background:var(--surface);
-
-    box-shadow:var(--shadow);
-
-}
-
-.creatorCard h3{
-
-    margin:10px 0;
-
-    color:var(--secondary);
-
-}
-
-.creatorSocials{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-    margin-top:20px;
-
-}
-
-.creatorSocials a{
-
-    padding:14px;
-
-    border-radius:14px;
-
-    background:var(--surface2);
-
-    transition:var(--transition);
-
-}
-
-.creatorSocials a:hover{
-
-    background:var(--primary);
-
-}
-
-/* ==========================
-ANIMACIONES
-========================== */
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(20px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-
-.groupCard,
-.category,
-.profileCard,
-.groupDetail,
-.creatorCard{
-
-    animation:fadeUp .45s ease;
-
-}
-
-/* ==========================
 RESPONSIVE
 ========================== */
 
-@media(min-width:768px){
+@media (min-width:768px){
 
-    section,
-    .hero{
+    main{
 
-        max-width:1000px;
+        max-width:1100px;
 
         margin:auto;
 
@@ -960,25 +739,11 @@ RESPONSIVE
 
         grid-template-columns:repeat(2,1fr);
 
-        gap:18px;
-
     }
 
     .categoryGrid{
 
         grid-template-columns:repeat(4,1fr);
-
-    }
-
-    .bottomNav{
-
-        width:500px;
-
-        left:50%;
-
-        transform:translateX(-50%);
-
-        border-radius:22px 22px 0 0;
 
     }
 
