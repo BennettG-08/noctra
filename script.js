@@ -1184,8 +1184,20 @@ lista.appendChild(item);
 
 async function cargarDatosPerfil(){
 
-
 if(!usuarioActual) return;
+
+
+const referencia = doc(
+db,
+"users",
+usuarioActual.uid
+);
+
+
+const usuario = await getDoc(referencia);
+
+
+const datos = usuario.data() || {};
 
 
 
@@ -1201,11 +1213,23 @@ const foto =
 document.getElementById("profilePhoto");
 
 
+const instagram =
+document.getElementById("profileInstagram");
+
+
+const tiktok =
+document.getElementById("profileTikTok");
+
+
+const bio =
+document.getElementById("profileBio");
+
+
 
 if(nombre){
 
 nombre.textContent =
-usuarioActual.displayName || "Bennett";
+datos.name || usuarioActual.displayName || "Bennett";
 
 }
 
@@ -1214,16 +1238,47 @@ usuarioActual.displayName || "Bennett";
 if(email){
 
 email.textContent =
-usuarioActual.email;
+datos.email || usuarioActual.email;
 
 }
 
 
 
-if(foto && usuarioActual.photoURL){
+if(foto && (datos.photo || usuarioActual.photoURL)){
 
 foto.src =
-usuarioActual.photoURL;
+datos.photo || usuarioActual.photoURL;
+
+}
+
+
+
+if(instagram){
+
+instagram.value =
+datos.instagram || "";
+
+}
+
+
+
+if(tiktok){
+
+tiktok.value =
+datos.tiktok || "";
+
+}
+
+
+
+if(bio){
+
+bio.value =
+datos.bio || "";
+
+}
+
+
 
 }
 
