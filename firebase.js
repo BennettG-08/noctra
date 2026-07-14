@@ -1,11 +1,11 @@
-// ==========================
-// 𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪 FIREBASE
-// ==========================
+// =================================
+// FIREBASE CONFIG - 𓆩⍣⃝  𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝  𓆪
+// =================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-import {
-    getFirestore
+import { 
+    getFirestore 
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -13,39 +13,38 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 
-// Configuración Firebase
+// COLOCA AQUÍ LOS DATOS DE TU PROYECTO FIREBASE
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyDavM_1KqDWtuM5t88lrQnp3spnZxi-8GM",
+    apiKey: "TU_API_KEY",
 
-    authDomain: "noctra-bbdaf.firebaseapp.com",
+    authDomain: "TU_AUTH_DOMAIN",
 
-    projectId: "noctra-bbdaf",
+    projectId: "TU_PROJECT_ID",
 
-    storageBucket: "noctra-bbdaf.firebasestorage.app",
+    storageBucket: "TU_STORAGE_BUCKET",
 
-    messagingSenderId: "1047689936282",
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
 
-    appId: "1:1047689936282:web:bc83f1c390256821b3ce23"
+    appId: "TU_APP_ID"
 
 };
 
 
-// Inicializar Firebase
+// INICIAR FIREBASE
 
 const app = initializeApp(firebaseConfig);
 
 
-// Base de datos
+// SERVICIOS
 
 const db = getFirestore(app);
 
-
-// Autenticación
-
 const auth = getAuth(app);
 
+
+// EXPORTAR
 
 export {
     app,
