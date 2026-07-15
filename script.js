@@ -661,13 +661,28 @@ async function sumarVista(grupoId){
 
     try{
 
+        const vistasGuardadas = JSON.parse(
+            localStorage.getItem("groupViews") || "[]"
+        );
+
+        if(vistasGuardadas.includes(grupoId)){
+            return;
+        }
+
+        vistasGuardadas.push(grupoId);
+
+        localStorage.setItem(
+            "groupViews",
+            JSON.stringify(vistasGuardadas)
+        );
+
         await updateDoc(
 
             doc(db,"groups",grupoId),
 
             {
 
-                views:increment(1)
+                views: increment(1)
 
             }
 
