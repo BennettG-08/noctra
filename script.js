@@ -6,36 +6,77 @@
 import {
     db,
     auth,
+
     addDoc,
     getDocs,
     getDoc,
     setDoc,
+
+    doc,
     updateDoc,
     deleteDoc,
-    doc,
-    collection,
+
     query,
     where,
     orderBy,
     limit,
-    increment,
+
     serverTimestamp,
+    increment,
+
     loginGoogle,
     logoutUser
+
 } from "./firebase.js";
 
 import {
+
     onAuthStateChanged
+
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+import {
+
+    collection
+
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+// ===========================
+// VARIABLES GLOBALES
+// ===========================
+
 let usuarioActual = null;
+
 let grupos = [];
+
 let grupoActual = null;
 
+let favoritos = [];
+
+let comentarios = [];
+
+let notificaciones = [];
+
+
+// ===========================
+// ELEMENTOS
+// ===========================
+
 const pages = document.querySelectorAll(".page");
+
 const navButtons = document.querySelectorAll(".navButton");
 
-function showPage(id){
+const splashScreen = document.getElementById("splashScreen");
+
+const app = document.getElementById("app");
+
+
+// ===========================
+// MOSTRAR PÁGINAS
+// ===========================
+
+function showPage(pageId){
 
     pages.forEach(page=>{
 
@@ -43,7 +84,7 @@ function showPage(id){
 
     });
 
-    const page = document.getElementById(id);
+    const page = document.getElementById(pageId);
 
     if(page){
 
@@ -53,11 +94,18 @@ function showPage(id){
 
 }
 
+
+// ===========================
+// NAVEGACIÓN INFERIOR
+// ===========================
+
 navButtons.forEach(button=>{
 
     button.addEventListener("click",()=>{
 
-        showPage(button.dataset.page);
+        const page = button.dataset.page;
+
+        showPage(page);
 
         navButtons.forEach(btn=>{
 
@@ -71,127 +119,163 @@ navButtons.forEach(button=>{
 
 });
 
+
 // ===========================
-// PARTE 2
-// SESIÓN Y USUARIOS
+// SPLASH SCREEN
 // ===========================
 
-async function crearUsuario(user){
+function ocultarSplash(){
 
-    const referencia = doc(
-        db,
-        "users",
-        user.uid
-    );
+    if(!splashScreen) return;
 
-    const documento = await getDoc(referencia);
+    setTimeout(()=>{
 
-    if(!documento.exists()){
+        splashScreen.style.opacity="0";
 
-        await setDoc(referencia,{
+        splashScreen.style.pointerEvents="none";
 
-            uid:user.uid,
+        setTimeout(()=>{
 
-            name:user.displayName || "Usuario",
+            splashScreen.style.display="none";
 
-            email:user.email,
+        },500);
 
-            photo:user.photoURL || "",
+    },1200);
 
-            instagram:"",
+}
 
-            tiktok:"",
 
-            bio:"",
+// ===========================
+// BOTONES VOLVER
+// ===========================
 
-            createdAt:serverTimestamp()
+const backButtons = {
+
+    backGroupButton:"homePage",
+
+    backExploreButton:"homePage",
+
+    backProfileButton:"homePage",
+
+    backNotificationsButton:"homePage",
+
+    backCommentsButton:"groupPage",
+
+    backPublishButton:"homePage",
+
+    backAdminButton:"homePage"
+
+};
+
+Object.entries(backButtons).forEach(([id,page])=>{
+
+    const button=document.getElementById(id);
+
+    if(button){
+
+        button.addEventListener("click",()=>{
+
+            showPage(page);
 
         });
-
-    }
-
-}
-
-
-
-async function cargarDatosPerfil(){
-
-    if(!usuarioActual) return;
-
-    const documento = await getDoc(
-
-        doc(
-            db,
-            "users",
-            usuarioActual.uid
-        )
-
-    );
-
-    if(!documento.exists()) return;
-
-    const datos = documento.data();
-
-    document.getElementById("profileName").textContent =
-    datos.name || "Usuario";
-
-    document.getElementById("profileEmail").textContent =
-    datos.email || "";
-
-    document.getElementById("profilePhoto").src =
-    datos.photo || "";
-
-    document.getElementById("profileInstagram").value =
-    datos.instagram || "";
-
-    document.getElementById("profileTikTok").value =
-    datos.tiktok || "";
-
-    document.getElementById("profileBio").value =
-    datos.bio || "";
-
-}
-
-
-
-onAuthStateChanged(auth,async(user)=>{
-
-    usuarioActual = user;
-
-    const login =
-    document.getElementById("loginButton");
-
-    const logout =
-    document.getElementById("logoutButton");
-
-    if(user){
-
-        await crearUsuario(user);
-
-        await cargarDatosPerfil();
-
-        if(login)
-        login.style.display="none";
-
-        if(logout)
-        logout.style.display="block";
-
-    }else{
-
-        if(login)
-        login.style.display="block";
-
-        if(logout)
-        logout.style.display="none";
 
     }
 
 });
 
 
+// ===========================
+// INICIALIZAR APP
+// ===========================
 
-const loginButton =
-document.getElementById("loginButton");
+function iniciarAplicacion(){
+
+    ocultarSplash();
+
+    showPage("homePage");
+
+    console.log("NOCTRA iniciada correctamente");
+
+}
+
+// ===========================
+// AUTENTICACIÓN
+// ===========================
+
+async function crearUsuario(user){
+
+    const referencia = doc(db,"users",user.uid);
+
+    const documento = await getDoc(referencia);
+
+    if(documento.exists()) return;
+
+    await setDoc(referencia,{
+
+        uid:user.uid,
+
+        name:user.displayName || "Usuario",
+
+        email:user.email || "",
+
+        photo:user.photoURL || "",
+
+        instagram:"",
+
+        tiktok:"",
+
+        bio:"",
+
+        createdAt:serverTimestamp()
+
+    });
+
+}
+
+
+// ===========================
+// ESTADO DE SESIÓN
+// ===========================
+
+onAuthStateChanged(auth,async(user)=>{
+
+    usuarioActual = user || null;
+
+    const loginButton = document.getElementById("loginButton");
+    const logoutButton = document.getElementById("logoutButton");
+
+    if(user){
+
+        await crearUsuario(user);
+
+        if(loginButton) loginButton.style.display="none";
+        if(logoutButton) logoutButton.style.display="block";
+
+        console.log("Sesión iniciada:",user.email);
+
+        if(typeof cargarDatosPerfil==="function"){
+            cargarDatosPerfil();
+        }
+
+    }else{
+
+        if(loginButton) loginButton.style.display="block";
+        if(logoutButton) logoutButton.style.display="none";
+
+        console.log("Usuario sin iniciar sesión");
+
+    }
+
+    iniciarAplicacion();
+
+});
+
+
+// ===========================
+// LOGIN
+// ===========================
+
+const loginButton = document.getElementById("loginButton");
 
 if(loginButton){
 
@@ -204,9 +288,11 @@ if(loginButton){
 }
 
 
+// ===========================
+// CERRAR SESIÓN
+// ===========================
 
-const logoutButton =
-document.getElementById("logoutButton");
+const logoutButton = document.getElementById("logoutButton");
 
 if(logoutButton){
 
@@ -221,55 +307,68 @@ if(logoutButton){
 }
 
 // ===========================
-// PARTE 3
-// GRUPOS
+// CARGAR GRUPOS
 // ===========================
 
 async function cargarGrupos(){
 
-    const snapshot =
-    await getDocs(
-        collection(db,"groups")
-    );
+    try{
 
-    grupos = [];
+        const snapshot = await getDocs(
+            collection(db,"groups")
+        );
 
-    snapshot.forEach((item)=>{
+        grupos = [];
 
-        grupos.push({
+        snapshot.forEach((item)=>{
 
-            id:item.id,
+            grupos.push({
 
-            ...item.data()
+                id:item.id,
+
+                ...item.data()
+
+            });
 
         });
 
-    });
+        console.log("Grupos encontrados:",grupos.length);
 
-    mostrarGrupos(grupos);
+        mostrarGrupos(grupos);
+
+        cargarDestacados();
+
+        cargarNuevos();
+
+        cargarTendencias();
+
+    }catch(error){
+
+        console.error("Error cargando grupos:",error);
+
+    }
 
 }
 
 
+// ===========================
+// MOSTRAR GRUPOS
+// ===========================
 
 function mostrarGrupos(lista){
 
     const contenedores=[
 
-        "trendingGroups",
-
+        "exploreGroups",
         "featuredGroups",
-
         "latestGroups",
-
-        "exploreGroups"
+        "trendingGroups"
 
     ];
 
     contenedores.forEach(id=>{
 
-        const contenedor=
-        document.getElementById(id);
+        const contenedor=document.getElementById(id);
 
         if(!contenedor) return;
 
@@ -277,67 +376,12 @@ function mostrarGrupos(lista){
 
         lista.forEach(grupo=>{
 
-            const card=document.createElement("div");
+            crearTarjetaGrupo(
 
-            card.className="groupCard";
+                grupo,
+                contenedor
 
-            card.innerHTML=`
-
-            <img src="${grupo.image || "https://placehold.co/400x400"}">
-
-            <div class="groupContent">
-
-            <h3>${grupo.name}</h3>
-
-            <p>${grupo.description}</p>
-
-            <div class="groupMeta">
-
-            <span>${grupo.category}</span>
-
-            <span>👁 ${grupo.views || 0}</span>
-
-            </div>
-
-            <div class="groupActions">
-
-            <button class="joinButton">
-
-            Entrar
-
-            </button>
-
-            <button class="favoriteButton">
-
-            ❤️
-
-            </button>
-
-            </div>
-
-            </div>
-
-            `;
-
-            card.querySelector(".joinButton")
-            .addEventListener("click",(e)=>{
-
-                e.stopPropagation();
-
-                window.open(
-                    grupo.link,
-                    "_blank"
-                );
-
-            });
-
-            card.addEventListener("click",()=>{
-
-                abrirGrupo(grupo);
-
-            });
-
-            contenedor.appendChild(card);
+            );
 
         });
 
@@ -346,87 +390,272 @@ function mostrarGrupos(lista){
 }
 
 
-
-function abrirGrupo(grupo){
-
-    grupoActual=grupo;
-
-    document.getElementById("groupName").textContent=
-    grupo.name;
-
-    document.getElementById("groupCategory").textContent=
-    grupo.category;
-
-    document.getElementById("groupDescription").textContent=
-    grupo.description;
-
-    document.getElementById("groupImage").src=
-    grupo.image || "";
-
-    document.getElementById("groupViews").textContent=
-    "👁 "+(grupo.views || 0);
-
-    document.getElementById("groupFavorites").textContent=
-    "❤️ "+(grupo.favorites || 0);
-
-    showPage("groupPage");
-
-    }
-
 // ===========================
-// PARTE 4
-// FAVORITOS - VISTAS - BÚSQUEDA
+// CREAR TARJETA
 // ===========================
 
-async function agregarFavorito(grupoId){
+function crearTarjetaGrupo(
 
-    if(!usuarioActual){
+    grupo,
+    contenedor
 
-        alert("Inicia sesión para guardar favoritos");
+){
 
-        return;
+    const card=document.createElement("div");
 
-    }
+    card.className="groupCard";
 
-    try{
+    card.innerHTML=`
 
-        await setDoc(
+        <img src="${grupo.image || "https://placehold.co/600x400"}">
 
-            doc(
-                db,
-                "users",
-                usuarioActual.uid,
-                "favorites",
-                grupoId
-            ),
+        <div class="groupContent">
 
-            {
-                createdAt:serverTimestamp()
-            }
+            <h3>${grupo.name || "Grupo"}</h3>
+
+            <p>${grupo.description || ""}</p>
+
+            <div class="groupMeta">
+
+                <span>${grupo.category || "Otros"}</span>
+
+                <span>👁 ${grupo.views || 0}</span>
+
+            </div>
+
+            <div class="groupActions">
+
+                <button class="joinButton">
+
+                    Entrar
+
+                </button>
+
+                <button class="favoriteButton">
+
+                    ❤️
+
+                </button>
+
+                <button class="reportButton">
+
+                    🚩
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    card.addEventListener("click",(e)=>{
+
+        if(e.target.tagName==="BUTTON") return;
+
+        abrirGrupo(grupo);
+
+    });
+
+    card.querySelector(".joinButton")
+    .addEventListener("click",(e)=>{
+
+        e.stopPropagation();
+
+        window.open(
+
+            grupo.link,
+
+            "_blank"
 
         );
 
-        await updateDoc(
+    });
 
-            doc(db,"groups",grupoId),
+    card.querySelector(".favoriteButton")
+    .addEventListener("click",async(e)=>{
 
-            {
-                favorites:increment(1)
-            }
+        e.stopPropagation();
 
-        );
+        await agregarFavorito(grupo.id);
 
-        cargarGrupos();
+    });
 
-    }catch(error){
+    card.querySelector(".reportButton")
+    .addEventListener("click",(e)=>{
 
-        console.error(error);
+        e.stopPropagation();
 
-    }
+        abrirGrupo(grupo);
+
+        showPage("groupPage");
+
+    });
+
+    contenedor.appendChild(card);
 
 }
 
 
+// ===========================
+// DESTACADOS
+// ===========================
+
+function cargarDestacados(){
+
+    const lista=[...grupos]
+    .sort((a,b)=>
+
+        (b.views||0)-(a.views||0)
+
+    );
+
+    const contenedor=
+    document.getElementById("featuredGroups");
+
+    if(!contenedor) return;
+
+    contenedor.innerHTML="";
+
+    lista.slice(0,5).forEach(grupo=>{
+
+        crearTarjetaGrupo(
+
+            grupo,
+            contenedor
+
+        );
+
+    });
+
+}
+
+
+// ===========================
+// NUEVOS
+// ===========================
+
+function cargarNuevos(){
+
+    const lista=[...grupos].reverse();
+
+    const contenedor=
+    document.getElementById("latestGroups");
+
+    if(!contenedor) return;
+
+    contenedor.innerHTML="";
+
+    lista.slice(0,5).forEach(grupo=>{
+
+        crearTarjetaGrupo(
+
+            grupo,
+            contenedor
+
+        );
+
+    });
+
+}
+
+
+// ===========================
+// TENDENCIAS
+// ===========================
+
+function cargarTendencias(){
+
+    const lista=[...grupos]
+    .sort((a,b)=>
+
+        (b.favorites||0)-(a.favorites||0)
+
+    );
+
+    const contenedor=
+    document.getElementById("trendingGroups");
+
+    if(!contenedor) return;
+
+    contenedor.innerHTML="";
+
+    lista.slice(0,5).forEach(grupo=>{
+
+        crearTarjetaGrupo(
+
+            grupo,
+            contenedor
+
+        );
+
+    });
+
+}
+
+// ===========================
+// DETALLE DEL GRUPO
+// ===========================
+
+function abrirGrupo(grupo){
+
+    grupoActual = grupo;
+
+    const nombre = document.getElementById("groupName");
+    const categoria = document.getElementById("groupCategory");
+    const descripcion = document.getElementById("groupDescription");
+    const imagen = document.getElementById("groupImage");
+
+    const creador = document.getElementById("creatorName");
+    const bio = document.getElementById("creatorBio");
+    const instagram = document.getElementById("creatorInstagram");
+    const tiktok = document.getElementById("creatorTikTok");
+
+    const vistas = document.getElementById("groupViews");
+    const favoritos = document.getElementById("groupFavorites");
+
+    if(nombre) nombre.textContent = grupo.name || "Grupo";
+    if(categoria) categoria.textContent = grupo.category || "Otros";
+    if(descripcion) descripcion.textContent = grupo.description || "";
+
+    if(imagen){
+        imagen.src = grupo.image || "https://placehold.co/600x400";
+    }
+
+    if(creador){
+        creador.textContent = grupo.creator || "Bennett";
+    }
+
+    if(bio){
+        bio.textContent = grupo.creatorBio || "";
+    }
+
+    if(instagram){
+        instagram.href = grupo.instagram || "#";
+    }
+
+    if(tiktok){
+        tiktok.href = grupo.tiktok || "#";
+    }
+
+    if(vistas){
+        vistas.textContent = `${grupo.views || 0} vistas`;
+    }
+
+    if(favoritos){
+        favoritos.textContent = `${grupo.favorites || 0} favoritos`;
+    }
+
+    showPage("groupPage");
+
+    sumarVista(grupo.id);
+
+}
+
+
+// ===========================
+// SUMAR VISTA
+// ===========================
 
 async function sumarVista(grupoId){
 
@@ -437,7 +666,9 @@ async function sumarVista(grupoId){
             doc(db,"groups",grupoId),
 
             {
+
                 views:increment(1)
+
             }
 
         );
@@ -451,296 +682,34 @@ async function sumarVista(grupoId){
 }
 
 
+// ===========================
+// BOTÓN ENTRAR
+// ===========================
 
-document.addEventListener("click",async(e)=>{
-
-    if(e.target.classList.contains("favoriteButton")){
-
-        e.stopPropagation();
-
-        const card=e.target.closest(".groupCard");
-
-        if(!card)return;
-
-        const nombre=
-        card.querySelector("h3").textContent;
-
-        const grupo=
-        grupos.find(g=>g.name===nombre);
-
-        if(!grupo)return;
-
-        await agregarFavorito(grupo.id);
-
-        e.target.textContent="💜";
-
-    }
-
-});
-
-
-
-const joinGroupButton=
+const joinGroupButton =
 document.getElementById("joinGroupButton");
 
 if(joinGroupButton){
 
     joinGroupButton.addEventListener("click",()=>{
 
-        if(grupoActual?.link){
+        if(!grupoActual) return;
 
-            window.open(
-                grupoActual.link,
-                "_blank"
-            );
+        window.open(
 
-            sumarVista(grupoActual.id);
+            grupoActual.link,
 
-        }
-
-    });
-
-}
-
-
-
-const searchInput=
-document.getElementById("searchInput");
-
-if(searchInput){
-
-    searchInput.addEventListener("input",()=>{
-
-        const texto=
-        searchInput.value.toLowerCase();
-
-        const resultado=
-        grupos.filter(grupo=>
-
-            grupo.name?.toLowerCase().includes(texto)
-
-            ||
-
-            grupo.description?.toLowerCase().includes(texto)
-
-            ||
-
-            grupo.category?.toLowerCase().includes(texto)
+            "_blank"
 
         );
 
-        mostrarGrupos(resultado);
-
     });
 
 }
+
 
 // ===========================
-// PARTE 5
-// PERFIL - PUBLICAR - COMENTARIOS
-// ===========================
-
-const saveProfileButton =
-document.getElementById("saveProfileButton");
-
-if(saveProfileButton){
-
-    saveProfileButton.addEventListener("click",async()=>{
-
-        if(!usuarioActual)return;
-
-        await updateDoc(
-
-            doc(db,"users",usuarioActual.uid),
-
-            {
-
-                instagram:
-                document.getElementById("profileInstagram").value,
-
-                tiktok:
-                document.getElementById("profileTikTok").value,
-
-                bio:
-                document.getElementById("profileBio").value
-
-            }
-
-        );
-
-        alert("Perfil actualizado");
-
-    });
-
-}
-
-
-
-const publishForm =
-document.getElementById("publishForm");
-
-if(publishForm){
-
-    publishForm.addEventListener("submit",async(e)=>{
-
-        e.preventDefault();
-
-        await addDoc(
-
-            collection(db,"groups"),
-
-            {
-
-                name:
-                document.getElementById("publishName").value,
-
-                description:
-                document.getElementById("publishDescription").value,
-
-                category:
-                document.getElementById("publishCategory").value,
-
-                link:
-                document.getElementById("publishLink").value,
-
-                image:
-                document.getElementById("publishImage").value,
-
-                creator:
-                usuarioActual?.displayName || "Usuario",
-
-                instagram:
-                document.getElementById("profileInstagram").value,
-
-                tiktok:
-                document.getElementById("profileTikTok").value,
-
-                createdAt:
-                serverTimestamp(),
-
-                views:0,
-
-                favorites:0
-
-            }
-
-        );
-
-        alert("Grupo publicado");
-
-        publishForm.reset();
-
-        cargarGrupos();
-
-    });
-
-}
-
-
-
-async function cargarComentarios(){
-
-    if(!grupoActual)return;
-
-    const lista=
-    document.getElementById("commentsList");
-
-    lista.innerHTML="";
-
-    const snapshot=
-    await getDocs(
-
-        query(
-
-            collection(db,"comments"),
-
-            where(
-                "groupId",
-                "==",
-                grupoActual.id
-            )
-
-        )
-
-    );
-
-    snapshot.forEach((item)=>{
-
-        const comentario=
-        item.data();
-
-        lista.innerHTML+=`
-
-        <div class="comment">
-
-        <strong>
-
-        ${comentario.author}
-
-        </strong>
-
-        <p>
-
-        ${comentario.text}
-
-        </p>
-
-        </div>
-
-        `;
-
-    });
-
-}
-
-
-
-const sendCommentButton=
-document.getElementById("sendCommentButton");
-
-if(sendCommentButton){
-
-    sendCommentButton.addEventListener("click",async()=>{
-
-        if(!grupoActual)return;
-
-        const texto=
-        document.getElementById("commentInput").value.trim();
-
-        if(!texto)return;
-
-        await addDoc(
-
-            collection(db,"comments"),
-
-            {
-
-                groupId:
-                grupoActual.id,
-
-                author:
-                usuarioActual?.displayName || "Usuario",
-
-                text:texto,
-
-                createdAt:
-                serverTimestamp()
-
-            }
-
-        );
-
-        document.getElementById("commentInput").value="";
-
-        cargarComentarios();
-
-    });
-
-}
-
-// ===========================
-// PARTE 6
-// COMPARTIR - REPORTAR
+// COMPARTIR
 // ===========================
 
 const shareGroupButton =
@@ -750,9 +719,11 @@ if(shareGroupButton){
 
     shareGroupButton.addEventListener("click",async()=>{
 
-        if(!grupoActual)return;
+        if(!grupoActual) return;
 
-        const texto=`🔥 ${grupoActual.name}
+        const texto =
+
+`🔥 ${grupoActual.name}
 
 ${grupoActual.link}
 
@@ -781,6 +752,9 @@ ${grupoActual.link}
 }
 
 
+// ===========================
+// COPIAR ENLACE
+// ===========================
 
 const copyGroupButton =
 document.getElementById("copyGroupButton");
@@ -789,9 +763,13 @@ if(copyGroupButton){
 
     copyGroupButton.addEventListener("click",async()=>{
 
-        if(!grupoActual)return;
+        if(!grupoActual) return;
 
-        await navigator.clipboard.writeText(grupoActual.link);
+        await navigator.clipboard.writeText(
+
+            grupoActual.link
+
+        );
 
         alert("Enlace copiado");
 
@@ -799,7 +777,356 @@ if(copyGroupButton){
 
 }
 
+// ===========================
+// PERFIL DE USUARIO
+// ===========================
 
+async function cargarDatosPerfil(){
+
+    if(!usuarioActual) return;
+
+    try{
+
+        const referencia = doc(db,"users",usuarioActual.uid);
+
+        const documento = await getDoc(referencia);
+
+        if(!documento.exists()) return;
+
+        const datos = documento.data();
+
+        const foto = document.getElementById("profilePhoto");
+        const nombre = document.getElementById("profileName");
+        const correo = document.getElementById("profileEmail");
+        const instagram = document.getElementById("profileInstagram");
+        const tiktok = document.getElementById("profileTikTok");
+        const bio = document.getElementById("profileBio");
+
+        if(foto){
+            foto.src = datos.photo || usuarioActual.photoURL || "";
+        }
+
+        if(nombre){
+            nombre.textContent = datos.name || usuarioActual.displayName;
+        }
+
+        if(correo){
+            correo.textContent = datos.email || usuarioActual.email;
+        }
+
+        if(instagram){
+            instagram.value = datos.instagram || "";
+        }
+
+        if(tiktok){
+            tiktok.value = datos.tiktok || "";
+        }
+
+        if(bio){
+            bio.value = datos.bio || "";
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ===========================
+// GUARDAR PERFIL
+// ===========================
+
+const saveProfileButton =
+document.getElementById("saveProfileButton");
+
+if(saveProfileButton){
+
+    saveProfileButton.addEventListener("click",async()=>{
+
+        if(!usuarioActual){
+
+            alert("Debes iniciar sesión.");
+
+            return;
+
+        }
+
+        try{
+
+            await updateDoc(
+
+                doc(db,"users",usuarioActual.uid),
+
+                {
+
+                    instagram:document.getElementById("profileInstagram").value,
+
+                    tiktok:document.getElementById("profileTikTok").value,
+
+                    bio:document.getElementById("profileBio").value
+
+                }
+
+            );
+
+            alert("Perfil actualizado.");
+
+        }catch(error){
+
+            console.error(error);
+
+            alert("No se pudo guardar.");
+
+        }
+
+    });
+
+}
+
+// ===========================
+// FAVORITOS
+// ===========================
+
+async function agregarFavorito(grupoId){
+
+    if(!usuarioActual){
+
+        alert("Debes iniciar sesión.");
+
+        return;
+
+    }
+
+    try{
+
+        const grupoRef = doc(db,"groups",grupoId);
+
+        await updateDoc(grupoRef,{
+
+            favorites:increment(1)
+
+        });
+
+        alert("Grupo agregado a favoritos.");
+
+        cargarGrupos();
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ===========================
+// PUBLICAR GRUPO
+// ===========================
+
+const publishForm = document.getElementById("publishForm");
+
+if(publishForm){
+
+    publishForm.addEventListener("submit",async(e)=>{
+
+        e.preventDefault();
+
+        if(!usuarioActual){
+
+            alert("Debes iniciar sesión.");
+
+            return;
+
+        }
+
+        try{
+
+            await addDoc(collection(db,"groups"),{
+
+                name:document.getElementById("publishName").value,
+
+                description:document.getElementById("publishDescription").value,
+
+                category:document.getElementById("publishCategory").value,
+
+                link:document.getElementById("publishLink").value,
+
+                image:document.getElementById("publishImage").value ||
+
+                "https://placehold.co/600x400",
+
+                creator:usuarioActual.displayName,
+
+                creatorUid:usuarioActual.uid,
+
+                creatorPhoto:usuarioActual.photoURL,
+
+                views:0,
+
+                favorites:0,
+
+                comments:0,
+
+                createdAt:serverTimestamp()
+
+            });
+
+            alert("Grupo publicado correctamente.");
+
+            publishForm.reset();
+
+            cargarGrupos();
+
+            showPage("homePage");
+
+        }catch(error){
+
+            console.error(error);
+
+            alert("No se pudo publicar.");
+
+        }
+
+    });
+
+}
+
+// ===========================
+// COMENTARIOS
+// ===========================
+
+async function cargarComentarios(){
+
+    if(!grupoActual) return;
+
+    const lista = document.getElementById("commentsList");
+
+    if(!lista) return;
+
+    lista.innerHTML = "";
+
+    try{
+
+        const q = query(
+
+            collection(db,"comments"),
+
+            where("groupId","==",grupoActual.id),
+
+            orderBy("createdAt","asc")
+
+        );
+
+        const snapshot = await getDocs(q);
+
+        snapshot.forEach((item)=>{
+
+            const comentario = item.data();
+
+            const div = document.createElement("div");
+
+            div.className = "comment";
+
+            div.innerHTML = `
+
+                <strong>${comentario.author || "Usuario"}</strong>
+
+                <p>${comentario.text}</p>
+
+            `;
+
+            lista.appendChild(div);
+
+        });
+
+        const total = document.getElementById("groupComments");
+
+        if(total){
+
+            total.textContent = `${snapshot.size} comentarios`;
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ===========================
+// ENVIAR COMENTARIO
+// ===========================
+
+const sendCommentButton =
+document.getElementById("sendCommentButton");
+
+if(sendCommentButton){
+
+    sendCommentButton.addEventListener("click",async()=>{
+
+        if(!usuarioActual){
+
+            alert("Debes iniciar sesión.");
+
+            return;
+
+        }
+
+        if(!grupoActual) return;
+
+        const input = document.getElementById("commentInput");
+
+        const texto = input.value.trim();
+
+        if(texto==="") return;
+
+        try{
+
+            await addDoc(
+
+                collection(db,"comments"),
+
+                {
+
+                    groupId:grupoActual.id,
+
+                    author:usuarioActual.displayName,
+
+                    authorUid:usuarioActual.uid,
+
+                    text:texto,
+
+                    createdAt:serverTimestamp()
+
+                }
+
+            );
+
+            input.value = "";
+
+            cargarComentarios();
+
+        }catch(error){
+
+            console.error(error);
+
+        }
+
+    });
+
+}
+
+
+// ===========================
+// REPORTAR GRUPO
+// ===========================
 
 const reportGroupButton =
 document.getElementById("reportGroupButton");
@@ -808,120 +1135,141 @@ if(reportGroupButton){
 
     reportGroupButton.addEventListener("click",async()=>{
 
-        if(!grupoActual)return;
+        if(!usuarioActual){
 
-        const motivo=prompt("¿Cuál es el motivo del reporte?");
+            alert("Debes iniciar sesión.");
 
-        if(!motivo)return;
+            return;
 
-        await addDoc(
+        }
 
-            collection(db,"reports"),
+        if(!grupoActual) return;
 
-            {
+        const motivo = prompt(
 
-                groupId:grupoActual.id,
-
-                groupName:grupoActual.name,
-
-                reason:motivo,
-
-                author:usuarioActual?.uid || "",
-
-                createdAt:serverTimestamp()
-
-            }
+            "¿Por qué deseas reportar este grupo?"
 
         );
 
-        alert("Reporte enviado");
+        if(!motivo) return;
 
-    });
+        try{
 
-}
+            await addDoc(
 
+                collection(db,"reports"),
 
+                {
 
-const groupComments =
-document.getElementById("groupComments");
+                    groupId:grupoActual.id,
 
-if(groupComments){
+                    groupName:grupoActual.name,
 
-    groupComments.addEventListener("click",()=>{
+                    reportedBy:usuarioActual.uid,
 
-        showPage("commentsPage");
+                    reason:motivo,
 
-        cargarComentarios();
+                    createdAt:serverTimestamp()
+
+                }
+
+            );
+
+            alert("Reporte enviado correctamente.");
+
+        }catch(error){
+
+            console.error(error);
+
+        }
 
     });
 
 }
 
 // ===========================
-// PARTE 7
-// NOTIFICACIONES - LIMPIEZA - PERFIL
+// NOTIFICACIONES
 // ===========================
 
 async function cargarNotificaciones(){
 
-    if(!usuarioActual)return;
+    if(!usuarioActual) return;
 
-    const lista=
+    const lista =
     document.getElementById("notificationsList");
 
-    if(!lista)return;
+    if(!lista) return;
 
-    lista.innerHTML="";
+    lista.innerHTML = "";
 
-    const snapshot=
-    await getDocs(
+    try{
 
-        query(
+        const q = query(
 
             collection(db,"notifications"),
 
-            where(
-                "userId",
-                "==",
-                usuarioActual.uid
-            ),
+            where("userId","==",usuarioActual.uid),
 
-            orderBy(
-                "createdAt",
-                "desc"
-            ),
+            orderBy("createdAt","desc"),
 
             limit(20)
 
-        )
+        );
 
-    );
+        const snapshot = await getDocs(q);
 
-    snapshot.forEach((item)=>{
+        if(snapshot.empty){
 
-        const data=item.data();
+            lista.innerHTML = `
 
-        const div=document.createElement("div");
+                <div class="notificationCard">
 
-        div.className="notificationCard";
+                    <h3>No hay notificaciones</h3>
 
-        div.innerHTML=`
+                    <p>Todavía no tienes ninguna.</p>
 
-        <h3>${data.title || "Notificación"}</h3>
+                </div>
 
-        <p>${data.message || ""}</p>
+            `;
 
-        `;
+            return;
 
-        lista.appendChild(div);
+        }
 
-    });
+        snapshot.forEach((item)=>{
+
+            const data = item.data();
+
+            const card = document.createElement("div");
+
+            card.className = "notificationCard";
+
+            card.innerHTML = `
+
+                <h3>${data.title || "Notificación"}</h3>
+
+                <p>${data.message || ""}</p>
+
+            `;
+
+            lista.appendChild(card);
+
+        });
+
+    }catch(error){
+
+        console.error(error);
+
+    }
 
 }
 
 
+// ===========================
+// ABRIR NOTIFICACIONES
+// ===========================
 
-const notificationsButton=
+const notificationsButton =
 document.getElementById("notificationsButton");
 
 if(notificationsButton){
@@ -937,115 +1285,114 @@ if(notificationsButton){
 }
 
 
+// ===========================
+// ENVIAR NOTIFICACIÓN
+// ===========================
 
-const profileButton=
-document.getElementById("profileButton");
+async function crearNotificacion(
 
-if(profileButton){
+    userId,
+    titulo,
+    mensaje
 
-    profileButton.addEventListener("click",async()=>{
+){
 
-        showPage("profilePage");
+    try{
 
-        await cargarDatosPerfil();
+        await addDoc(
 
-    });
+            collection(db,"notifications"),
 
-}
+            {
 
+                userId:userId,
 
+                title:titulo,
 
-async function limpiarGruposExpirados(){
+                message:mensaje,
 
-    const snapshot=
-    await getDocs(
-        collection(db,"groups")
-    );
+                createdAt:serverTimestamp()
 
-    const ahora=Date.now();
+            }
 
-    for(const item of snapshot.docs){
+        );
 
-        const grupo=item.data();
+    }catch(error){
 
-        if(!grupo.createdAt) continue;
-
-        const horas=
-
-        (ahora-grupo.createdAt.toDate().getTime())
-
-        /(1000*60*60);
-
-        if(horas>=48){
-
-            await deleteDoc(
-
-                doc(db,"groups",item.id)
-
-            );
-
-        }
+        console.error(error);
 
     }
 
 }
 
 // ===========================
-// PARTE 8
-// INICIALIZACIÓN
+// BÚSQUEDA DE GRUPOS
 // ===========================
 
-// Botones volver
+const searchInput = document.getElementById("searchInput");
 
-const backButtons={
+if(searchInput){
 
-    backGroupButton:"homePage",
+    searchInput.addEventListener("input",()=>{
 
-    backExploreButton:"homePage",
+        const texto = searchInput.value
+        .trim()
+        .toLowerCase();
 
-    backCommentsButton:"groupPage",
+        if(texto===""){
 
-    backPublishButton:"homePage",
+            mostrarGrupos(grupos);
 
-    backProfileButton:"homePage",
+            return;
 
-    backNotificationsButton:"homePage",
+        }
 
-    backAdminButton:"homePage"
+        const resultados = grupos.filter(grupo=>{
 
-};
+            return(
 
-Object.entries(backButtons).forEach(([id,pagina])=>{
+                grupo.name?.toLowerCase().includes(texto)
 
-    const boton=document.getElementById(id);
+                ||
 
-    if(!boton)return;
+                grupo.description?.toLowerCase().includes(texto)
 
-    boton.addEventListener("click",()=>{
+                ||
 
-        showPage(pagina);
+                grupo.category?.toLowerCase().includes(texto)
+
+            );
+
+        });
+
+        mostrarGrupos(resultados);
 
     });
 
-});
+}
 
 
+// ===========================
+// FILTRAR CATEGORÍAS
+// ===========================
 
-// Categorías
+const categoryButtons =
+document.querySelectorAll(".categoryButton");
 
-document.querySelectorAll(".categoryButton").forEach(btn=>{
+categoryButtons.forEach(button=>{
 
-    btn.addEventListener("click",()=>{
+    button.addEventListener("click",()=>{
 
-        const categoria=btn.dataset.category;
+        const categoria =
+        button.dataset.category;
 
-        const resultado=grupos.filter(g=>
+        const lista = grupos.filter(grupo=>{
 
-            g.category===categoria
+            return grupo.category===categoria;
 
-        );
+        });
 
-        mostrarGrupos(resultado);
+        mostrarGrupos(lista);
 
         showPage("explorePage");
 
@@ -1054,10 +1401,12 @@ document.querySelectorAll(".categoryButton").forEach(btn=>{
 });
 
 
+// ===========================
+// VER TODO
+// ===========================
 
-// Ver todo
-
-const seeAllTrending=document.getElementById("seeAllTrending");
+const seeAllTrending =
+document.getElementById("seeAllTrending");
 
 if(seeAllTrending){
 
@@ -1071,9 +1420,8 @@ if(seeAllTrending){
 
 }
 
-
-
-const seeAllFeatured=document.getElementById("seeAllFeatured");
+const seeAllFeatured =
+document.getElementById("seeAllFeatured");
 
 if(seeAllFeatured){
 
@@ -1088,14 +1436,36 @@ if(seeAllFeatured){
 }
 
 
+// ===========================
+// BOTÓN PERFIL
+// ===========================
 
-// Botón flotante publicar
+const profileButton =
+document.getElementById("profileButton");
 
-const fab=document.getElementById("fabButton");
+if(profileButton){
 
-if(fab){
+    profileButton.addEventListener("click",()=>{
 
-    fab.addEventListener("click",()=>{
+        showPage("profilePage");
+
+        cargarDatosPerfil();
+
+    });
+
+}
+
+
+// ===========================
+// BOTÓN PUBLICAR
+// ===========================
+
+const publishFab =
+document.getElementById("fabButton");
+
+if(publishFab){
+
+    publishFab.addEventListener("click",()=>{
 
         showPage("publishPage");
 
@@ -1103,15 +1473,326 @@ if(fab){
 
 }
 
+// ===========================
+// PANEL DE ADMINISTRACIÓN
+// ===========================
+
+async function cargarPanelAdmin(){
+
+    try{
+
+        // Total usuarios
+        const usuariosSnapshot = await getDocs(
+            collection(db,"users")
+        );
+
+        // Total grupos
+        const gruposSnapshot = await getDocs(
+            collection(db,"groups")
+        );
+
+        // Total reportes
+        const reportesSnapshot = await getDocs(
+            collection(db,"reports")
+        );
+
+        const totalUsers =
+        document.getElementById("totalUsers");
+
+        const totalGroups =
+        document.getElementById("totalGroups");
+
+        const totalReports =
+        document.getElementById("totalReports");
+
+        if(totalUsers){
+
+            totalUsers.textContent =
+            usuariosSnapshot.size;
+
+        }
+
+        if(totalGroups){
+
+            totalGroups.textContent =
+            gruposSnapshot.size;
+
+        }
+
+        if(totalReports){
+
+            totalReports.textContent =
+            reportesSnapshot.size;
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Error cargando panel:",
+            error
+        );
+
+    }
+
+}
 
 
-// Inicio
+// ===========================
+// ABRIR PANEL ADMIN
+// ===========================
+
+const manageGroupsButton =
+document.getElementById("manageGroupsButton");
+
+const manageReportsButton =
+document.getElementById("manageReportsButton");
+
+const sendAnnouncementButton =
+document.getElementById("sendAnnouncementButton");
+
+if(manageGroupsButton){
+
+    manageGroupsButton.addEventListener("click",()=>{
+
+        alert(
+            "Próximamente podrás administrar los grupos."
+        );
+
+    });
+
+}
+
+if(manageReportsButton){
+
+    manageReportsButton.addEventListener("click",()=>{
+
+        alert(
+            "Próximamente podrás revisar los reportes."
+        );
+
+    });
+
+}
+
+if(sendAnnouncementButton){
+
+    sendAnnouncementButton.addEventListener("click",()=>{
+
+        alert(
+            "Próximamente podrás enviar avisos."
+        );
+
+    });
+
+}
+
+
+// ===========================
+// ABRIR ADMINISTRACIÓN
+// ===========================
+
+function abrirPanelAdmin(){
+
+    showPage("adminPage");
+
+    cargarPanelAdmin();
+
+}
+
+// ===========================
+// ELIMINACIÓN AUTOMÁTICA
+// 48 HORAS
+// ===========================
+
+async function limpiarGruposExpirados(){
+
+    try{
+
+        const snapshot = await getDocs(
+            collection(db,"groups")
+        );
+
+        const ahora = Date.now();
+
+        for(const item of snapshot.docs){
+
+            const grupo = item.data();
+
+            if(!grupo.createdAt) continue;
+
+            const fecha =
+            grupo.createdAt.toDate().getTime();
+
+            const horas =
+            (ahora - fecha) /
+            (1000 * 60 * 60);
+
+            if(horas >= 48){
+
+                await deleteDoc(
+
+                    doc(db,"groups",item.id)
+
+                );
+
+                console.log(
+                    "Grupo eliminado:",
+                    grupo.name
+                );
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Error eliminando grupos:",
+            error
+        );
+
+    }
+
+}
+
+
+// ===========================
+// INICIAR APP
+// ===========================
 
 window.addEventListener("load",async()=>{
 
     try{
 
+        ocultarSplash();
+
         await limpiarGruposExpirados();
+
+        await cargarGrupos();
+
+        console.log(
+            "NOCTRA iniciada correctamente."
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+});
+
+
+// ===========================
+// RECARGAR DATOS
+// ===========================
+
+async function actualizarAplicacion(){
+
+    await cargarGrupos();
+
+    if(usuarioActual){
+
+        await cargarDatosPerfil();
+
+        await cargarNotificaciones();
+
+    }
+
+}
+
+
+// ===========================
+// BOTÓN RECARGAR
+// ===========================
+
+window.actualizarAplicacion =
+actualizarAplicacion;
+
+// ===========================
+// PARTE 12
+// INICIALIZACIÓN FINAL
+// ===========================
+
+// Abrir comentarios
+const groupComments =
+document.getElementById("groupComments");
+
+if(groupComments){
+
+    groupComments.addEventListener("click",()=>{
+
+        if(!grupoActual) return;
+
+        showPage("commentsPage");
+
+        cargarComentarios();
+
+    });
+
+}
+
+
+// Abrir perfil desde navegación
+const profileNav =
+document.querySelector(
+'.navButton[data-page="profilePage"]'
+);
+
+if(profileNav){
+
+    profileNav.addEventListener("click",()=>{
+
+        if(usuarioActual){
+
+            cargarDatosPerfil();
+
+        }
+
+    });
+
+}
+
+
+// Abrir explorar
+const exploreNav =
+document.querySelector(
+'.navButton[data-page="explorePage"]'
+);
+
+if(exploreNav){
+
+    exploreNav.addEventListener("click",()=>{
+
+        mostrarGrupos(grupos);
+
+    });
+
+}
+
+
+// Botón volver al inicio
+const homeNav =
+document.querySelector(
+'.navButton[data-page="homePage"]'
+);
+
+if(homeNav){
+
+    homeNav.addEventListener("click",()=>{
+
+        cargarGrupos();
+
+    });
+
+}
+
+
+// Refrescar datos cada minuto
+setInterval(async()=>{
+
+    try{
 
         await cargarGrupos();
 
@@ -1121,4 +1802,49 @@ window.addEventListener("load",async()=>{
 
     }
 
+},60000);
+
+
+// ===========================
+// ARRANQUE FINAL
+// ===========================
+
+document.addEventListener("DOMContentLoaded",async()=>{
+
+    try{
+
+        ocultarSplash();
+
+        await limpiarGruposExpirados();
+
+        await cargarGrupos();
+
+        if(usuarioActual){
+
+            await cargarDatosPerfil();
+
+            await cargarNotificaciones();
+
+        }
+
+        console.log("𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪 lista.");
+
+    }catch(error){
+
+        console.error(
+
+            "Error iniciando NOCTRA:",
+
+            error
+
+        );
+
+    }
+
 });
+
+
+// ===========================
+// FIN SCRIPT.JS
+// 𓆩⍣⃝ 𝙉𝙊𝘾𝙏𝙍𝘼⍣⃝ 𓆪
+// ===========================
