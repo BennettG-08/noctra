@@ -826,6 +826,30 @@ async function cargarDatosPerfil(){
             bio.value = datos.bio || "";
         }
 
+        // ===========================
+        // ESTADÍSTICAS DEL PERFIL
+        // ===========================
+
+        const misGrupos = grupos.filter(grupo =>
+            grupo.creatorUid === usuarioActual.uid
+        );
+
+        const totalGrupos = misGrupos.length;
+
+        const totalVistas = misGrupos.reduce(
+            (total, grupo) => total + (grupo.views || 0),
+            0
+        );
+
+        const totalFavoritos = misGrupos.reduce(
+            (total, grupo) => total + (grupo.favorites || 0),
+            0
+        );
+
+        document.getElementById("profileGroups").textContent = totalGrupos;
+        document.getElementById("profileViews").textContent = totalVistas;
+        document.getElementById("profileFavorites").textContent = totalFavoritos;
+
     }catch(error){
 
         console.error(error);
