@@ -10,6 +10,7 @@ import {
     addDoc,
     getDocs,
     getDoc,
+    setDoc,
     doc,
     updateDoc,
     deleteDoc,
@@ -92,36 +93,23 @@ const notificationsCollection = collection(db,"notifications");
 
 async function loginGoogle(){
 
-try{
+    try{
 
-const result = await signInWithPopup(
-auth,
-provider
-);
+        const result = await signInWithPopup(auth,provider);
 
-console.log(
-"Login correcto:",
-result.user.email
-);
+        console.log("Login correcto:",result.user.email);
 
-return result.user;
+        return result.user;
 
+    }catch(error){
 
-}catch(error){
+        console.error("Error login:",error);
 
-console.error(
-"Error login:",
-error.code,
-error.message
-);
+        alert("Error al iniciar sesión");
 
-alert(
-"Error al iniciar sesión: " + error.message
-);
+        return null;
 
-return null;
-
-}
+    }
 
 }
 
@@ -129,24 +117,17 @@ return null;
 
 async function logoutUser(){
 
-try{
+    try{
 
-await signOut(auth);
+        await signOut(auth);
 
-console.log(
-"Sesión cerrada correctamente"
-);
+        console.log("Sesión cerrada correctamente");
 
+    }catch(error){
 
-}catch(error){
+        console.error(error);
 
-console.error(
-"Error cerrar sesión:",
-error.code,
-error.message
-);
-
-}
+    }
 
 }
 
@@ -157,20 +138,15 @@ error.message
 
 onAuthStateChanged(auth,(user)=>{
 
-if(user){
+    if(user){
 
-console.log(
-"Usuario conectado:",
-user.email
-);
+        console.log("Usuario conectado:",user.email);
 
-}else{
+    }else{
 
-console.log(
-"Usuario sin sesión"
-);
+        console.log("Usuario sin sesión");
 
-}
+    }
 
 });
 
@@ -181,30 +157,31 @@ console.log(
 
 export {
 
-app,
-db,
-auth,
+    app,
+    db,
+    auth,
 
-groupsCollection,
-usersCollection,
-reportsCollection,
-commentsCollection,
-notificationsCollection,
+    groupsCollection,
+    usersCollection,
+    reportsCollection,
+    commentsCollection,
+    notificationsCollection,
 
-addDoc,
-getDocs,
-getDoc,
-doc,
-updateDoc,
-deleteDoc,
-query,
-where,
-orderBy,
-limit,
-serverTimestamp,
-increment,
+    addDoc,
+    getDocs,
+    getDoc,
+    setDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    query,
+    where,
+    orderBy,
+    limit,
+    serverTimestamp,
+    increment,
 
-loginGoogle,
-logoutUser
+    loginGoogle,
+    logoutUser
 
 };
